@@ -1,0 +1,45 @@
+<!-- components/poll-stepper-phone-field/poll-stepper-phone-field.component.html -->
+<div class="poll-stepper-field">
+  <p class="poll-stepper-question">{{ field.question }}</p>
+
+  <label class="phone-input-wrap" [class.invalid]="touched && !isValid">
+    <span class="prefix">+380</span>
+    <input
+      type="tel"
+      inputmode="tel"
+      placeholder="__ ___ __ __"
+      [value]="displayValue"
+      (input)="onInput($event)"
+      (blur)="touched = true"
+      (keydown.enter)="submitIfValid()"
+      aria-label="Номер телефону"
+    />
+  </label>
+
+  <div class="hint">
+    Введи номер у форматі <strong>+380 ХХ ХХХ ХХ ХХ</strong>. Ми не будемо спамити 🙂
+  </div>
+
+  <div class="error" *ngIf="touched && !isValid">
+    Невірний номер. Перевір, будь ласка.
+  </div>
+
+  <!-- Новий блок для вибору месенджера -->
+  <div class="messenger-select">
+    <p class="poll-stepper-question">Обери зручний месенджер для зв’язку:</p>
+    <button
+      type="button"
+      class="messenger-option"
+      [class.selected]="selectedMessenger === 'telegram'"
+      (click)="selectMessenger('telegram')">
+      <img style="width: 35px; height: 35px" src="assets/icons/telegram.webp" alt="Telegram" /> Telegram
+    </button>
+    <button
+      type="button"
+      class="messenger-option"
+      [class.selected]="selectedMessenger === 'viber'"
+      (click)="selectMessenger('viber')">
+      <img src="assets/icons/viber.png" alt="Viber" /> Viber
+    </button>
+  </div>
+</div>

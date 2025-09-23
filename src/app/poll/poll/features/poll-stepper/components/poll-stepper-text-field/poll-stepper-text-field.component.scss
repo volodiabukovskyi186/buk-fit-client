@@ -1,0 +1,128 @@
+// components/poll-stepper-phone-field/poll-stepper-phone-field.component.scss
+@import 'variables';
+
+app-poll-stepper-text-field {
+  display: block;
+
+  .poll-stepper-field {
+    padding: 20px;
+    background: $hs-neutrals-light;
+    border: 1px solid $hs-secondary-grey-01;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba($hs-black, 0.06);
+    margin-bottom: 20px;
+    animation: fadeInStep 240ms ease;
+
+    @keyframes fadeInStep {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  .poll-stepper-question {
+    font-size: 18px;
+    line-height: 1.35;
+    font-weight: 700;
+    color: $hs-black;
+    margin-bottom: 14px;
+    letter-spacing: .2px;
+  }
+
+  .phone-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background: #fff;
+    border: 1px solid $hs-secondary-grey-01;
+    border-radius: 14px;
+    padding: 12px 14px 12px 14px;
+
+    transition: border-color .2s ease, box-shadow .2s ease;
+
+    .prefix {
+      flex: 0 0 auto;
+      font-weight: 700;
+      color: $hs-black;
+      background: $hs-secondary-grey-00;
+      border: 1px solid $hs-secondary-grey-01;
+      border-radius: 10px;
+      padding: 8px 10px;
+      letter-spacing: .3px;
+    }
+
+    input {
+      flex: 1 1 auto;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      letter-spacing: .4px;
+      padding: 10px 6px;
+      background: transparent;
+      color: $hs-black;
+
+      &::placeholder { color: $hs-secondary-grey-03; }
+    }
+
+    &:focus-within {
+      border-color: $hs-primary;
+      box-shadow: 0 6px 18px rgba($hs-primary, .15);
+    }
+
+    &.invalid {
+      border-color: $hs-error;
+      box-shadow: 0 6px 18px rgba($hs-error, .12);
+    }
+  }
+
+  .hint {
+    margin-top: 10px;
+    color: $hs-secondary-grey-03;
+    font-size: 12px;
+  }
+
+  .error {
+    margin-top: 8px;
+    color: $hs-error;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .messenger-select {
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+
+    .messenger-option {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+
+      background: #fff;
+      border: 1px solid $hs-secondary-grey-01;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s ease;
+
+      img {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        border-color: $hs-primary;
+        box-shadow: 0 4px 12px rgba($hs-primary, 0.12);
+      }
+
+      &.selected {
+        border-color: $hs-primary;
+        background: rgba($hs-primary, 0.05);
+      }
+    }
+  }
+}

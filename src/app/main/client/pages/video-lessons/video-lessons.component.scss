@@ -1,0 +1,62 @@
+$primary-color: #007bff;
+$secondary-color: #0056b3;
+$background-color: #f8f9fa;
+$text-color: #343a40;
+$light-background-color: #e9ecef;
+
+
+bk-video-lessons {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+    overflow: auto;
+
+    .program {
+        margin-top: 16px;
+    }
+
+    day {
+      margin: 20px 0;
+    }
+    
+    .card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+      h3 {
+        margin-top: 0;
+        color: $primary-color;
+      }
+    
+      ul {
+        padding: 0;
+        list-style: none;
+    
+        li {
+          margin: 5px 0;
+          padding: 5px 10px;
+          background-color: $light-background-color;
+          border-radius: 4px;
+        }
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .card-content {
+        ul {
+          li {
+            display: flex;
+            flex-direction: column;
+            margin: 10px 0;
+          }
+        }
+      }
+    }
+    
+      
+}

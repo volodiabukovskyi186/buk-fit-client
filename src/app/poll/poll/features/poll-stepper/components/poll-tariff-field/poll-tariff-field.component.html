@@ -1,0 +1,83 @@
+<div class="poll-stepper-field">
+  <p class="poll-stepper-question">{{field.question}}</p>
+
+  <!-- ЛАЙТ / ПЛАН -->
+  <div class="poll-stepper-answers"
+       [class.selected]="field.selectedAnswer === '2100'"
+       (click)="selectAnswer('2100')">
+
+    <div class="tariff-block">
+      <div class="tariff-title">Лайт — тільки план</div>
+
+      <div class="tariff-price-line">
+        <span class="price-main"><strong>2&nbsp;100</strong> грн</span>
+        <span class="price-period">/ 4 тижні</span>
+      </div>
+
+      <div class="tariff-subtitle">Для тих, хто все робить самостійно</div>
+
+      <ul class="tariff-features">
+        <li>План харчування на тиждень</li>
+        <li>Тренування на тиждень</li>
+        <li>1 перевірка звіту щотижня</li>
+      </ul>
+
+      <div class="tariff-note">Мінімум взаємодії — максимум самостійності.</div>
+    </div>
+  </div>
+
+  <!-- ПОВНИЙ (РЕКОМЕНДОВАНО) -->
+  <div class="poll-stepper-answers is-recommended"
+       [class.selected]="field.selectedAnswer === '2800'"
+       (click)="selectAnswer('2800')">
+
+    <div class="tariff-block">
+      <div class="tariff-title">
+        👑 Повний супровід
+        <span class="tariff-badge">Рекомендовано</span>
+      </div>
+
+      <div class="tariff-price-line">
+        <span class="price-main"><strong>2&nbsp;800</strong> грн</span>
+        <span class="price-period">/ 4 тижні</span>
+      </div>
+
+      <div class="tariff-subtitle">Індивідуальне наставництво, мотивація та контроль</div>
+
+      <ul class="tariff-features">
+        <li>Персональний план харчування</li>
+        <li>Тренування під твій рівень і цілі</li>
+        <li>Регулярний контроль прогресу</li>
+        <li>Мотивація та корекції за потреби</li>
+      </ul>
+
+      <div class="tariff-note">Оптимальний баланс підтримки та результату.</div>
+    </div>
+  </div>
+
+  <!-- ПРЕМІУМ -->
+  <div class="poll-stepper-answers"
+       [class.selected]="field.selectedAnswer === '3600'"
+       (click)="selectAnswer('3600')">
+
+    <div class="tariff-block">
+      <div class="tariff-title">Преміум</div>
+
+      <div class="tariff-price-line">
+        <span class="price-main"><strong>3&nbsp;600</strong> грн</span>
+        <span class="price-period">/ 4 тижні</span>
+      </div>
+
+      <div class="tariff-subtitle">Максимум уваги та найшвидший результат</div>
+
+      <ul class="tariff-features">
+        <li>Все з повного супроводу</li>
+        <li>Щоденний супровід у чаті</li>
+        <li>Додаткові вправи для прогресу</li>
+        <li>Пріоритетні відповіді</li>
+      </ul>
+
+      <div class="tariff-note">Твій тренер завжди на зв’язку — щодня.</div>
+    </div>
+  </div>
+</div>

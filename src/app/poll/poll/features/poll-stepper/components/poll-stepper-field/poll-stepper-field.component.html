@@ -1,0 +1,11 @@
+<div class="poll-stepper-field">
+  <p class="poll-stepper-question">{{field.question}}</p>
+
+  <div
+    class="poll-stepper-answers"
+    *ngFor="let answer of field.answers; let i = index"
+    [class.selected]="field.selectedAnswer === answer.value"
+    (click)="selectAnswer(i)">
+    {{answer.title}}
+  </div>
+</div>

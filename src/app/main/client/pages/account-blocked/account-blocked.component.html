@@ -1,0 +1,11 @@
+<div class="flex justify-content-center"
+     *ngIf="user?.status === userStatusEnum.DELETED || user?.status === userStatusEnum.BLOCKED">
+  <h3 class="fc-error">
+    Ваш акаунт заблоковано !
+  </h3>
+</div>
+
+<div>
+  <hs-button (click)="checkStatus()">Оновити сторінку</hs-button>
+</div>
+

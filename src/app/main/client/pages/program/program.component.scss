@@ -1,0 +1,90 @@
+$primary-color: #007bff;
+$secondary-color: #0056b3;
+$background-color: #f8f9fa;
+$text-color: #343a40;
+$muted-text-color: #6c757d;
+
+
+bk-program {
+  .mg-autolink {
+    color: $primary-color;
+    text-decoration: none;
+
+    }
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+    overflow: auto;
+
+    .program {
+        margin-top: 16px;
+    }
+
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: $background-color;
+      margin: 0;
+      padding: 0;
+    }
+
+    .program {
+      margin: 20px 0;
+    }
+
+    .card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+      h2 {
+        margin-top: 0;
+        color: $primary-color;
+      }
+
+      p {
+        margin: 5px 0;
+
+        strong {
+          color: $secondary-color;
+        }
+
+        &:first-child {
+          color: $primary-color;
+        }
+
+        &:last-child {
+          color: $text-color;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      .card-content {
+        p {
+          display: flex;
+          flex-direction: column;
+          margin: 10px 0;
+
+          strong {
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }
+
+
+}
+
+
+
+@media (max-width: 768px) {
+  .bk-toggle-width {
+    min-width: 90px;
+  }
+}

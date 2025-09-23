@@ -1,0 +1,12 @@
+<h2 class="pb-8">Програма харчування</h2>
+<ng-container *ngIf="!dailyMealsText?.text">
+  <div class="w-100 flex justify-content-center pt-24">
+    <h4 class="fc-secondary-grey-03 ">У вас ще немає програми харчування</h4>
+  </div>
+</ng-container>
+
+<div *ngIf="dailyMealsText?.text" class="flex w-100 card meal" >
+  <div *ngIf="dailyMealsText?.text" [innerHTML]="dailyMealsText?.text | MGAutoLink"></div>
+</div>
+
+

@@ -1,0 +1,124 @@
+<div class="flex flex-column w-100">
+  <div class="pb-10">
+    <h2 class="fc-primary"> Активна оплата</h2>
+  </div>
+  <div class="bk-card w-100">
+
+
+    <div class="flex flex-column" *ngIf="payment">
+      <div class="flex pb-4 payment-field-row">
+        <span>Тариф: </span>
+        <span class="fc-primary pl-4 fw-500">
+      <ng-container *ngIf="payment.tariff === userPaymentsTariffEnum.BASIC">
+        Базовий
+      </ng-container>
+
+      <ng-container *ngIf="payment.tariff === userPaymentsTariffEnum.STANDARD">
+         Стандартний
+      </ng-container>
+
+      <ng-container *ngIf="payment.tariff === userPaymentsTariffEnum.PREMIUM">
+        Преміум
+      </ng-container>
+
+    </span>
+      </div>
+      <div class="flex pb-4 payment-field-row">
+        <span>Вартість: </span>
+        <span class="fc-primary pl-4 fw-500">
+        {{ payment.price }} грн
+    </span>
+      </div>
+
+      <div class="flex pb-4 payment-field-row">
+        <span>Оплата за період:</span>
+        <span class="fc-primary pl-4 fw-500">
+        {{ payment.fromDate | dateFirebase }} - {{ payment.toDate  | dateFirebase }}
+      </span>
+      </div>
+
+      <div class="flex pb-4 payment-field-row">
+        <span>Коментар:</span>
+        <span class="fc-primary pl-4 fw-500">
+       {{payment.comment}}
+      </span>
+      </div>
+
+
+      <div class="flex w-100 justify-content-end mt-6">
+        <div>
+          <hs-button text="Оплатити" (click)="callFirebase()"></hs-button>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="w-100 flex justify-content-center">
+      <h2 *ngIf="!payment">У вас немає активної оплати</h2>
+    </div>
+  </div>
+
+
+  <div class="pb-10">
+    <h2 class="fc-primary">Історія оплат</h2>
+  </div>
+
+  <ng-container *ngFor="let payment of historyPayments ">
+    <div class="bk-card w-100">
+      <div class="flex flex-column" >
+        <div class="flex pb-4 payment-field-row">
+          <span>Тариф: </span>
+          <span class="fc-primary pl-4 fw-500">
+      <ng-container *ngIf="payment.tariff === userPaymentsTariffEnum.BASIC">
+        Базовий
+      </ng-container>
+
+      <ng-container *ngIf="payment.tariff === userPaymentsTariffEnum.STANDARD">
+         Стандартний
+      </ng-container>
+
+      <ng-container *ngIf="payment.tariff === userPaymentsTariffEnum.PREMIUM">
+        Преміум
+      </ng-container>
+
+    </span>
+        </div>
+        <div class="flex pb-4 payment-field-row">
+          <span>Вартість: </span>
+          <span class="fc-primary pl-4 fw-500">
+        {{ payment.price }} грн
+    </span>
+        </div>
+
+        <div class="flex pb-4 payment-field-row">
+          <span>Оплата за період:</span>
+          <span class="fc-primary pl-4 fw-500">
+        {{ payment.fromDate | dateFirebase }} - {{ payment.toDate  | dateFirebase }}
+      </span>
+        </div>
+
+        <div class="flex pb-4 payment-field-row">
+          <span>Коментар:</span>
+          <span class="fc-primary pl-4 fw-500">
+       {{payment.comment}}
+      </span>
+        </div>
+
+
+      </div>
+
+
+
+    </div>
+
+  </ng-container>
+
+  <div class="w-100" *ngIf="!historyPayments.length">
+    <div class="bk-card w-100  flex justify-content-center">
+      <h2 >У вас немає історії оплати</h2>
+    </div>
+
+  </div>
+
+</div>

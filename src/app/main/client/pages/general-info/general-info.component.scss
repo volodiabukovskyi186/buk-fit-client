@@ -1,0 +1,130 @@
+bk-general-info {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+
+  margin: 0;
+  padding: 0;
+height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .general-info-btn {
+    padding: 15px 20px
+  }
+
+  .general-info-container {
+    height: 100%;
+    overflow: auto;
+    background-color: #f4f4f4;
+
+    h1,
+    h2 {
+      color: #333;
+    }
+
+    section {
+      margin: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .important-note {
+      border: 2px solid red;
+      padding: 10px;
+      margin-bottom: 20px;
+
+      h2 {
+        color: red;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        background: #e7f3ff;
+        margin: 5px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      section {
+        margin: 10px;
+        padding: 15px;
+      }
+
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+      }
+
+      thead tr {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 10px;
+      }
+
+      td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+      }
+
+      td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: calc(50% - 20px);
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+      }
+
+      ul {
+        //padding-left: 20px;
+      }
+    }
+  }
+}

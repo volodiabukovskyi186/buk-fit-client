@@ -1,0 +1,54 @@
+$primary-color: #007bff;
+$secondary-color: #0056b3;
+$background-color: #f8f9fa;
+$text-color: #343a40;
+$muted-text-color: #6c757d;
+@import 'variables';
+
+bk-calculate-calories {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  height: 100%;
+  overflow: auto;
+
+  .bk-title-secondary {
+    color: $secondary-color;
+  }
+  .bk-title-primary {
+    color: $primary-color;
+  }
+
+  .valories-all-values {
+    padding: 6px;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  .calc-results {
+    padding: 4px;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.24);
+  }
+  .fc-error {
+    color: $hs-error;
+  }
+
+  .users-calories-container {
+
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px;
+
+    .users-calories-container {
+
+      padding: 10px;
+      
+    }
+  }
+}

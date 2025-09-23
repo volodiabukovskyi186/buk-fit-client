@@ -1,0 +1,50 @@
+<h2>Програма тренувань</h2>
+
+<div *ngIf="exercises?.length > 1">
+  <div hsButtonToggleGroup [value]="selectedDay" (change)="setDay($event)" class="mt-12" style="max-width: 900px;">
+    <hs-button-toggle-ui [ngClass]="{'bk-toggle-width': selectedDay == i}"  *ngFor="let program of exercises; let i = index" [value]="i">
+      <span>{{selectedDay == i ? 'День': ''}}  {{ i + 1 }}</span>
+    </hs-button-toggle-ui>
+  </div>
+
+</div>
+
+<div *ngIf="exercises?.length > 0">
+  <div class="program">
+    <div class="mb-8">
+      <h4>День {{ selectedDay + 1 }}</h4>
+    </div>
+    <div *ngFor="let exercise of exercises[selectedDay]?.exercises" class="card">
+      <div class="card-content">
+        <h2 class="pb-8">{{ exercise.exerciseName }}:</h2>
+        <p><strong class="bk-title-color">Підходи та повторення:</strong> {{ exercise.setsAndReps }}</p>
+        <p><strong class="bk-title-color">Вага:</strong> {{ exercise.weight }}</p>
+        <p><strong class="bk-title-color">Відпочинок:</strong> {{ exercise.restTime }}</p>
+        <p><strong class="bk-title-color">Коментар:</strong> <span [innerHTML]="exercise.comment | MGAutoLink"></span></p>
+        <hs-button class="mt-8" *ngIf="exercise?.videoURL" (click)="moveToVideo(exercise?.videoURL)">Відео вправи</hs-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div *ngFor="let program of exercises;  let i = index" class="program">-->
+<!--    <div class="mb-8">-->
+<!--        <h4>День {{i + 1}}</h4>-->
+<!--    </div>-->
+<!--    <div *ngFor="let exercise of program.exercises" class="card">-->
+<!--      <div class="card-content">-->
+<!--        <h2 class="pb-8">{{ exercise.exerciseName }}:</h2>-->
+<!--        <p><strong class="bk-title-color">Підходи і повторення:</strong> {{ exercise.setsAndReps }}</p>-->
+<!--        <p><strong class="bk-title-color">Вага:</strong> {{ exercise.weight }}</p>-->
+<!--        <p><strong class="bk-title-color">Відпочинок:</strong> {{ exercise.restTime }}</p>-->
+<!--        <p><strong class="bk-title-color">Коментар:</strong> <span [innerHTML]="exercise.comment | MGAutoLink"></span></p>-->
+<!--        <hs-button class="mt-8" *ngIf="exercise?.videoURL" (click)="moveToVideo(exercise?.videoURL)">Відео вправи</hs-button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<ng-container *ngIf="!exercises?.length">
+  <div class="w-100 flex justify-content-center pt-24">
+    <h4 class="fc-secondary-grey-03 ">У вас ще немає програми тренувань</h4>
+  </div>
+</ng-container>

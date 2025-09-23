@@ -1,0 +1,30 @@
+<div class="hs-card" [formGroup]="formGroup">
+
+  <h2 class="pb-12">Загальна інформація</h2>
+  <div class="flex bk-two-fields">
+    <hs-form-field class="w-100">
+      <hs-label>Імя</hs-label>
+      <input iqInput formControlName="name"/>
+      <hs-error>Поле обов`язкове</hs-error>
+    </hs-form-field>
+    <hs-form-field class="w-100">
+      <hs-label>Прізвище</hs-label>
+      <input iqInput formControlName="secondName"/>
+      <hs-error>Поле обов`язкове</hs-error>
+    </hs-form-field>
+    <hs-form-field class="w-100">
+      <hs-label>E-mail</hs-label>
+      <input iqInput formControlName="email"/>
+      <hs-error>Поле обов`язкове</hs-error>
+    </hs-form-field>
+  </div>
+
+  <div class="flex justify-content-end ">
+    <hs-button size="medium"  class="mb-18" (click)="updateUser()" [text]="'Зберегти'"></hs-button>
+  </div>
+
+  <div class="hs-splitter mb-18"></div>
+  <h2 class="pb-12">Анкетні дані</h2>
+  <app-user-survey></app-user-survey>
+
+</div>

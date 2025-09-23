@@ -1,0 +1,45 @@
+<div class="general-info-btn">
+    <div hsButtonToggleGroup [value]="selectedView" (change)="setTabView($event)" style="max-width: 600px;">
+        <hs-button-toggle-ui [value]="userInfoTabsEnum.WORKOUT_PROGRAM">
+            <span>Тренування</span>
+        </hs-button-toggle-ui>
+          <hs-button-toggle-ui [value]="userInfoTabsEnum.DIET_CALCULATION">
+              <span>Калорії</span>
+          </hs-button-toggle-ui>
+          <hs-button-toggle-ui [value]="userInfoTabsEnum.NUTRATION">
+              <span>Спортивне харчування</span>
+          </hs-button-toggle-ui>
+          <hs-button-toggle-ui [value]="userInfoTabsEnum.NUTRATION_PLAN">
+              <span>Харчування </span>
+          </hs-button-toggle-ui>
+         
+      </div>
+</div>
+
+
+
+<div class="general-info-container">
+    
+      <ng-container *ngIf="selectedView === userInfoTabsEnum.NUTRATION">
+        <app-general-info-nutrition></app-general-info-nutrition>
+    </ng-container>
+
+    <ng-container *ngIf="selectedView === userInfoTabsEnum.DIET_CALCULATION">
+        <app-general-info-diet-calculation></app-general-info-diet-calculation>
+    </ng-container>
+      <ng-container *ngIf="selectedView === userInfoTabsEnum.NUTRATION_PLAN">
+       <app-general-info-nutrition-plan></app-general-info-nutrition-plan>
+    </ng-container>
+    
+      <ng-container *ngIf="selectedView === userInfoTabsEnum.WORKOUT_PROGRAM">
+      <app-general-info-workout-program></app-general-info-workout-program>
+    </ng-container>
+    
+</div>
+
+
+
+
+
+
+

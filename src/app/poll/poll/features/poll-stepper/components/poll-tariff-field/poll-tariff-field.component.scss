@@ -1,0 +1,215 @@
+@import 'variables';
+
+app-poll-stepper-field {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  background: transparent;
+
+  /* Карта питання */
+  .poll-stepper-field {
+    padding: 20px;
+    background: $hs-neutrals-light;
+    border: 1px solid $hs-secondary-grey-01;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba($hs-black, 0.06);
+    margin-bottom: 20px;
+    animation: fadeInStep 240ms ease;
+
+    @keyframes fadeInStep {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  /* Заголовок питання */
+  .poll-stepper-question {
+    font-size: 18px;
+    line-height: 1.35;
+    font-weight: 700;
+    color: $hs-black;
+    margin-bottom: 16px;
+    letter-spacing: .2px;
+  }
+
+  /* Відповідь — преміум-радіо (картка тарифу) */
+  .poll-stepper-answers {
+    position: relative;
+    display: flex;
+    flex-direction: column;         /* вертикальна подача */
+    align-items: flex-start;        /* вирівнювання зліва */
+    gap: 0;
+
+    padding: 16px 16px 16px 52px;   /* місце під індикатор зліва */
+    background: #fff;
+    border: 1px solid $hs-secondary-grey-01;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    cursor: pointer;
+
+    color: $hs-black;
+    letter-spacing: .2px;
+
+    transition:
+      background-color .2s ease,
+      border-color .2s ease,
+      box-shadow .25s ease,
+      transform .06s ease;
+
+    .tariff-block { width: 100%; }
+
+    .tariff-title {
+      font-weight: 800;
+      font-size: 16px;
+      line-height: 1.25;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tariff-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba($hs-primary, .08);
+      color: $hs-primary;
+      border: 1px solid rgba($hs-primary, .25);
+    }
+
+    .tariff-price-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 6px;
+
+      .price-main {
+        font-size: 18px;
+        font-weight: 800;
+      }
+      .price-period {
+        font-size: 13px;
+        color: $hs-secondary-grey-03;
+      }
+    }
+
+    .tariff-subtitle {
+      font-size: 14px;
+      color: #6B7280;
+      margin-bottom: 10px;
+    }
+
+    .tariff-features {
+      margin: 0 0 10px 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        position: relative;
+        padding-left: 22px;
+        margin: 6px 0;
+        font-weight: 600;
+        font-size: 14px;
+
+        /* чек-іконка */
+        &::before {
+          content: "✓";
+          position: absolute;
+          left: 0;
+          top: 0;
+          color: $hs-primary;
+          font-weight: 800;
+        }
+      }
+    }
+
+    .tariff-note {
+      font-size: 12px;
+      color: $hs-secondary-grey-03;
+    }
+
+    /* Кільце індикатора (радіо) */
+    &::before {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 20px; /* вирівняно по заголовку */
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid $hs-secondary-grey-02;
+      box-shadow:
+        0 1px 0 rgba($hs-black, 0.06) inset,
+        0 0 0 0 rgba($hs-primary, 0);
+      transition: border-color .2s ease, box-shadow .25s ease, background .25s ease;
+    }
+
+    /* Hover */
+    &:hover {
+      background-color: $hs-secondary-blue-00;
+      border-color: $hs-secondary-blue-01;
+      box-shadow: 0 8px 20px rgba($hs-black, 0.05);
+    }
+
+    &:hover::before {
+      border-color: $hs-secondary-blue-01;
+    }
+
+    &:active { transform: scale(.995); }
+
+    /* Фокус */
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px $hs-secondary-blue-02, 0 10px 20px rgba($hs-black, 0.06);
+      border-color: $hs-primary;
+    }
+
+    /* Обраний стан */
+    &.selected {
+      background: linear-gradient(180deg, rgba($hs-primary, .06), #fff);
+      border-color: $hs-primary;
+      box-shadow: 0 10px 24px rgba($hs-primary, .18);
+    }
+
+    &.selected::before {
+      border-color: transparent;
+      background: $hs-accend-gradient;
+      box-shadow:
+        0 0 0 3px #fff inset,
+        0 0 0 6px rgba($hs-accend, .20);
+    }
+
+    /* “Рекомендовано” — легкий акцент навіть без вибору */
+    &.is-recommended {
+      border-color: rgba($hs-primary, .25);
+      background: linear-gradient(180deg, rgba($hs-primary, .04), #fff);
+    }
+
+    /* Disabled */
+    &.disabled {
+      pointer-events: none;
+      color: $text-silver;
+      background: $hs-secondary-grey-00;
+      border-color: $hs-secondary-grey-01;
+    }
+
+    &.disabled::before {
+      border-color: $hs-secondary-grey-01;
+      background: $hs-secondary-grey-00;
+    }
+  }
+
+  /* Мобайл-фест (дрібні підчистки) */
+  @media (max-width: 560px) {
+    .poll-stepper-field { padding: 14px; }
+    .poll-stepper-answers { padding: 14px 14px 14px 50px; }
+    .poll-stepper-question { font-size: 16px; margin-bottom: 12px; }
+    .poll-stepper-answers .tariff-title { font-size: 15px; }
+    .poll-stepper-answers .price-main { font-size: 17px; }
+    .poll-stepper-answers .tariff-subtitle { font-size: 13px; }
+    .poll-stepper-answers .tariff-features li { font-size: 13px; }
+  }
+}

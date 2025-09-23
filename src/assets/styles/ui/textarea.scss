@@ -1,0 +1,47 @@
+@import "variables";
+
+.bk-textarea-container {
+  position: relative;
+
+  .bk-textarea {
+    max-width: 800px;
+    resize: none;
+    display: flex;
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.25;
+    color: black;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid $hs-secondary-grey-02;
+    border-radius: 2px;
+    margin-bottom: 24px;
+
+    &::placeholder {
+      color: $hs-secondary-grey-03;
+      font-size: 14px;
+    }
+
+    &:focus {
+      border-color: #1e9ff2;
+      box-shadow: none !important;
+    }
+
+    &.bk-textarea-error {
+      border-color: red;
+      box-shadow: none !important;
+    }
+  }
+
+  .bk-textarea-error-text {
+    position: absolute;
+    left: 0;
+    bottom: -16px;
+    font-size: 12px;
+    color: red;
+    box-shadow: none !important;
+  }
+
+}
