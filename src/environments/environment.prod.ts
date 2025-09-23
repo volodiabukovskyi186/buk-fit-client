@@ -13,3 +13,4 @@ export const environment = {
   botNewRegister: '8111781384:AAF5--svXCOVJwor5gaWDTtPx8F3Oxi4vtI',
   welcomeMessageChannelID: -1002658415091,
 };
+
