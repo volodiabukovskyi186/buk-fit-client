@@ -9,10 +9,11 @@ export const environment = {
     measurementId: "G-LG246H4RLE"
   },
   botToken: '8033627783:AAFoa_Pzye9EcwK5_JbaCAuAbZbfGG8021U',
-  miniAppLink: 'https://buk-fit-client-8b56ce9cc329.herokuapp.com/',
+  miniAppLink: 'https://buk-fit.com/',
   botNewRegister: '8111781384:AAF5--svXCOVJwor5gaWDTtPx8F3Oxi4vtI',
   bukAdminLink: 'https://buk-fit-app-admin-13b24d3755d7.herokuapp.com/',
-  welcomeMessageChannelID: -1002658415091,
-  registerChatId: -1002239530822,
+  welcomeMessageChannelID: -1003045965696,
+  registerChatId: -1003052114090,
 };
+
 
