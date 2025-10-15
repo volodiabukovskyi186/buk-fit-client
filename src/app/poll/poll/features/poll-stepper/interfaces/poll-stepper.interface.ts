@@ -1,4 +1,4 @@
-type PollStepType = 'choice' | 'phone' | 'tariff';
+type PollStepType = 'choice' | 'phone' | 'tariff'| 'welcome';
 
 export interface PollStepperInterface {
   type: PollStepType;

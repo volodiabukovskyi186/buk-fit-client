@@ -10,6 +10,10 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {ActivatedRoute} from "@angular/router";
+import {
+  PollStepperWelcomeComponent
+} from "src/app/poll/poll/poll-stepper-welcome/poll-stepper-welcome.component";
 import {PollStepperService} from './services/poll-stepper.service';
 import {PollStepperFieldComponent} from './components/poll-stepper-field/poll-stepper-field.component';
 import {PollStepperInterface} from './interfaces/poll-stepper.interface';
@@ -47,6 +51,7 @@ export class PollStepperComponent {
   constructor(
     private pollStepperService: PollStepperService,
     private telegramService: TelegramService,
+    private route: ActivatedRoute,
   ) {
     effect(
       () => {
@@ -85,7 +90,7 @@ export class PollStepperComponent {
 
     if (idx === steps.length - 1) {
       const text = this.buildSurveyResultMessage();
-      console.log('Результат опитування:', steps, text);
+      this.clearStep();
       this.sendToTelegram(text)
 
       this.isCompleted = true; // ✅ показуємо екран подяки
@@ -106,7 +111,10 @@ export class PollStepperComponent {
           this.completeRegFired = true;
         }
 
-        this.isCompleted = true; // показуємо екран подяки лише після успіху
+        this.isCompleted = true;
+        const type = this.route.snapshot.queryParams['type'] ?? 'TRAINING_HOME';
+        window.open(`https://t.me/buk_fit_chat_bot?start=${type}`, '_blank');
+
         // за бажанням: this.router.navigate(['/thank-you']);
       },
       error: (err) => {
@@ -155,6 +163,9 @@ export class PollStepperComponent {
 
     let componentType: Type<any>;
     switch (field.type) {
+      case 'welcome':
+        componentType = PollStepperWelcomeComponent;
+        break;
       case 'phone':
         componentType = PollStepperTextFieldComponent;
         break;

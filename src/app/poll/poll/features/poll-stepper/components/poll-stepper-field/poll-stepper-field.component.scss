@@ -106,10 +106,10 @@ app-poll-stepper-field {
 
     &.selected::before {
       border-color: transparent;
-      background: $hs-accend-gradient;
+      background:  $hs-primary;
       box-shadow:
         0 0 0 3px #fff inset,
-        0 0 0 6px rgba($hs-accend, .20);
+        0 0 0 6px rgba($hs-primary, .20);
     }
 
     &.selected::after {

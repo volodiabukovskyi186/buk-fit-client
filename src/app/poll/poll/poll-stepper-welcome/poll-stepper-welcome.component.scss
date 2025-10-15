@@ -1,0 +1,123 @@
+@import '../../../../assets/styles/variables';
+
+app-poll-stepper-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 64px 24px;
+  background: linear-gradient(180deg, #fdfdfd 0%, #f7f9fb 100%);
+  text-align: center;
+
+  .poll-stepper-field {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 48px 32px;
+    box-shadow:
+      0 8px 32px rgba($hs-black, 0.04),
+      0 0 0 1px rgba($hs-primary, 0.04);
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    animation: fadeInStep 400ms ease;
+    transition: all 0.3s ease;
+
+    @keyframes fadeInStep {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .poll-stepper-title {
+    color: $hs-primary;
+    font-size: clamp(24px, 5vw, 34px);
+    font-weight: 800;
+    line-height: 1.25;
+
+    margin-bottom: 20px;
+    letter-spacing: 0.3px;
+
+  }
+
+  .poll-stepper-sub {
+    color: $hs-primary-dark;
+    font-weight: 800;
+    //background: linear-gradient(90deg, #0066ff, #0099ff);
+    //-webkit-background-clip: text;
+    //-webkit-text-fill-color: transparent;
+    font-size: 18px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    display: flex;
+  }
+
+
+  .poll-stepper-subtitle {
+    font-size: clamp(15px, 4vw, 18px);
+    line-height: 1.6;
+    color: rgba($hs-black, 0.8);
+    max-width: 480px;
+    margin: 0 auto 36px;
+  }
+
+  button.primary {
+    width: 100%;
+    max-width: 280px;
+    height: 54px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.3px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(90deg, #007aff, #0a84ff);
+    color: #fff;
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 18px rgba(0, 122, 255, 0.25);
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0, 122, 255, 0.35);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    &:disabled {
+      background: #d8dce2;
+      color: #fff;
+      cursor: not-allowed;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 48px 16px;
+
+    .poll-stepper-field {
+      padding: 36px 20px;
+      border-radius: 20px;
+    }
+
+    .poll-stepper-title {
+      margin-bottom: 16px;
+    }
+
+    .poll-stepper-subtitle {
+      margin-bottom: 28px;
+    }
+
+    button.primary {
+      height: 50px;
+      font-size: 15px;
+      max-width: 240px;
+    }
+  }
+}

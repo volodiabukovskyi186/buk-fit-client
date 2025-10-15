@@ -1,3 +1,9 @@
 <div>
-<app-poll-stepper></app-poll-stepper>
+
+  @if (isStarted) {
+    <app-poll-stepper></app-poll-stepper>
+  } @else {
+    <app-poll-stepper-welcome (start)="startGuide()"></app-poll-stepper-welcome>
+  }
+
 </div>
