@@ -18,47 +18,55 @@ export class PollStepperTextFieldComponent {
 
   touched = false;
   isSave = false;
-  displayValue = ''; // те, що бачить юзер (формат ХХ ХХХ ХХ ХХ)
-  get isValid(): boolean { return this.validate(this.field?.value ?? ''); }
-  phone
+  displayValue = '';
+  selectedMessenger: 'telegram' | 'viber' | null = null;
+  phone = '';
+
   constructor(private pollStepperService: PollStepperService) {}
 
-  onInput(e: Event) {
-    const raw = (e.target as HTMLInputElement).value;
-    // лишаємо тільки цифри
-    const digits = raw.replace(/\D+/g, '');
-
-    // Якщо ввели з 0 на початку (місцевий формат), зріжемо його
-    // і збережемо лише 9 цифр абонентської частини
-    const abonent = digits.replace(/^0/, '').slice(0, 9);
-
-    // Зберігаємо у стейт нормалізовано як +380XXXXXXXXX
-    const normalized = abonent.length ? `+380${abonent}` : '';
-
-    this.phone = normalized;
-    this.pollStepperService.updateValue(this.field.fieldName, normalized, this.selectedMessenger);
-
-    // Відображення у полі: ХХ ХХХ ХХ ХХ
-    this.displayValue = this.pretty(abonent);
+  /** Перевірка валідності */
+  get isValid(): boolean {
+    return this.validate(this.field?.value ?? '');
   }
 
-  selectedMessenger: 'telegram' | 'viber' | null = null;
+  /** Автопідстановка +380 при фокусі */
+  onFocus(e: Event) {
+    const input = e.target as HTMLInputElement;
+    if (!input.value.trim()) {
+      input.value = '+380';
+      this.displayValue = '+380';
+    }
+  }
 
+  /** Обробка вводу */
+  onInput(e: Event) {
+    const input = e.target as HTMLInputElement;
+    let raw = input.value;
+
+    // автоматично додаємо "+" якщо стерли
+    if (!raw.startsWith('+')) {
+      raw = '+' + raw.replace(/\D+/g, '');
+    }
+
+    // лишаємо тільки "+" і цифри
+    const cleaned = raw.replace(/(?!^\+)\D+/g, '');
+
+    // обмежуємо довжину (мінімум 6, максимум 15 цифр)
+    const limited = cleaned.replace(/^(\+\d{0,15}).*$/, '$1');
+
+    this.phone = limited;
+    this.displayValue = limited;
+
+    this.pollStepperService.updateValue(this.field.fieldName, limited, this.selectedMessenger);
+  }
+
+  /** Вибір месенджера */
   selectMessenger(type: 'telegram' | 'viber') {
     this.selectedMessenger = type;
-
-    this.pollStepperService.updateValue(this.field.fieldName,  this.phone, this.selectedMessenger);
+    this.pollStepperService.updateValue(this.field.fieldName, this.phone, this.selectedMessenger);
   }
 
-  submitIfValid() {
-    // this.touched = true;
-    // if (this.isValid) {
-    //   // тут можна авто-перехід на наступний крок
-    //   // наприклад:
-    //   this.pollStepperService.nextStep();
-    // }
-  }
-
+  /** Збереження телефону */
   savePhone(): void {
     this.touched = true;
     this.isSave = true;
@@ -67,25 +75,14 @@ export class PollStepperTextFieldComponent {
     }
   }
 
-  /** +380XXXXXXXXX */
+  /** Валідатор: + і 6–15 цифр */
   private validate(value: string): boolean {
-    return /^\+380\d{9}$/.test(value);
+    return /^\+\d{6,15}$/.test(value);
   }
 
-  /** Формат показу: ХХ ХХХ ХХ ХХ */
-  private pretty(abonent: string): string {
-    // групи: 2-3-2-2
-    const g1 = abonent.slice(0, 2);
-    const g2 = abonent.slice(2, 5);
-    const g3 = abonent.slice(5, 7);
-    const g4 = abonent.slice(7, 9);
-    return [g1, g2, g3, g4].filter(Boolean).join(' ');
-  }
-
+  /** Ініціалізація */
   ngOnInit() {
-    // якщо в полі вже є value — підставимо у відображення
     const val = this.field?.value ?? '';
-    const abonent = val.replace(/^\+?380/, '').replace(/\D+/g, '').slice(0, 9);
-    this.displayValue = this.pretty(abonent);
+    this.displayValue = val || '+380';
   }
 }
