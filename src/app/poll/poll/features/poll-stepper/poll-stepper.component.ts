@@ -206,7 +206,7 @@ export class PollStepperComponent implements   AfterViewInit {
 
         return `${index + 1}. <b>${step.question}</b>\n   ${answerText} \n ${messanger}`;
       })
-      .join('\n\n');
+      .join('\n');
 
     return header + body;
   }
