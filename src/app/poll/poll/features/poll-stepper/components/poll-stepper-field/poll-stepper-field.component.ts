@@ -24,5 +24,6 @@ export class PollStepperFieldComponent {
     this.field.selectedAnswer = answerValue;
 
     this.pollStepperService.selectAnswer(this.field.fieldName, answerValue);
+    this.pollStepperService.nextStep();
   }
 }

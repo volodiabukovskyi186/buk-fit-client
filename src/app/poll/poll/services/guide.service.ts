@@ -112,14 +112,7 @@ export class GuideService {
         value: '',
         valueMessenger: '',
       },
-      {
-        type: 'phone',
-        fieldName: 'phone',
-        question: 'Введіть свій номер телефону, щоб отримати чек-лист 📲',
-        required: true,
-        value: '',
-        valueMessenger: '',
-      },
+
     ];
   }
 

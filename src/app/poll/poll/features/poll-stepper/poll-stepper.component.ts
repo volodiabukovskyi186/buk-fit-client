@@ -1,3 +1,4 @@
+import {AfterViewInit} from "@angular/core";
 import {
   Component,
   ComponentRef,
@@ -35,13 +36,14 @@ declare global {
   styleUrl: './poll-stepper.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class PollStepperComponent {
+export class PollStepperComponent implements   AfterViewInit {
   @ViewChild('stepContainer', {read: ViewContainerRef, static: true})
   private stepContainer!: ViewContainerRef;
   private completeRegFired = false;
   private destroyRef = inject(DestroyRef);
   protected stepperState = this.pollStepperService.getState();
   protected currentStepIndex = this.pollStepperService.getCurrentIndex();
+  protected isFinish = this.pollStepperService.getIsFinish();
 
   protected isCompleted = false; // ✅ прапорець завершення форми
 
@@ -57,6 +59,7 @@ export class PollStepperComponent {
       () => {
         const steps = this.stepperState();
         const idx = this.currentStepIndex();
+        const isFinish = this.isFinish();
 
         if (!steps?.length) {
           this.clearStep();
@@ -66,6 +69,15 @@ export class PollStepperComponent {
         // Якщо форма завершена — не рендеримо питання
         if (this.isCompleted) {
           this.clearStep();
+          return;
+        }
+
+        if (isFinish) {
+          const text = this.buildSurveyResultMessage();
+          // this.clearStep();
+          this.sendToTelegram(text)
+
+          // this.isCompleted = true;
           return;
         }
 
@@ -100,7 +112,35 @@ export class PollStepperComponent {
     this.pollStepperService.nextStep();
   }
 
-  private sendToTelegram(message): void {
+  private sendToTelegram(message: string): void {
+    const type = this.route.snapshot.queryParams['type'] ?? 'TRAINING_HOME';
+    const telegramUrl = `https://t.me/buk_fit_chat_bot?start=ZGw6Mjk1NTA3`;
+
+    // 1️⃣ Створюємо "невидиме" посилання, якщо його ще нема
+    let link = document.querySelector(`a.ss-btn[href="${telegramUrl}"]`) as HTMLAnchorElement;
+    if (!link) {
+      link = document.createElement('a');
+      link.href = telegramUrl;
+      link.classList.add('ss-btn');
+      link.style.display = 'none';
+      document.body.appendChild(link);
+    }
+
+    const phone:PollStepperInterface =  this.stepperState().find(a => a.type === 'phone');
+
+    const ssContext = {
+      variables: {
+        utm_source: new URLSearchParams(window.location.search).get('utm_source'),
+        utm_medium: new URLSearchParams(window.location.search).get('utm_medium'),
+        utm_campaign: new URLSearchParams(window.location.search).get('utm_campaign'),
+        utm_content: new URLSearchParams(window.location.search).get('utm_content'),
+        startParameter: new URLSearchParams(window.location.search).get('type'),
+        phoneParameter: phone.value,
+      },
+    };
+
+
+
     this.telegramService.sendPollResult(message).subscribe({
       next: (result) => {
         console.log('Telegram OK', result);
@@ -112,17 +152,30 @@ export class PollStepperComponent {
         }
 
         this.isCompleted = true;
-        const type = this.route.snapshot.queryParams['type'] ?? 'TRAINING_HOME';
-        window.open(`https://t.me/buk_fit_chat_bot?start=${type}`, '_blank');
 
-        // за бажанням: this.router.navigate(['/thank-you']);
+        const ssDeepLinkFn = (window as any).ssDeepLink;
+        if (ssDeepLinkFn) {
+          ssDeepLinkFn('ss-btn', 'bukfit', false, ssContext);
+
+
+          setTimeout(() => {
+            link.click();
+          }, 500);
+        } else {
+          console.warn('⚠️ SmartSender не завантажений — відкриваємо напряму');
+          window.open(telegramUrl, '_blank');
+        }
+
+
       },
       error: (err) => {
-        console.error('Telegram ERROR', err);
-        // тут можна показати повідомлення і не завершувати форму
+
       }
     });
+
   }
+
+
 
   goToPreviousStep(): void {
     this.pollStepperService.prevStep();
@@ -140,6 +193,7 @@ export class PollStepperComponent {
 
         if (step.type === 'choice') {
           const selected = step.answers?.find(a => a.value === step.selectedAnswer);
+
           answerText = selected ? selected.title : '(не вибрано)';
         } else if (step.type === 'phone') {
           answerText = step.value || '(не вказано)';
@@ -215,4 +269,74 @@ export class PollStepperComponent {
 
     return Math.min(100, firstStepWeight + afterFirst * perStep);
   }
+
+
+
+  ngAfterViewInit(): void {
+    // 1️⃣ Підключаємо зовнішній скрипт SmartSender (якщо ще не підключений)
+    const existing = document.querySelector('script[src="https://customer.smartsender.eu/js/client/dl.js"]');
+    if (!existing) {
+      const script = document.createElement('script');
+      script.src = 'https://customer.smartsender.eu/js/client/dl.js';
+      script.async = true;
+      document.body.appendChild(script);
+
+      // коли скрипт завантажиться — виконаємо ініціалізацію
+      script.onload = () => this.initSmartSender();
+    } else {
+      this.initSmartSender();
+    }
+  }
+
+  private initSmartSender(): void {
+    // 2️⃣ Знаходимо посилання
+    const links = document.querySelectorAll('a');
+    if (links) {
+      for (const link of Array.from(links)) {
+        if (
+          link.href.includes('tg://resolve') ||
+          link.href.includes('https://t.me/') ||
+          link.href.includes('https://direct.smartsender.com/redirect') ||
+          link.href.includes('viber://pa') ||
+          link.href.includes('https://vk.com/app') ||
+          link.href.includes('vk://vk.com/app') ||
+          link.href.includes('https://m.me') ||
+          link.href.includes('https://wa.me') ||
+          link.href.includes('whatsapp://send')
+        ) {
+          link.classList.add('ss-btn');
+        }
+      }
+    }
+
+    // 3️⃣ Отримуємо параметри з URL
+    const getUrlParam = (param: string): string | null => {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    };
+
+    const ssContext = {
+      variables: {
+        utm_source: getUrlParam('utm_source'),
+        utm_medium: getUrlParam('utm_medium'),
+        utm_campaign: getUrlParam('utm_campaign'),
+        utm_content: getUrlParam('utm_content'),
+        W_chanel: getUrlParam('W_chanel'),
+      },
+    };
+
+    console.log('SmartSender context:', ssContext);
+
+    // 4️⃣ Викликаємо ssDeepLink (переконуємось, що функція вже є в window)
+    const ssDeepLinkFn = (window as any).ssDeepLink;
+    if (ssDeepLinkFn) {
+      ssDeepLinkFn('ss-btn', 'bukfit', false, ssContext);
+      console.log('✅ SmartSender DeepLink initialized');
+    } else {
+      console.warn('⚠️ SmartSender script not loaded yet');
+    }
+  }
+
+
+
 }

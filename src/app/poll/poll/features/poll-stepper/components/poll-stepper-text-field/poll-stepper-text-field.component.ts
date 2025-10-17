@@ -1,4 +1,5 @@
 // components/poll-stepper-phone-field/poll-stepper-phone-field.component.ts
+import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { PollStepperInterface } from '../../interfaces/poll-stepper.interface';
 import { PollStepperService } from '../../services/poll-stepper.service';
@@ -16,6 +17,7 @@ export class PollStepperTextFieldComponent {
   @Input() field!: PollStepperInterface;
 
   touched = false;
+  isSave = false;
   displayValue = ''; // те, що бачить юзер (формат ХХ ХХХ ХХ ХХ)
   get isValid(): boolean { return this.validate(this.field?.value ?? ''); }
   phone
@@ -49,11 +51,19 @@ export class PollStepperTextFieldComponent {
   }
 
   submitIfValid() {
+    // this.touched = true;
+    // if (this.isValid) {
+    //   // тут можна авто-перехід на наступний крок
+    //   // наприклад:
+    //   this.pollStepperService.nextStep();
+    // }
+  }
+
+  savePhone(): void {
     this.touched = true;
-    if (this.isValid) {
-      // тут можна авто-перехід на наступний крок
-      // наприклад:
-      // this.pollStepperService.nextStep();
+    this.isSave = true;
+    if (this.isValid && this.selectedMessenger) {
+      this.pollStepperService.setFinish();
     }
   }
 

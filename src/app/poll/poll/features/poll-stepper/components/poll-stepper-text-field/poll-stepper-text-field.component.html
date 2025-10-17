@@ -11,9 +11,9 @@
       [value]="displayValue"
       (input)="onInput($event)"
       (blur)="touched = true"
-      (keydown.enter)="submitIfValid()"
       aria-label="Номер телефону"
     />
+<!--    (keydown.enter)="submitIfValid()"-->
   </label>
 
   <div class="hint">
@@ -24,22 +24,32 @@
     Невірний номер. Перевір, будь ласка.
   </div>
 
-  <!-- Новий блок для вибору месенджера -->
+
   <div class="messenger-select">
     <p class="poll-stepper-question">Обери зручний месенджер для зв’язку:</p>
-    <button
-      type="button"
-      class="messenger-option"
-      [class.selected]="selectedMessenger === 'telegram'"
-      (click)="selectMessenger('telegram')">
-      <img style="width: 35px; height: 35px" src="assets/icons/telegram.webp" alt="Telegram" /> Telegram
-    </button>
-    <button
-      type="button"
-      class="messenger-option"
-      [class.selected]="selectedMessenger === 'viber'"
-      (click)="selectMessenger('viber')">
-      <img src="assets/icons/viber.png" alt="Viber" /> Viber
-    </button>
+
+    <div class="flex poll-stepper-question-buttons">
+      <button
+        type="button"
+        class="messenger-option"
+        [class.selected]="selectedMessenger === 'telegram'"
+        (click)="selectMessenger('telegram')">
+        <img style="width: 35px; height: 35px" src="assets/icons/telegram.webp" alt="Telegram" /> Telegram
+      </button>
+      <button
+        type="button"
+        class="messenger-option"
+        [class.selected]="selectedMessenger === 'viber'"
+        (click)="selectMessenger('viber')">
+        <img src="assets/icons/viber.png" alt="Viber" /> Viber
+      </button>
+    </div>
+    <div class="error" *ngIf="!selectedMessenger && isSave">
+      Оберіть тип комунікації, будь ласка.
+    </div>
+
+    <div class="flex justify-content-end w-100">
+      <button class="primary-phone mt-16" (click)="savePhone()">Перейти до чек-листа</button>
+    </div>
   </div>
 </div>

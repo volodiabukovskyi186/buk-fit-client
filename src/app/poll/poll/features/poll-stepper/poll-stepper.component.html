@@ -1,3 +1,4 @@
+<!--<a href="https://t.me/buk_fit_chat_bot?start=ZGw6Mjk1NTA3" class="ss-btn" >Перейти в бот</a>-->
 <div class="poll-app">
   <header class="app-header" *ngIf="!isCompleted">
     <div class="brand">
@@ -13,21 +14,21 @@
   <div class="poll-stepper-container">
     <div #stepContainer [hidden]="isCompleted" ></div>
 
-    <div *ngIf="isCompleted" class="poll-stepper-field-container thankyou">
-      <p class="poll-stepper-question">
-        Дякуємо, що залишили заявку! Ви на правильному шляху, і зовсім скоро вас чекають великі зміни 💪🔥
-        Наш менеджер найближчим часом зв’яжеться з вами 📲
-      </p>
-    </div>
+<!--    <div *ngIf="isCompleted" class="poll-stepper-field-container thankyou">-->
+<!--      <p class="poll-stepper-question">-->
+<!--        Дякуємо, що залишили заявку! Ви на правильному шляху, і зовсім скоро вас чекають великі зміни 💪🔥-->
+<!--        Наш менеджер найближчим часом зв’яжеться з вами 📲-->
+<!--      </p>-->
+<!--    </div>-->
   </div>
 
-  <nav class="poll-stepper-navigation" *ngIf="!isCompleted">
-    <button class="ghost" (click)="goToPreviousStep()" [disabled]="currentStepIndex() === 0">Назад</button>
-    <div class="steps-indicator" aria-label="кроки">
-      <span *ngFor="let step of stepperState(); let i = index" [class.active]="i === currentStepIndex()"></span>
-    </div>
-    <button class="primary" (click)="goToNextStep()">
-      {{ currentStepIndex() === stepperState().length - 1 ? 'Завершити' : 'Далі' }}
-    </button>
-  </nav>
+<!--  <nav class="poll-stepper-navigation" *ngIf="!isCompleted">-->
+<!--    <button class="ghost" (click)="goToPreviousStep()" [disabled]="currentStepIndex() === 0">Назад</button>-->
+<!--    <div class="steps-indicator" aria-label="кроки">-->
+<!--      <span *ngFor="let step of stepperState(); let i = index" [class.active]="i === currentStepIndex()"></span>-->
+<!--    </div>-->
+<!--    <button class="primary" (click)="goToNextStep()">-->
+<!--      {{ currentStepIndex() === stepperState().length - 1 ? 'Завершити' : 'Далі' }}-->
+<!--    </button>-->
+<!--  </nav>-->
 </div>

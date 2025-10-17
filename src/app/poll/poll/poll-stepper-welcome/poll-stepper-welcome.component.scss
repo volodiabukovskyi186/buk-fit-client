@@ -4,7 +4,7 @@ app-poll-stepper-welcome {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  //justify-content: center;
   min-height: 100vh;
   padding: 64px 24px;
   background: linear-gradient(180deg, #fdfdfd 0%, #f7f9fb 100%);
@@ -46,6 +46,14 @@ app-poll-stepper-welcome {
 
   }
 
+
+  .buk-fit-logo {
+    font-size: 72px;
+    color: $hs-primary;
+    margin-bottom: 48px;
+    border-bottom: 1px solid $hs-primary;
+  }
+
   .poll-stepper-sub {
     color: $hs-primary-dark;
     font-weight: 800;
@@ -54,7 +62,7 @@ app-poll-stepper-welcome {
     //-webkit-text-fill-color: transparent;
     font-size: 18px;
     padding-top: 12px;
-    padding-bottom: 12px;
+    padding-bottom: 16px;
     display: flex;
   }
 

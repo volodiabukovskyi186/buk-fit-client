@@ -5,7 +5,7 @@ import { PollStepperInterface } from '../interfaces/poll-stepper.interface';
 export class PollStepperService {
   private stepperState = signal<PollStepperInterface[]>([]);
   private currentIndex = signal<number>(0);
-
+  private isFinish = signal<boolean>(false);
   // Опціонально: прогрес у % (зручно для прогресбару)
   readonly progressPct = computed(() => {
     const total = this.stepperState().length || 1;
@@ -17,11 +17,16 @@ export class PollStepperService {
   /** Signals getters */
   getState(): Signal<PollStepperInterface[]> { return this.stepperState; }
   getCurrentIndex(): Signal<number> { return this.currentIndex; }
+  getIsFinish(): Signal<boolean> { return this.isFinish; }
 
   /** Ініціалізація/заміна списку кроків */
   setStepper(stepper: PollStepperInterface[]): void {
     this.stepperState.set(stepper ?? []);
     this.currentIndex.set(0);
+  }
+
+  setFinish(): void {
+    this.isFinish.set(true);
   }
 
   /** Безпечні переходи між кроками */

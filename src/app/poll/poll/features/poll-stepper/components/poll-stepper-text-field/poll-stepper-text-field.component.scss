@@ -92,7 +92,12 @@ app-poll-stepper-text-field {
   .messenger-select {
     margin-top: 16px;
     display: flex;
-    gap: 12px;
+    flex-direction: column;
+
+    .poll-stepper-question-buttons {
+      display: flex;
+      gap: 12px;
+    }
 
     .messenger-option {
       flex: 1;
@@ -123,6 +128,37 @@ app-poll-stepper-text-field {
         border-color: $hs-primary;
         background: rgba($hs-primary, 0.05);
       }
+    }
+  }
+
+  button.primary-phone {
+    width: 100%;
+    max-width: 220px;
+    height: 42px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(90deg, #007aff, #0a84ff);
+    color: #fff;
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 18px rgba(0, 122, 255, 0.25);
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0, 122, 255, 0.35);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    &:disabled {
+      background: #d8dce2;
+      color: #fff;
+      cursor: not-allowed;
     }
   }
 }

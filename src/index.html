@@ -1,18 +1,6 @@
 
 <html lang="en">
 <head>
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '694296816987644');
-    fbq('track', 'PageView');
-  </script>
   <noscript><img height="1" width="1" style="display:none"
                  src="https://www.facebook.com/tr?id=694296816987644&ev=PageView&noscript=1"
   /></noscript>
@@ -29,13 +17,87 @@
 
 </head>
 <body>
+
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://secure.wayforpay.com/server/pay-widget.js"></script>
-
-<!-- Meta Pixel Code -->
-
-<!-- End Meta Pixel Code -->
-
+<!--<a href="https://t.me/buk_fit_chat_bot?start=ZGw6Mjk1NTA3" class="ss-btn" >Перейти в бот</a>-->
   <app-root></app-root>
+
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '694296816987644');
+  fbq('track', 'PageView');
+</script>
+
+
+
+<script src="https://customer.smartsender.eu/js/client/dl.js"></script>
+
+<!--<script>-->
+<!--  const links = document.querySelectorAll('a');-->
+
+<!--  if( links ) {-->
+<!--    for( const link of links ) {-->
+<!--      if (-->
+<!--        link.href.includes("tg://resolve") ||-->
+<!--        link.href.includes("https://t.me/") ||-->
+<!--        link.href.includes("https://direct.smartsender.com/redirect") ||-->
+<!--        link.href.includes("viber://pa") ||-->
+<!--        link.href.includes("https://vk.com/app") ||-->
+<!--        link.href.includes("vk://vk.com/app") ||-->
+<!--        link.href.includes("https://m.me") ||-->
+<!--        link.href.includes("https://wa.me") ||-->
+<!--        link.href.includes("whatsapp://send")-->
+<!--      ) {-->
+<!--        link.classList.add('ss-btn');-->
+<!--      }-->
+<!--    }-->
+<!--  }-->
+<!--</script>-->
+
+<!--<script>-->
+<!--  /**-->
+<!--   * Returns string with URL param value.-->
+<!--   *-->
+<!--   * @param {String} param [The Param in URL].-->
+<!--   * @return {String} paramValue [Value that we search in param].-->
+<!--   */-->
+<!--  const getUrlParam = function( param ) {-->
+<!--    if ( ! param ) return;-->
+
+<!--    const queryString = window.location.search;-->
+<!--    const urlParams = new URLSearchParams( queryString );-->
+<!--    const paramValue = urlParams.get(param);-->
+
+<!--    // console.log(paramValue);-->
+<!--    return paramValue;-->
+<!--  };-->
+
+
+<!--  // ssDeepLink params-->
+<!--  const ssContext = {-->
+<!--    variables: {-->
+<!--      utm_source: getUrlParam('utm_source'), // получит параметр "utm_source" из ссылки-->
+<!--      utm_medium: getUrlParam('utm_medium'), // получит параметр "utm_medium" из ссылки-->
+<!--      utm_campaign: getUrlParam('utm_campaign'), // получит параметр "utm_campaign" из ссылки-->
+<!--      utm_content: getUrlParam('utm_content'), // получит параметр "utm_content" из ссылки-->
+<!--      W_chanel: getUrlParam('W_chanel'), // получит параметр "W_chanel" из ссылки-->
+<!--    }-->
+<!--  };-->
+<!--  console.log(ssContext);-->
+
+
+<!--  ssDeepLink('ss-btn', 'bukfit', false, ssContext);-->
+
+
+<!--</script>-->
+
 </body>
 </html>
