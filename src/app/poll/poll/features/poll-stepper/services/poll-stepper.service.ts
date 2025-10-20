@@ -54,7 +54,7 @@ export class PollStepperService {
   }
 
   updateValue(fieldName: string, value: string, valueMessenger): void {
-    console.log(valueMessenger)
+
     this.stepperState.update(list =>
       list.map(item => item.fieldName === fieldName ? { ...item, value, valueMessenger } : item)
     );

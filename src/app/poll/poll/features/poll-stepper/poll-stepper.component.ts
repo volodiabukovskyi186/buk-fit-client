@@ -208,7 +208,11 @@ export class PollStepperComponent implements   AfterViewInit {
       })
       .join('\n');
 
-    return header + body;
+    const typeQueryValue = this.route?.snapshot?.queryParams['type'];
+
+    const type = `\n\nТип форми: ${typeQueryValue?typeQueryValue: '(не вказано) '}`
+
+    return header + body +type;
   }
 
 

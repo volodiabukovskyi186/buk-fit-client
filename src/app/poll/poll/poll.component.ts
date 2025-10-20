@@ -26,7 +26,6 @@ export class PollComponent implements OnInit {
 
       if (this.isFormCompleted(state)) {
         const result = this.buildSurveyResultMessage(state);
-        console.log('Результат:', result);
       }
     });
   }

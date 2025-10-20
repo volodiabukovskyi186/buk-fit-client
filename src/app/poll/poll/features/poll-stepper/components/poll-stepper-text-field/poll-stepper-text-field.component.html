@@ -6,6 +6,8 @@
       type="tel"
       inputmode="tel"
       placeholder="+380"
+      [mask]="phoneMask"
+      [dropSpecialCharacters]="false"
       [value]="displayValue"
       (focus)="onFocus($event)"
       (input)="onInput($event)"
@@ -15,7 +17,8 @@
   </label>
 
   <div class="hint">
-    Введи номер у міжнародному форматі <strong>+380 ХХ ХХХ ХХ ХХ</strong> або будь-якої країни 🌍
+    Введи номер у міжнародному форматі
+    <strong>+380 ХХ ХХХ ХХ ХХ</strong> або будь-якої країни 🌍
   </div>
 
   <div class="error" *ngIf="touched && !isValid">
@@ -32,7 +35,12 @@
         [class.selected]="selectedMessenger === 'telegram'"
         (click)="selectMessenger('telegram')"
       >
-        <img style="width: 35px; height: 35px" src="assets/icons/telegram.webp" alt="Telegram" />
+        <img
+          src="assets/icons/telegram.webp"
+          alt="Telegram"
+          width="35"
+          height="35"
+        />
         Telegram
       </button>
 
@@ -42,7 +50,7 @@
         [class.selected]="selectedMessenger === 'viber'"
         (click)="selectMessenger('viber')"
       >
-        <img src="assets/icons/viber.png" alt="Viber" />
+        <img src="assets/icons/viber.png" alt="Viber" width="35" height="35" />
         Viber
       </button>
     </div>
@@ -52,7 +60,9 @@
     </div>
 
     <div class="flex justify-content-end w-100">
-      <button class="primary-phone mt-16" (click)="savePhone()">Перейти до чек-листа</button>
+      <button class="primary-phone mt-16" (click)="savePhone()">
+        Перейти до чек-листа
+      </button>
     </div>
   </div>
 </div>

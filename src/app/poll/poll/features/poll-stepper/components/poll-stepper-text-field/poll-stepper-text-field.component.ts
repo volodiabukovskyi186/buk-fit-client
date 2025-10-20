@@ -1,88 +1,106 @@
-// components/poll-stepper-phone-field/poll-stepper-phone-field.component.ts
-import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { PollStepperInterface } from '../../interfaces/poll-stepper.interface';
 import { PollStepperService } from '../../services/poll-stepper.service';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-poll-stepper-text-field',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, NgxMaskDirective],
   templateUrl: './poll-stepper-text-field.component.html',
-  styleUrl: './poll-stepper-text-field.component.scss',
+  styleUrls: ['./poll-stepper-text-field.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  providers: [provideNgxMask()],
 })
 export class PollStepperTextFieldComponent {
   @Input() field!: PollStepperInterface;
 
+  /** Стан введення */
   touched = false;
   isSave = false;
+
+  /** Значення телефону */
   displayValue = '';
-  selectedMessenger: 'telegram' | 'viber' | null = null;
   phone = '';
+
+  /** Маска для номера (міжнародна) */
+  phoneMask = '+000 00 000 00 00';
+
+  /** Вибраний месенджер */
+  selectedMessenger: 'telegram' | 'viber' | null = null;
 
   constructor(private pollStepperService: PollStepperService) {}
 
-  /** Перевірка валідності */
+  /** Геттер валідності */
   get isValid(): boolean {
-    return this.validate(this.field?.value ?? '');
+    return this.validate(this.phone);
   }
 
-  /** Автопідстановка +380 при фокусі */
-  onFocus(e: Event) {
+  /** Коли фокусуємо поле — підставляємо +380 */
+  onFocus(e: Event): void {
     const input = e.target as HTMLInputElement;
+
     if (!input.value.trim()) {
       input.value = '+380';
       this.displayValue = '+380';
     }
+
+    // 🟢 Після автопідстановки переміщуємо курсор у кінець
+    const len = input.value.length;
+    setTimeout(() => {
+      input.setSelectionRange(len, len);
+    }, 100);
   }
 
   /** Обробка вводу */
-  onInput(e: Event) {
+  onInput(e: Event): void {
     const input = e.target as HTMLInputElement;
-    let raw = input.value;
 
-    // автоматично додаємо "+" якщо стерли
-    if (!raw.startsWith('+')) {
-      raw = '+' + raw.replace(/\D+/g, '');
-    }
+    // видаляємо пробіли (які додає маска)
+    const cleaned = input.value.replace(/\s+/g, '');
 
-    // лишаємо тільки "+" і цифри
-    const cleaned = raw.replace(/(?!^\+)\D+/g, '');
+    // оновлюємо локальні змінні
+    this.phone = cleaned;
+    this.displayValue = input.value;
 
-    // обмежуємо довжину (мінімум 6, максимум 15 цифр)
-    const limited = cleaned.replace(/^(\+\d{0,15}).*$/, '$1');
-
-    this.phone = limited;
-    this.displayValue = limited;
-
-    this.pollStepperService.updateValue(this.field.fieldName, limited, this.selectedMessenger);
+    // передаємо у сервіс для збереження
+    this.pollStepperService.updateValue(
+      this.field.fieldName,
+      cleaned,
+      this.selectedMessenger
+    );
   }
 
   /** Вибір месенджера */
-  selectMessenger(type: 'telegram' | 'viber') {
+  selectMessenger(type: 'telegram' | 'viber'): void {
     this.selectedMessenger = type;
-    this.pollStepperService.updateValue(this.field.fieldName, this.phone, this.selectedMessenger);
+    this.pollStepperService.updateValue(
+      this.field.fieldName,
+      this.phone,
+      this.selectedMessenger
+    );
   }
 
-  /** Збереження телефону */
+  /** Збереження телефону (при кліку на кнопку) */
   savePhone(): void {
     this.touched = true;
     this.isSave = true;
+
     if (this.isValid && this.selectedMessenger) {
       this.pollStepperService.setFinish();
     }
   }
 
-  /** Валідатор: + і 6–15 цифр */
+  /** Валідатор формату: + і 6–15 цифр */
   private validate(value: string): boolean {
     return /^\+\d{6,15}$/.test(value);
   }
 
-  /** Ініціалізація */
-  ngOnInit() {
+  /** Ініціалізація початкового стану */
+  ngOnInit(): void {
     const val = this.field?.value ?? '';
     this.displayValue = val || '+380';
+    this.phone = this.displayValue;
   }
 }
