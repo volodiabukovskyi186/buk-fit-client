@@ -140,6 +140,8 @@ export class PollStepperComponent implements   AfterViewInit {
     };
 
 
+    this.isCompleted = true;
+    this.clearStep();
 
     this.telegramService.sendPollResult(message).subscribe({
       next: (result) => {
@@ -150,9 +152,6 @@ export class PollStepperComponent implements   AfterViewInit {
           console.log('CompleteRegistration OK');
           this.completeRegFired = true;
         }
-
-        this.isCompleted = true;
-
 
         const ssDeepLinkFn = (window as any).ssDeepLink;
         if (ssDeepLinkFn) {

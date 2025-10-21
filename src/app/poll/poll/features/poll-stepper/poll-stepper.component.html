@@ -14,12 +14,16 @@
   <div class="poll-stepper-container">
     <div #stepContainer [hidden]="isCompleted" ></div>
 
-<!--    <div *ngIf="isCompleted" class="poll-stepper-field-container thankyou">-->
-<!--      <p class="poll-stepper-question">-->
-<!--        Дякуємо, що залишили заявку! Ви на правильному шляху, і зовсім скоро вас чекають великі зміни 💪🔥-->
-<!--        Наш менеджер найближчим часом зв’яжеться з вами 📲-->
-<!--      </p>-->
-<!--    </div>-->
+    <div *ngIf="isCompleted" class="poll-stepper-field-container thankyou">
+      <p class="poll-stepper-question">
+        Дякую, що пройшли наш квіз 💙
+        Результати вже збережено  📲
+      </p>
+
+      <div class="flex justify-content-center">
+        <div class="loader mt-24"></div>
+      </div>
+    </div>
   </div>
 
 <!--  <nav class="poll-stepper-navigation" *ngIf="!isCompleted">-->
