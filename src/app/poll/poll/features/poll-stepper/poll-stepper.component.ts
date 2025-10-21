@@ -153,14 +153,14 @@ export class PollStepperComponent implements   AfterViewInit {
 
         this.isCompleted = true;
 
+
         const ssDeepLinkFn = (window as any).ssDeepLink;
         if (ssDeepLinkFn) {
           ssDeepLinkFn('ss-btn', 'bukfit', false, ssContext);
 
-
           setTimeout(() => {
             link.click();
-          }, 500);
+          }, 1500);
         } else {
           console.warn('⚠️ SmartSender не завантажений — відкриваємо напряму');
           window.open(telegramUrl, '_blank');
@@ -174,8 +174,6 @@ export class PollStepperComponent implements   AfterViewInit {
     });
 
   }
-
-
 
   goToPreviousStep(): void {
     this.pollStepperService.prevStep();
