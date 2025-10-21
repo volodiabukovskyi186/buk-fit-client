@@ -12,6 +12,8 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute} from "@angular/router";
+import {switchMap} from "rxjs";
+import {Observable} from "rxjs";
 import {
   PollStepperWelcomeComponent
 } from "src/app/poll/poll/poll-stepper-welcome/poll-stepper-welcome.component";
@@ -143,15 +145,17 @@ export class PollStepperComponent implements   AfterViewInit {
     this.isCompleted = true;
     this.clearStep();
 
-    this.telegramService.sendPollResult(message).subscribe({
-      next: (result) => {
-        console.log('Telegram OK', result);
+    this.telegramService.sendPollResult(message).pipe(switchMap((result)=> {
+      console.log('Telegram OK', result);
+      return this.trackCompleteRegistration()
+    } )).subscribe({
+      next: () => {
 
-        if (!this.completeRegFired) {
-          window.fbq?.('track', 'CompleteRegistration');
-          console.log('CompleteRegistration OK');
-          this.completeRegFired = true;
-        }
+        // if (!this.completeRegFired) {
+        //   window.fbq?.('track', 'CompleteRegistration');
+        //   console.log('CompleteRegistration OK');
+        //   this.completeRegFired = true;
+        // }
 
         const ssDeepLinkFn = (window as any).ssDeepLink;
         if (ssDeepLinkFn) {
@@ -159,7 +163,7 @@ export class PollStepperComponent implements   AfterViewInit {
 
           setTimeout(() => {
             link.click();
-          }, 1500);
+          }, 500);
         } else {
           console.warn('⚠️ SmartSender не завантажений — відкриваємо напряму');
           window.open(telegramUrl, '_blank');
@@ -172,6 +176,19 @@ export class PollStepperComponent implements   AfterViewInit {
       }
     });
 
+  }
+
+  trackCompleteRegistration(): Observable<void> {
+    return new Observable<void>((observer) => {
+      try {
+        window.fbq?.('track', 'CompleteRegistration');
+        console.log('CompleteRegistration OK');
+        observer.next();
+        observer.complete();
+      } catch (error) {
+        observer.error(error);
+      }
+    });
   }
 
   goToPreviousStep(): void {
