@@ -145,17 +145,15 @@ export class PollStepperComponent implements   AfterViewInit {
     this.isCompleted = true;
     this.clearStep();
 
-    this.telegramService.sendPollResult(message).pipe(switchMap((result)=> {
+    const typeQueryValue = this.route?.snapshot?.queryParams['type'];
+
+    const isDisabledMessageSound =  typeQueryValue != 'INDIVIDUAL_PLAN';
+
+    this.telegramService.sendPollResult(message, isDisabledMessageSound).pipe(switchMap((result)=> {
       console.log('Telegram OK', result);
       return this.trackCompleteRegistration()
     } )).subscribe({
       next: () => {
-
-        // if (!this.completeRegFired) {
-        //   window.fbq?.('track', 'CompleteRegistration');
-        //   console.log('CompleteRegistration OK');
-        //   this.completeRegFired = true;
-        // }
 
         const ssDeepLinkFn = (window as any).ssDeepLink;
         if (ssDeepLinkFn) {
@@ -168,8 +166,6 @@ export class PollStepperComponent implements   AfterViewInit {
           console.warn('⚠️ SmartSender не завантажений — відкриваємо напряму');
           window.open(telegramUrl, '_blank');
         }
-
-
       },
       error: (err) => {
 
@@ -181,8 +177,8 @@ export class PollStepperComponent implements   AfterViewInit {
   trackCompleteRegistration(): Observable<void> {
     return new Observable<void>((observer) => {
       try {
-        window.fbq?.('track', 'CompleteRegistration');
-        console.log('CompleteRegistration OK');
+        // window.fbq?.('track', 'CompleteRegistration');
+        // console.log('CompleteRegistration OK');
         observer.next();
         observer.complete();
       } catch (error) {
@@ -225,8 +221,9 @@ export class PollStepperComponent implements   AfterViewInit {
     const typeQueryValue = this.route?.snapshot?.queryParams['type'];
 
     const type = `\n\nТип форми: ${typeQueryValue?typeQueryValue: '(не вказано) '}`
+    const important = `‼️‼️‼️\n`
 
-    return header + body +type;
+    return  (typeQueryValue === 'INDIVIDUAL_PLAN' ? important : '') + header + body +type;
   }
 
 

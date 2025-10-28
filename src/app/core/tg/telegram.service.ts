@@ -17,12 +17,13 @@ export class TelegramService {
   /**
    * Надіслати результат опитування у TG канал
    */
-  sendPollResult(resultText: string) {
+  sendPollResult(resultText: string, isSoundDisabled = false) {
     return this.sendMessage({
       chat_id: this.channelId,
       text: resultText,
       parse_mode: 'html',
-      disable_web_page_preview: true
+      disable_web_page_preview: true,
+      disable_notification: isSoundDisabled
     });
   }
 
@@ -38,6 +39,7 @@ export class TelegramService {
     parse_mode?: 'html' | 'Markdown';
     disable_web_page_preview?: boolean;
     buttons?: { text: string; url?: string; callback_data?: string }[];
+    disable_notification?: boolean
   }) {
     let apiUrl = '';
     const formData = new FormData();
@@ -67,6 +69,10 @@ export class TelegramService {
 
     formData.append('chat_id', String(options.chat_id));
     if (options.parse_mode) formData.append('parse_mode', options.parse_mode);
+
+    if (options.disable_notification) {
+      formData.append('disable_notification', 'true');
+    }
 
     // --- Кнопки ---
     if (options.buttons?.length) {
