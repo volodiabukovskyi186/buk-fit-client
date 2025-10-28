@@ -1,5 +1,6 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { NgIf } from '@angular/common';
+import {ActivatedRoute} from "@angular/router";
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { PollStepperInterface } from '../../interfaces/poll-stepper.interface';
 import { PollStepperService } from '../../services/poll-stepper.service';
@@ -19,7 +20,7 @@ export class PollStepperTextFieldComponent {
   /** Стан введення */
   touched = false;
   isSave = false;
-
+  type = null;
   /** Значення телефону */
   displayValue = '';
   phone = '';
@@ -30,7 +31,12 @@ export class PollStepperTextFieldComponent {
   /** Вибраний месенджер */
   selectedMessenger: 'telegram' | 'viber' | null = null;
 
-  constructor(private pollStepperService: PollStepperService) {}
+  constructor(
+    private pollStepperService: PollStepperService,
+    private route: ActivatedRoute,
+  ) {
+    this.type = this.route.snapshot.queryParams['type'];
+  }
 
   /** Геттер валідності */
   get isValid(): boolean {

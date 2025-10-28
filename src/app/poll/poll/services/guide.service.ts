@@ -4,6 +4,7 @@ export enum GUIDE_TYPE_ENUM {
   THREE_DAYS = 'THREE_DAYS',
   SEVEN_MISTAKES = 'SEVEN_MISTAKES',
   TRAINING_HOME = 'TRAINING_HOME',
+  INDIVIDUAL_PLAN = 'INDIVIDUAL_PLAN',
 }
 
 @Injectable({
@@ -23,10 +24,59 @@ export class GuideService {
         return this.getSevenMistakes();
       case GUIDE_TYPE_ENUM.TRAINING_HOME:
         return this.getHomeWorkout();
+      case GUIDE_TYPE_ENUM.INDIVIDUAL_PLAN:
+        return this.individualPlan();
       default:
         return this.getThreeDays();
     }
 
+  }
+
+  private individualPlan(): any[] {
+    return [
+      {
+        type: "choice",
+        fieldName: "goal",
+        question: "Яка твоя головна ціль зараз?",
+        answers: [
+          { title: "Схуднути", value: "lose_weight" },
+          { title: "Набрати м’язову масу", value: "gain_muscle" },
+          { title: "Підтримувати форму", value: "maintain_shape" },
+          { title: "Поліпшити самопочуття", value: "improve_wellbeing" },
+        ],
+      },
+      {
+        type: "choice",
+        fieldName: "train_frequency",
+        question: "Як часто ти готовий/готова тренуватись?",
+        answers: [
+          { title: "2–3 рази на тиждень", value: "two_three" },
+          { title: "4–5 разів на тиждень", value: "four_five" },
+          { title: "Щодня", value: "every_day" },
+          { title: "Поки не знаю, тренер підкаже", value: "coach_help" },
+        ],
+      },
+      {
+        type: "choice",
+        fieldName: "train_place",
+        question: "Де плануєш займатись?",
+        answers: [
+          { title: "У спортзалі", value: "gym" },
+          { title: "Вдома", value: "home" },
+          { title: "На вулиці", value: "outdoor" },
+          { title: "Комбіную різні варіанти", value: "mixed" },
+        ],
+      },
+      {
+        type: "phone",
+        fieldName: "phone",
+        question: "Заповни форму нижче — тренер зв’яжеться з тобою для безкоштовної консультації\n" +
+          "Вкажи номер та обери зручний месенджер — ми напишемо саме туди",
+        required: true,
+        value: "",
+        valueMessenger: "",
+      },
+    ];
   }
 
   private getThreeDays(): any[] {
