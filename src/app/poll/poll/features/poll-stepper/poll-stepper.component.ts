@@ -177,8 +177,8 @@ export class PollStepperComponent implements   AfterViewInit {
   trackCompleteRegistration(): Observable<void> {
     return new Observable<void>((observer) => {
       try {
-        // window.fbq?.('track', 'CompleteRegistration');
-        // console.log('CompleteRegistration OK');
+        window.fbq?.('track', 'CompleteRegistration');
+        console.log('CompleteRegistration OK');
         observer.next();
         observer.complete();
       } catch (error) {
