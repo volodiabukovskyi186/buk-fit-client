@@ -118,7 +118,6 @@ export class PollStepperComponent implements   AfterViewInit {
     const type = this.route.snapshot.queryParams['type'] ?? 'TRAINING_HOME';
     const telegramUrl = `https://t.me/buk_fit_chat_bot?start=ZGw6Mjk1NTA3`;
 
-    // 1️⃣ Створюємо "невидиме" посилання, якщо його ще нема
     let link = document.querySelector(`a.ss-btn[href="${telegramUrl}"]`) as HTMLAnchorElement;
     if (!link) {
       link = document.createElement('a');
@@ -203,7 +202,6 @@ export class PollStepperComponent implements   AfterViewInit {
 
         if (step.type === 'choice') {
           const selected = step.answers?.find(a => a.value === step.selectedAnswer);
-
           answerText = selected ? selected.title : '(не вибрано)';
         } else if (step.type === 'phone') {
           answerText = step.value || '(не вказано)';
@@ -218,14 +216,26 @@ export class PollStepperComponent implements   AfterViewInit {
       })
       .join('\n');
 
-    const typeQueryValue = this.route?.snapshot?.queryParams['type'];
+    // Усі queryParams з роуту
+    const queryParams = this.route?.snapshot?.queryParams ?? {};
 
-    const type = `\n\nТип форми: ${typeQueryValue?typeQueryValue: '(не вказано) '}`
-    const important = `‼️‼️‼️\n`
+    // Витягуємо type окремо, решту лишаємо в об'єкті
+    const { type: typeQueryValue, ...otherQueryParams } = queryParams;
 
-    return  (typeQueryValue === 'INDIVIDUAL_PLAN' ? important : '') + header + body +type;
+    const type = `\n\nТип форми: ${typeQueryValue ? typeQueryValue : '(не вказано)'}`;
+    const important = `‼️‼️‼️\n`;
+
+    // Форматуємо решту query params (якщо є)
+    const queryParamsBlock =
+      Object.keys(otherQueryParams).length > 0
+        ? '\n\n<b>Query params:</b>\n' +
+        Object.entries(otherQueryParams)
+          .map(([key, value]) => `• <b>${key}</b>: ${value ?? '(порожньо)'}`)
+          .join('\n')
+        : '';
+
+    return (typeQueryValue === 'INDIVIDUAL_PLAN' ? important : '') + header + body + type + queryParamsBlock;
   }
-
 
   private renderStep(field: PollStepperInterface): void {
     this.stepContainer.clear();
