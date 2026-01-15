@@ -1,5 +1,6 @@
 @import "variables";
 
+
 @mixin reset-button-styles() {
   border: 0;
   color: inherit;
@@ -75,20 +76,20 @@ $hs-icon-button-primary-disabled-opacity: 0.6;
     height: $hs-icon-button-height;
     border: 1px solid transparent;
     padding: 8px 12px;
-    
+
 
     &:hover {
       cursor: pointer;
     }
 
   }
-  
+
 
   i {
     display: flex;
     align-items: center;
-    
-   
+
+
   }
 
   &-active {
@@ -137,7 +138,7 @@ $hs-icon-button-primary-disabled-opacity: 0.6;
       background-color: $hs-icon-button-dark-hover-color;
     }
   }
-  
+
   &-text {
     background-color: $hs-icon-button-text-background;
     color: $hs-icon-button-text-text-color;

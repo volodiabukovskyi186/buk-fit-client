@@ -1,5 +1,6 @@
 @import "variables";
 
+
 hs-select {
   width: 100%;
   outline: none !important;
@@ -9,7 +10,7 @@ hs-select {
       color: $hs-primary;
     }
   }
-  
+
   .hs-select-wrapper {
     position: relative;
 
@@ -68,7 +69,7 @@ hs-select {
         // color: $hs-secondary-grey-04;
         position: absolute;
         cursor: pointer;
-       
+
         bottom: 5px;
         right: 12px;
 
@@ -81,7 +82,7 @@ hs-select {
           bottom: 5px;
           color: $hs-primary;
         }
-        
+
       }
     }
 

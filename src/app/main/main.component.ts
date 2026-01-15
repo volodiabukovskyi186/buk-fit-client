@@ -8,10 +8,11 @@ import {LiqpayService} from "../core/services/payment/payament.service";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'bk-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'bk-main',
+    templateUrl: './main.component.html',
+    styleUrls: ['./main.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class MainComponent implements OnInit, OnDestroy {
   isOpen = false;

@@ -1,5 +1,4 @@
 @import "typography";
-@import "variables";
 
 $iq-menu-item-content-hover: $hs-primary;
 $iq-menu-item-content-text-hover: white;
@@ -8,7 +7,7 @@ $iq-menu-item-content-active: $hs-neutrals-active;
 
 .iq-menu-item {
   @extend .hs-text-caption;
-  
+
   cursor: pointer;
   color: $iq-menu-item-content-text-default;
 
@@ -29,7 +28,7 @@ $iq-menu-item-content-active: $hs-neutrals-active;
     }
 
     .icon {
-      
+
       padding-right: 9px;
     }
 

@@ -2,7 +2,8 @@ import { Directive, Input, TemplateRef } from '@angular/core';
 import { SortDirection } from '../enums/sort-direction.enum';
 
 @Directive({
-  selector: '[hsTableColumn]'
+    selector: '[hsTableColumn]',
+    standalone: false
 })
 export class TableColumnDirective {
   @Input() fieldName = '';

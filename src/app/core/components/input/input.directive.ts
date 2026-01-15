@@ -1,5 +1,3 @@
-import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { getSupportedInputTypes } from '@angular/cdk/platform';
 import {
   Directive,
   DoCheck,
@@ -10,17 +8,30 @@ import {
   Optional,
   Self,
 } from '@angular/core';
-import { FormGroupDirective, NgControl, NgForm, Validators } from '@angular/forms';
-import { CanUpdateErrorState, ErrorStateMatcher, mixinErrorState } from '@angular/material/core';
+import {
+  AbstractControl,
+  FormGroupDirective,
+  NgControl,
+  NgForm,
+  Validators,
+} from '@angular/forms';
+import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
+import { getSupportedInputTypes } from '@angular/cdk/platform';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 import { Subject } from 'rxjs';
-import { HSFormFieldComponent, HS_FORM_FIELD } from '../form-field';
+import {HSFormFieldComponent} from "src/app/core/components/form-field";
+import {HS_FORM_FIELD} from "src/app/core/components/form-field";
 
 import { HSFormFieldControl } from '../form-field/form-field-control';
-import { getHSInputUnsupportedTypeError } from './input-errors';
 import { HS_INPUT_VALUE_ACCESSOR } from './input-value-accessor';
+import { getHSInputUnsupportedTypeError } from './input-errors';
 
-// Invalid input type. Using one of these will throw an MatInputUnsupportedTypeError.
+
+
+// ---------------------------------------------
+// INVALID TYPES
+// ---------------------------------------------
 const HS_INPUT_INVALID_TYPES = [
   'button',
   'checkbox',
@@ -35,45 +46,58 @@ const HS_INPUT_INVALID_TYPES = [
 
 let nextUniqueId = 0;
 
-
-const HSInputBase = mixinErrorState(
-  class {
-    readonly stateChanges = new Subject<void>();
-
-    constructor(
-      public _defaultErrorStateMatcher: ErrorStateMatcher,
-      public _parentForm: NgForm,
-      public _parentFormGroup: FormGroupDirective,
-      public ngControl: NgControl
-    ) {
-    }
-  },
-);
+// ---------------------------------------------
+// LOCAL DEFAULT ERROR STATE MATCHER
+// (аналог DefaultErrorStateMatcher)
+// ---------------------------------------------
+export class HSDefaultErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: AbstractControl | null,
+    form: FormGroupDirective | NgForm | null,
+  ): boolean {
+    const isSubmitted = !!(form && form.submitted);
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
+    );
+  }
+}
 
 @Directive({
-  selector: `input[iqInput], textarea[iqInput], select[iqNativeControl],
-      input[iqNativeControl], textarea[iqNativeControl]`,
+  selector: `
+    input[iqInput], textarea[iqInput],
+    select[iqNativeControl], input[iqNativeControl], textarea[iqNativeControl]
+  `,
   exportAs: 'iqInput',
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     'class': 'hs-input-element hs-form-field-autofill-control',
     '[class.hs-mdc-native-select-inline]': '_isInlineSelect()',
+
     '[id]': 'id',
     '[disabled]': 'disabled',
     '[required]': 'required',
     '[attr.name]': 'name || null',
     '[attr.readonly]': 'readonly && !_isNativeSelect || null',
+
     '[attr.aria-invalid]': '(empty && required) ? null : errorState',
     '[attr.aria-required]': 'required',
-    '[attr.id]': 'id',
+
     '(focus)': '_focusChanged(true)',
     '(blur)': '_focusChanged(false)',
     '(input)': '_onInput()',
   },
-  providers: [{provide: HSFormFieldControl, useExisting: HSInputDirective}],
+  providers: [
+    { provide: HSFormFieldControl, useExisting: HSInputDirective },
+    { provide: ErrorStateMatcher, useClass: HSDefaultErrorStateMatcher },
+  ],
 })
-export class HSInputDirective extends HSInputBase implements HSFormFieldControl<any>, OnDestroy, DoCheck, CanUpdateErrorState {
+export class HSInputDirective
+  implements HSFormFieldControl<any>, OnDestroy, DoCheck {
 
+  // ---------------------------------------------
+  // PROPERTIES
+  // ---------------------------------------------
   protected _uid = `hs-input-${nextUniqueId++}`;
   protected _previousNativeValue: any;
 
@@ -85,81 +109,88 @@ export class HSInputDirective extends HSInputBase implements HSFormFieldControl<
   readonly _isInFormField: boolean;
 
   focused = false;
+  readOnly = false;
 
-  override readonly stateChanges: Subject<void> = new Subject<void>();
+  readonly stateChanges = new Subject<void>();
 
   controlType = 'hs-input';
-
   autofilled = false;
 
+  protected _disabled = false;
+  protected _id!: string;
+
+  protected _required: boolean | undefined;
+  protected _readonly = false;
+
+  protected _neverEmptyInputTypes = [
+    'date',
+    'datetime',
+    'datetime-local',
+    'month',
+    'time',
+    'week',
+  ].filter(t => getSupportedInputTypes().has(t));
+
+  protected _type = 'text';
+
+  // error state stuff
+  errorState = false;
+  protected _defaultErrorStateMatcher: ErrorStateMatcher;
+  protected _parentForm: NgForm | null;
+  protected _parentFormGroup: FormGroupDirective | null;
+
+  // ---------------------------------------------
+  // INPUTS
+  // ---------------------------------------------
   @Input()
   get disabled(): boolean {
-    if (this.ngControl && this.ngControl.disabled !== null) {
-      return this.ngControl.disabled;
-    }
-    return this._disabled;
+    return this.ngControl?.disabled ?? this._disabled;
   }
-
   set disabled(value: BooleanInput) {
     this._disabled = coerceBooleanProperty(value);
-
     if (this.focused) {
       this.focused = false;
       this.stateChanges.next();
     }
   }
 
-  protected _disabled = false;
-
   @Input()
   get id(): string {
     return this._id;
   }
-
   set id(value: string) {
     this._id = value || this._uid;
   }
 
-  protected _id!: string;
-
   @Input() placeholder!: string;
-
   @Input() name!: string;
 
   @Input()
   get required(): boolean {
     return this._required ?? this.ngControl?.control?.hasValidator(Validators.required) ?? false;
   }
-
   set required(value: BooleanInput) {
     this._required = coerceBooleanProperty(value);
   }
-
-  protected _required: boolean | undefined;
 
   @Input()
   get type(): string {
     return this._type;
   }
-
   set type(value: string) {
     this._type = value || 'text';
     this._validateType();
-
     if (!this._isTextarea && getSupportedInputTypes().has(this._type)) {
       (this._elementRef.nativeElement as HTMLInputElement).type = this._type;
     }
   }
 
-  protected _type = 'text';
-
-  @Input() override errorStateMatcher!: ErrorStateMatcher;
+  @Input() errorStateMatcher!: ErrorStateMatcher;
 
   @Input()
   get value(): string {
     return this._inputValueAccessor.value;
   }
-
   set value(value: any) {
     if (value !== this.value) {
       this._inputValueAccessor.value = value;
@@ -171,41 +202,34 @@ export class HSInputDirective extends HSInputBase implements HSFormFieldControl<
   get readonly(): boolean {
     return this._readonly;
   }
-
   set readonly(value: BooleanInput) {
     this._readonly = coerceBooleanProperty(value);
+    this.readOnly = this._readonly;
   }
 
-  private _readonly = false;
-
-  protected _neverEmptyInputTypes = [
-    'date',
-    'datetime',
-    'datetime-local',
-    'month',
-    'time',
-    'week',
-  ].filter(t => getSupportedInputTypes().has(t));
-
+  // ---------------------------------------------
+  // CONSTRUCTOR
+  // ---------------------------------------------
   constructor(
     protected _elementRef: ElementRef<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
-    _defaultErrorStateMatcher: ErrorStateMatcher,
-    @Optional() @Self() ngControl: NgControl,
-    @Optional() _parentForm: NgForm,
-    @Optional() _parentFormGroup: FormGroupDirective,
+    @Optional() @Self() public ngControl: NgControl,
+    @Optional() parentForm: NgForm,
+    @Optional() parentFormGroup: FormGroupDirective,
     @Optional() @Self() @Inject(HS_INPUT_VALUE_ACCESSOR) inputValueAccessor: any,
-    @Optional() @Inject(HS_FORM_FIELD) protected _formField?: HSFormFieldComponent,
+    @Optional() @Inject(HS_FORM_FIELD) protected _formField: HSFormFieldComponent | null,
+    @Inject(ErrorStateMatcher) defaultErrorStateMatcher: ErrorStateMatcher,
   ) {
-    super(_defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
+    this._parentForm = parentForm ?? null;
+    this._parentFormGroup = parentFormGroup ?? null;
+    this._defaultErrorStateMatcher = defaultErrorStateMatcher;
 
-    const element = this._elementRef.nativeElement;
+    const element: any = this._elementRef.nativeElement;
     const nodeName = element.nodeName.toLowerCase();
 
     this._inputValueAccessor = inputValueAccessor || element;
-
     this._previousNativeValue = this.value;
 
-    // eslint-disable-next-line no-self-assign
+    // set default id
     this.id = this.id;
 
     this._isNativeSelect = nodeName === 'select';
@@ -213,28 +237,42 @@ export class HSInputDirective extends HSInputBase implements HSFormFieldControl<
     this._isInFormField = !!_formField;
 
     if (this._isNativeSelect) {
-      this.controlType = (element as HTMLSelectElement).multiple
-        ? 'hs-native-select-multiple'
-        : 'hs-native-select';
+      this.controlType = element.multiple ? 'hs-native-select-multiple' : 'hs-native-select';
     }
   }
 
-  // ngOnChanges() {
-  //   this.stateChanges.next();
-  // }
-
+  // ---------------------------------------------
+  // LIFECYCLE
+  // ---------------------------------------------
   ngOnDestroy(): void {
     this.stateChanges.complete();
   }
 
   ngDoCheck(): void {
-    if (this.ngControl) {
-      this.updateErrorState();
-    }
+    this.updateErrorState();
     this._dirtyCheckNativeValue();
     this._dirtyCheckPlaceholder();
   }
 
+  // ---------------------------------------------
+  // ERROR STATE HANDLING
+  // ---------------------------------------------
+  updateErrorState(): void {
+    const parent = this._parentFormGroup || this._parentForm;
+    const matcher = this.errorStateMatcher || this._defaultErrorStateMatcher;
+
+    const control = this.ngControl ? this.ngControl.control : null;
+    const newState = !!(control && matcher.isErrorState(control, parent));
+
+    if (newState !== this.errorState) {
+      this.errorState = newState;
+      this.stateChanges.next();
+    }
+  }
+
+  // ---------------------------------------------
+  // UI + DOM LOGIC
+  // ---------------------------------------------
   focus(options?: FocusOptions): void {
     this._elementRef.nativeElement.focus(options);
   }
@@ -247,7 +285,7 @@ export class HSInputDirective extends HSInputBase implements HSFormFieldControl<
   }
 
   _onInput(): void {
-    //
+    // місце для кастомної логіки input
   }
 
   protected _dirtyCheckNativeValue(): void {
@@ -264,6 +302,7 @@ export class HSInputDirective extends HSInputBase implements HSFormFieldControl<
     if (placeholder !== this._previousPlaceholder) {
       const element = this._elementRef.nativeElement;
       this._previousPlaceholder = placeholder;
+
       placeholder
         ? element.setAttribute('placeholder', placeholder)
         : element.removeAttribute('placeholder');
@@ -275,16 +314,13 @@ export class HSInputDirective extends HSInputBase implements HSFormFieldControl<
   }
 
   protected _validateType(): void {
-    if (
-      HS_INPUT_INVALID_TYPES.indexOf(this._type) > -1
-      // (typeof ngDevMode === 'undefined' || ngDevMode)
-    ) {
+    if (HS_INPUT_INVALID_TYPES.includes(this._type)) {
       throw getHSInputUnsupportedTypeError(this._type);
     }
   }
 
   protected _isNeverEmpty(): boolean {
-    return this._neverEmptyInputTypes.indexOf(this._type) > -1;
+    return this._neverEmptyInputTypes.includes(this._type);
   }
 
   protected _isBadInput(): boolean {

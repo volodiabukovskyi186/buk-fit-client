@@ -9,12 +9,11 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'hs-welcome-page',
-  imports: [CommonModule],
-  standalone: true,
-  templateUrl: './welcome-page.component.html',
-  styleUrls: ['./welcome-page.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hs-welcome-page',
+    imports: [CommonModule],
+    templateUrl: './welcome-page.component.html',
+    styleUrls: ['./welcome-page.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class WelcomePageComponent implements OnInit, OnDestroy {
   user: ClientInterface

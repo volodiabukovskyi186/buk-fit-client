@@ -6,13 +6,12 @@ import { PollStepperInterface } from '../../interfaces/poll-stepper.interface';
 import { PollStepperService } from '../../services/poll-stepper.service';
 
 @Component({
-  selector: 'app-poll-stepper-text-field',
-  standalone: true,
-  imports: [NgIf, NgxMaskDirective],
-  templateUrl: './poll-stepper-text-field.component.html',
-  styleUrls: ['./poll-stepper-text-field.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  providers: [provideNgxMask()],
+    selector: 'app-poll-stepper-text-field',
+    imports: [NgIf, NgxMaskDirective],
+    templateUrl: './poll-stepper-text-field.component.html',
+    styleUrls: ['./poll-stepper-text-field.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    providers: [provideNgxMask()]
 })
 export class PollStepperTextFieldComponent {
   @Input() field!: PollStepperInterface;

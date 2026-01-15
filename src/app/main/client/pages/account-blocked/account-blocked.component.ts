@@ -7,9 +7,10 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-account-blocked',
-  templateUrl: './account-blocked.component.html',
-  styleUrls: ['./account-blocked.component.scss']
+    selector: 'app-account-blocked',
+    templateUrl: './account-blocked.component.html',
+    styleUrls: ['./account-blocked.component.scss'],
+    standalone: false
 })
 export class AccountBlockedComponent implements OnInit, OnDestroy {
   user: ClientInterface

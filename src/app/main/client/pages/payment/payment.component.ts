@@ -15,12 +15,11 @@ import {UserPaymentTemplate} from "../../../../core/interfaces/user-payment-temp
 
 declare const Wayforpay: any;
 @Component({
-  selector: 'bk-payment',
-  standalone: true,
-  imports: [CommonModule, HSButtonModule, DateFirebasePipe],
-  templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'bk-payment',
+    imports: [CommonModule, HSButtonModule, DateFirebasePipe],
+    templateUrl: './payment.component.html',
+    styleUrls: ['./payment.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class PaymentComponent implements OnInit {
   protected readonly userPaymentsTariffEnum = USER_PAYMENTS_TARIFF_ENUM;

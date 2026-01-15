@@ -1,5 +1,6 @@
 @import "variables";
 
+
 $hs-text-select-main-color: var(--hs-text-select-color-text);
 $hs-text-select-main-color-icon: var(--hs-text-select-color-icon);
 
@@ -82,7 +83,7 @@ hs-text-select {
 
     .hs-text-select-input-wrapper.hs-text-select-arrow-left {
 
-      .hs-text-select-input { 
+      .hs-text-select-input {
         padding: 0  8px 0 28px !important;
       }
 
@@ -114,10 +115,10 @@ hs-text-select {
 
       .hs-text-select-arrow-left {
 
-        .hs-text-select-input { 
+        .hs-text-select-input {
           padding: 0  8px 0 28px !important;
         }
-  
+
         i {
           left: 9px !important;
           bottom: 9px ;

@@ -17,10 +17,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'bk-user-create-message',
-  templateUrl: './user-create-message.component.html',
-  styleUrls: ['./user-create-message.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'bk-user-create-message',
+    templateUrl: './user-create-message.component.html',
+    styleUrls: ['./user-create-message.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class UserCreateMessageComponent implements OnInit {
 

@@ -1,16 +1,17 @@
 @import "variables";
 
+
 hs-time-range-picker {
   display: block;
   position: relative;
-  
+
 
 
   .hs-time-range-picker-wrapper {
     display: block;
     background: white;
     position: relative;
-    
+
     i.hs-icon {
       color: $hs-secondary-grey-03;
       bottom: 12px;
@@ -33,7 +34,7 @@ hs-time-range-picker {
   &.ng-invalid {
     &.ng-touched {
       .hs-time-range-picker-wrapper {
-   
+
 
         // .hs-input {
         //   border-bottom: 1px solid $hs-error;

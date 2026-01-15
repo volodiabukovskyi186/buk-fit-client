@@ -18,23 +18,24 @@ export type HSAccordionTogglePosition = 'before' | 'after';
 let unHSueId = 0;
 
 @Component({
-  selector: 'hs-expansion-panel',
-  templateUrl: './expansion-panel.component.html',
-  styleUrls: ['./expansion-panel.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  inputs: ['disabled', 'expanded'],
-  outputs: ['opened', 'closed', 'expandedChange'],
-  animations: [expansionAnimations],
-  providers: [
-    { provide: HS_ACCORDION, useValue: undefined },
-    // { provide: MAT_EXPANSION_PANEL, useExisting: MatExpansionPanel },
-  ],
-  host: {
-    'class': 'hs-expansion-panel',
-    '[class.hs-expanded]': 'expanded',
-    '[class.hs-expansion-panel-spacing]': '_hasSpacing()',
-  },
+    selector: 'hs-expansion-panel',
+    templateUrl: './expansion-panel.component.html',
+    styleUrls: ['./expansion-panel.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    inputs: ['disabled', 'expanded'],
+    outputs: ['opened', 'closed', 'expandedChange'],
+    animations: [expansionAnimations],
+    providers: [
+        { provide: HS_ACCORDION, useValue: undefined },
+        // { provide: MAT_EXPANSION_PANEL, useExisting: MatExpansionPanel },
+    ],
+    host: {
+        'class': 'hs-expansion-panel',
+        '[class.hs-expanded]': 'expanded',
+        '[class.hs-expansion-panel-spacing]': '_hasSpacing()',
+    },
+    standalone: false
 })
 export class HSExpansionPanelComponent extends CdkAccordionItem implements OnChanges, OnDestroy {
 
@@ -65,7 +66,7 @@ export class HSExpansionPanelComponent extends CdkAccordionItem implements OnCha
   readonly _inputChanges = new Subject<SimpleChanges>();
 
   /** Optionally defined accordion the expansion panel belongs to. */
-  override accordion: HSAccordionBase;
+
 
   /** Element containing the panel's user-provided content. */
   @ViewChild('body') _body!: ElementRef<HTMLElement>;
@@ -76,7 +77,7 @@ export class HSExpansionPanelComponent extends CdkAccordionItem implements OnCha
   private _document: Document;
   private _hideToggle = false;
   private _togglePosition!: HSAccordionTogglePosition;
-  
+
   /** Stream of body animation done events. */
   readonly _bodyAnimationDone = new Subject<any>();
 
@@ -111,7 +112,7 @@ export class HSExpansionPanelComponent extends CdkAccordionItem implements OnCha
         }
       });
   }
-
+  declare  accordion: HSAccordionBase;
   /** Determines whether the expansion panel should have spacing between it and its siblings. */
   _hasSpacing(): boolean {
     if (this.accordion) {

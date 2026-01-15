@@ -31,8 +31,9 @@ import {PaymentComponent} from "./main/client/pages/payment/payment.component";
     AngularFireFunctionsModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    MatSnackBarModule,
     AngularFireStorageModule,
+    MatSnackBarModule,
+
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,

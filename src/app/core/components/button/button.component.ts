@@ -4,11 +4,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { HSButtonBase } from './button-base.component';
 
 @Component({
-  selector: "hs-button",
-  templateUrl: "./button.component.html",
-  styleUrls: ["./button.component.scss"],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: "hs-button",
+    templateUrl: "./button.component.html",
+    styleUrls: ["./button.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class HSButtonComponent extends HSButtonBase {
 

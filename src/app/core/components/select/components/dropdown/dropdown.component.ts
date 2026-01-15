@@ -15,10 +15,10 @@ import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'hs-dropdown',
-  styleUrls: ['./dropdown.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'hs-dropdown',
+    styleUrls: ['./dropdown.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <ng-template cdkPortal>
       <!-- InfinityScroll [scrollPercent]="90" (scrollEvent)="scrollEvent.emit($event)" -->
      <div class="hs-dropdown-container" style="position: relative;" (mousemove)="onMouseMove($event)">
@@ -26,7 +26,8 @@ import { Subscription } from 'rxjs';
      </div>
     </ng-template>
 
-  `
+  `,
+    standalone: false
 })
 export class HSDropdownComponent implements OnDestroy {
   @ViewChild(CdkPortal) contentTemplate!: CdkPortal;

@@ -25,26 +25,27 @@ export const HS_FORM_FIELD = new InjectionToken<HSFormFieldComponent>('HSFormFie
 
 let nextUniqueId = 0;
 @Component({
-  selector: 'hs-form-field',
-  templateUrl: './form-field.component.html',
-  styleUrls: ['./form-field.component.scss'],
-  host: {
-    'class': 'hs-form-field',
-    '[class.hs-form-field-invalid]': '_control.errorState',
-    '[class.hs-form-field-disabled]': '_control.disabled',
-    '[class.hs-form-field-autofilled]': '_control.autofilled',
-    '[class.hs-focused]': '_control.focused',
-    '[class.ng-untouched]': '_shouldForward("untouched")',
-    '[class.ng-touched]': '_shouldForward("touched")',
-    '[class.ng-pristine]': '_shouldForward("pristine")',
-    '[class.ng-dirty]': '_shouldForward("dirty")',
-    '[class.ng-valid]': '_shouldForward("valid")',
-    '[class.ng-invalid]': '_shouldForward("invalid")',
-    '[class.ng-pending]': '_shouldForward("pending")',
-  },
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{provide: HS_FORM_FIELD, useExisting: HSFormFieldComponent}],
+    selector: 'hs-form-field',
+    templateUrl: './form-field.component.html',
+    styleUrls: ['./form-field.component.scss'],
+    host: {
+        'class': 'hs-form-field',
+        '[class.hs-form-field-invalid]': '_control.errorState',
+        '[class.hs-form-field-disabled]': '_control.disabled',
+        '[class.hs-form-field-autofilled]': '_control.autofilled',
+        '[class.hs-focused]': '_control.focused',
+        '[class.ng-untouched]': '_shouldForward("untouched")',
+        '[class.ng-touched]': '_shouldForward("touched")',
+        '[class.ng-pristine]': '_shouldForward("pristine")',
+        '[class.ng-dirty]': '_shouldForward("dirty")',
+        '[class.ng-valid]': '_shouldForward("valid")',
+        '[class.ng-invalid]': '_shouldForward("invalid")',
+        '[class.ng-pending]': '_shouldForward("pending")',
+    },
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [{ provide: HS_FORM_FIELD, useExisting: HSFormFieldComponent }],
+    standalone: false
 })
 export class HSFormFieldComponent implements AfterViewInit, OnChanges , AfterContentInit, AfterContentChecked, OnDestroy {
   @ContentChildren(HS_SUFFIX, {descendants: true}) _suffixChildren!: QueryList<HSSuffixDirective>;

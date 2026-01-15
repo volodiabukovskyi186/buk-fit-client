@@ -3,8 +3,9 @@ import { Directive, ElementRef, InjectionToken } from '@angular/core';
 export const HS_SUFFIX = new InjectionToken<HSSuffixDirective>('HSSuffixDirective');
 
 @Directive({
-  selector: '[iqSuffix], [iqIconSuffix], [iqTextSuffix]',
-  providers: [{provide: HS_SUFFIX, useExisting: HSSuffixDirective}],
+    selector: '[iqSuffix], [iqIconSuffix], [iqTextSuffix]',
+    providers: [{ provide: HS_SUFFIX, useExisting: HSSuffixDirective }],
+    standalone: false
 })
 export class HSSuffixDirective {
   _isText = false;

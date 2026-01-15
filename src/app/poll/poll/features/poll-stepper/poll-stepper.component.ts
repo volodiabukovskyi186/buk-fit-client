@@ -31,22 +31,21 @@ declare global {
 }
 
 @Component({
-  selector: 'app-poll-stepper',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './poll-stepper.component.html',
-  styleUrl: './poll-stepper.component.scss',
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-poll-stepper',
+    imports: [CommonModule],
+    templateUrl: './poll-stepper.component.html',
+    styleUrl: './poll-stepper.component.scss',
+    encapsulation: ViewEncapsulation.None
 })
 export class PollStepperComponent implements   AfterViewInit {
   @ViewChild('stepContainer', {read: ViewContainerRef, static: true})
   private stepContainer!: ViewContainerRef;
   private completeRegFired = false;
   private destroyRef = inject(DestroyRef);
-  protected stepperState = this.pollStepperService.getState();
-  protected currentStepIndex = this.pollStepperService.getCurrentIndex();
-  protected isFinish = this.pollStepperService.getIsFinish();
 
+  protected stepperState = null;
+  protected currentStepIndex = null;
+  protected isFinish = null;
   protected isCompleted = false; // ✅ прапорець завершення форми
 
   private cmpRef?: ComponentRef<any>;
@@ -57,6 +56,11 @@ export class PollStepperComponent implements   AfterViewInit {
     private telegramService: TelegramService,
     private route: ActivatedRoute,
   ) {
+
+    this.stepperState = this.pollStepperService.getState();
+    this.currentStepIndex = this.pollStepperService.getCurrentIndex();
+    this.isFinish = this.pollStepperService.getIsFinish();
+
     effect(
       () => {
         const steps = this.stepperState();
@@ -97,6 +101,8 @@ export class PollStepperComponent implements   AfterViewInit {
       {allowSignalWrites: false}
     );
   }
+
+
 
   goToNextStep(): void {
     const steps = this.stepperState();

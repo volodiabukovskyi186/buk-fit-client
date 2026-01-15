@@ -20,18 +20,19 @@ export const CS_BUTTON_TOGGLE_GROUP = new InjectionToken<ButtonToggleGroupDirect
 );
 
 @Directive({
-  selector: '[hsButtonToggleGroup]',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ButtonToggleGroupDirective),
-      multi: true
-    },
-    {
-      provide: CS_BUTTON_TOGGLE_GROUP,
-      useExisting: ButtonToggleGroupDirective
-    }
-  ]
+    selector: '[hsButtonToggleGroup]',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => ButtonToggleGroupDirective),
+            multi: true
+        },
+        {
+            provide: CS_BUTTON_TOGGLE_GROUP,
+            useExisting: ButtonToggleGroupDirective
+        }
+    ],
+    standalone: false
 })
 export class ButtonToggleGroupDirective implements ControlValueAccessor {
 

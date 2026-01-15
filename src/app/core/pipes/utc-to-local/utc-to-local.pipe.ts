@@ -3,7 +3,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import moment from 'moment';
 
 @Pipe({
-  name: 'HSUtcToLocal'
+    name: 'HSUtcToLocal',
+    standalone: false
 })
 export class HSUtcToLocalPipe implements PipeTransform {
   transform(value: any, format: string = 'DD:MM:YYYY HH:mm'): any {

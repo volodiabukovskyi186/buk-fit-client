@@ -3,8 +3,9 @@ import { Directive, ElementRef, InjectionToken } from '@angular/core';
 export const HS_PREFIX = new InjectionToken<HSPrefixDirective>('HSPrefixDirective');
 
 @Directive({
-  selector: '[iqPrefix], [iqIconPrefix], [iqTextPrefix]',
-  providers: [{provide: HS_PREFIX, useExisting: HSPrefixDirective}],
+    selector: '[iqPrefix], [iqIconPrefix], [iqTextPrefix]',
+    providers: [{ provide: HS_PREFIX, useExisting: HSPrefixDirective }],
+    standalone: false
 })
 export class HSPrefixDirective {
   _isText = false;

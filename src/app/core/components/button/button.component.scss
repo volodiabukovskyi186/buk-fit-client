@@ -1,6 +1,7 @@
 
 @import "variables";
 
+
 @mixin reset-button-styles() {
   border: 0;
   color: inherit;
@@ -186,7 +187,7 @@ $hs-button-outlined-disabled-opacity: 0.6;
        width: 100%;
       }
     }
-  
+
   }
 
   &.hs-button-icon-no-text {
@@ -269,9 +270,9 @@ $hs-button-outlined-disabled-opacity: 0.6;
 
       button {
         border-color: $hs-button-white-disabled-border-color !important;
-        
+
         color: $hs-button-white-disabled-text-color;
-      }     
+      }
     }
 
     &:hover {
@@ -308,7 +309,7 @@ $hs-button-outlined-disabled-opacity: 0.6;
 
       button {
         color: $hs-button-text-disabled-text-color;
-      }     
+      }
     }
 
     &:hover {
@@ -337,7 +338,7 @@ $hs-button-outlined-disabled-opacity: 0.6;
 
       button {
         color: $hs-button-text-primary-disabled-text-color;
-      }     
+      }
     }
 
     &:hover {
@@ -370,7 +371,7 @@ $hs-button-outlined-disabled-opacity: 0.6;
         background-color: $hs-button-outlined-primary-disabled-background;
         border-color: $hs-button-outlined-primary-disabled-border-color;
         color: $hs-button-outlined-primary-disabled-text-color;
-      }     
+      }
     }
 
     &:hover {
@@ -379,11 +380,11 @@ $hs-button-outlined-disabled-opacity: 0.6;
 
       button {
         border-color: $hs-button-outlined-primary-hover-border-color;
-      
+
         transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
         border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
       }
-     
+
     }
 
     &:active {
@@ -391,7 +392,7 @@ $hs-button-outlined-disabled-opacity: 0.6;
 
       button {
         border-color: $hs-button-outlined-primary-hover-border-color;
-      
+
         transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
         border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
       }
@@ -416,7 +417,7 @@ $hs-button-outlined-disabled-opacity: 0.6;
         background-color: $hs-button-outlined-accend-disabled-background;
         border-color: $hs-button-outlined-accend-disabled-border-color;
         color: $hs-button-outlined-accend-disabled-text-color;
-      }     
+      }
     }
 
     &:hover {
@@ -425,11 +426,11 @@ $hs-button-outlined-disabled-opacity: 0.6;
 
       button {
         border-color: $hs-button-outlined-accend-hover-border-color;
-      
+
         transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
         border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
       }
-     
+
     }
 
     &:active {
@@ -437,7 +438,7 @@ $hs-button-outlined-disabled-opacity: 0.6;
 
       button {
         border-color: $hs-button-outlined-accend-hover-border-color;
-      
+
         transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
         border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
       }
@@ -461,7 +462,7 @@ $hs-button-outlined-disabled-opacity: 0.6;
       button {
         border-color: $hs-button-outlined-disabled-border-color;
         color: $hs-button-outlined-disabled-text-color;
-      }     
+      }
     }
 
     &:hover {
@@ -470,11 +471,11 @@ $hs-button-outlined-disabled-opacity: 0.6;
 
       button {
         border-color: $hs-button-outlined-hover-border-color;
-      
+
         transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
         border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
       }
-     
+
     }
 
     &:active {
@@ -482,7 +483,7 @@ $hs-button-outlined-disabled-opacity: 0.6;
 
       button {
         border-color: $hs-button-outlined-hover-border-color;
-      
+
         transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
         border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
       }
@@ -532,7 +533,7 @@ $hs-button-outlined-disabled-opacity: 0.6;
   &-size-medium {
 
      button {
-      padding: $hs-button-medium-padding;  
+      padding: $hs-button-medium-padding;
       font-size: $hs-button-medium-lable-font-size !important;
       font-weight: $hs-button-medium-label-font-weight;
       height: $hs-button-medium-height;

@@ -6,12 +6,13 @@ let nextUniqueId = 0;
 export const HS_ERROR = new InjectionToken<HSErrorDirective>('HSErrorDirective');
 
 @Directive({
-  selector: 'hs-error, [iqError]',
-  host: {
-    'class': 'hs-mdc-form-field-error hs-mdc-form-field-bottom-align',
-    '[id]': 'id',
-  },
-  providers: [{provide: HS_ERROR, useExisting: HSErrorDirective}],
+    selector: 'hs-error, [iqError]',
+    host: {
+        'class': 'hs-mdc-form-field-error hs-mdc-form-field-bottom-align',
+        '[id]': 'id',
+    },
+    providers: [{ provide: HS_ERROR, useExisting: HSErrorDirective }],
+    standalone: false
 })
 export class HSErrorDirective {
   @Input() id: string = `hs-mdc-error-${nextUniqueId++}`;

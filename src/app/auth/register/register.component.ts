@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {HSButtonModule} from "../../core/components/button";
 import {HSFormFieldModule} from "../../core/components/form-field";
+import {HSInputDirective} from "../../core/components/input";
 import {HSInputModule} from "../../core/components/input";
 import {
   AbstractControl,
@@ -15,26 +16,24 @@ import {AdminsService} from "../../core/services/admins/admin.service";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../core/services/auth/auth.service";
-import {Firestore, collection, addDoc, collectionData, doc, getDoc, setDoc} from '@angular/fire/firestore';
+
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Timestamp } from '@angular/fire/firestore';
 import {USER_ROLES_ENUM} from "../../core/enums/users-roles.enum";
 import {USER_STATUS_ENUM} from "../../core/enums/users-status.enum";
-import {ClientInterface} from "../../core/interfaces/user.interface";
 import {TOKEN_ENUM} from "../../core/enums/token.enum";
 import {catchError, of, Subscription} from "rxjs";
-import {NgxMaskDirective} from "ngx-mask";
+
 import {BKTgService} from "../../core/services/tg/tg.service";
 import {environment} from "../../../environments/environment";
 
 
 @Component({
-  selector: 'bk-register',
-  standalone: true,
-  imports: [CommonModule, HSButtonModule, HSFormFieldModule, HSInputModule, ReactiveFormsModule, RouterLink, NgxMaskDirective],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'bk-register',
+  imports: [CommonModule, HSButtonModule, HSFormFieldModule, HSInputModule, ReactiveFormsModule, RouterLink, HSInputDirective],
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;

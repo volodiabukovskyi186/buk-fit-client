@@ -4,7 +4,8 @@ import { DOCUMENT } from '@angular/common';
 import { fromEvent, Subscription } from 'rxjs';
 
 @Directive({
-  selector: '[HSColumnResizable]',
+    selector: '[HSColumnResizable]',
+    standalone: false
 })
 export class ColumnResizableDirective implements OnInit, OnDestroy {
   @Input('HSColumnResizable') resizable!: boolean;

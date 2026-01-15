@@ -15,11 +15,12 @@ import {
 } from './directives/button-toggle-group.directive';
 
 @Component({
-  selector: 'hs-button-toggle-ui',
-  templateUrl: './button-toggle.component.html',
-  styleUrls: ['./button-toggle.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'hs-button-toggle-ui',
+    templateUrl: './button-toggle.component.html',
+    styleUrls: ['./button-toggle.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ButtonToggleComponent {
 

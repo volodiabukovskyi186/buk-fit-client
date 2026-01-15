@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 
 import {CommonModule} from "@angular/common";
+import {HSInputDirective} from "../../../../core/components/input";
 import {ClientInterface} from "../../../../core/interfaces/user.interface";
 import {USER_STATUS_ENUM} from "../../../../core/enums/users-status.enum";
 import {filter, Subscription} from "rxjs";
@@ -16,12 +17,11 @@ import {HSButtonModule} from "../../../../core/components/button";
 import {UserSurveyComponent} from "./features/user-survey/user-survey.component";
 
 @Component({
-  selector: 'hs-user-profile',
-  imports: [CommonModule, HSFormFieldModule, HSInputModule, ReactiveFormsModule, HSButtonModule, UserSurveyComponent],
-  standalone: true,
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hs-user-profile',
+  imports: [CommonModule, HSFormFieldModule, HSInputModule, ReactiveFormsModule, HSButtonModule, UserSurveyComponent, HSInputDirective],
+    templateUrl: './user-profile.component.html',
+    styleUrls: ['./user-profile.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   user: ClientInterface

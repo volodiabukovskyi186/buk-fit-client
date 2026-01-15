@@ -29,12 +29,13 @@ import { TableColumnDirective } from './table-column/table-column.directive';
 import {CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray, CdkDragStart, CdkDragPreview} from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'hs-table-grid',
-  templateUrl: './table-grid.component.html',
-  styleUrls: ['./table-grid.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [SortService]
+    selector: 'hs-table-grid',
+    templateUrl: './table-grid.component.html',
+    styleUrls: ['./table-grid.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [SortService],
+    standalone: false
 })
 export class TableGridComponent<T> implements AfterViewInit, OnDestroy {
   @ViewChild(CdkDropList) cdkDropList!: CdkDropList;

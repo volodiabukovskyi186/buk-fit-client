@@ -15,10 +15,11 @@ import {ClientInterface} from "../../../core/interfaces/user.interface";
 import {TOKEN_ENUM} from "../../../core/enums/token.enum";
 
 @Component({
-  selector: 'hs-menu-list',
-  templateUrl: './menu-list.component.html',
-  styleUrls: ['./menu-list.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hs-menu-list',
+    templateUrl: './menu-list.component.html',
+    styleUrls: ['./menu-list.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class MenuListComponent implements OnInit, OnDestroy {
 

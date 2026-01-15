@@ -23,11 +23,12 @@ export interface SelectOptionChangeInterface {
 }
 
 @Component({
-  selector: 'hs-select-option',
-  templateUrl: './select-option.component.html',
-  styleUrls: ['./select-option.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+    selector: 'hs-select-option',
+    templateUrl: './select-option.component.html',
+    styleUrls: ['./select-option.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HSSelectOptionComponent {
   @Input() value: any;

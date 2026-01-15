@@ -1,5 +1,6 @@
 @import "variables";
 
+
 hs-select-option,
 hs-select-option-all,
 .hs-select-option {
@@ -52,7 +53,7 @@ hs-select-option-all,
       font-size: 18px;
 
       i {
-        color: $text-silver;
+        color: #00000066;
         visibility: hidden;
         top: 50%;
         left: 50%;
@@ -199,5 +200,5 @@ hs-select-option-all,
   line-height: 30px;
   text-align: center;
   font-size: 14px;
-  color: $text-silver;
+  color: #00000066;
 }

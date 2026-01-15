@@ -4,14 +4,13 @@ import {NgForOf} from "@angular/common";
 import {PollStepperService} from "../../services/poll-stepper.service";
 
 @Component({
-  selector: 'app-poll-stepper-field',
-  standalone: true,
-  imports: [
-    NgForOf
-  ],
-  templateUrl: './poll-stepper-field.component.html',
-  styleUrl: './poll-stepper-field.component.scss',
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-poll-stepper-field',
+    imports: [
+        NgForOf
+    ],
+    templateUrl: './poll-stepper-field.component.html',
+    styleUrl: './poll-stepper-field.component.scss',
+    encapsulation: ViewEncapsulation.None
 })
 export class PollStepperFieldComponent {
   @Input() field: PollStepperInterface;

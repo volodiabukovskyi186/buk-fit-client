@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'MGAutoLink'
+    name: 'MGAutoLink',
+    standalone: false
 })
 export class AutoLinkPipe implements PipeTransform {
   transform(value: string): string {

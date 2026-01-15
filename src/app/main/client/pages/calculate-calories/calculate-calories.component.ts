@@ -7,10 +7,11 @@ import { filter } from 'rxjs';
 
 
 @Component({
-  selector: 'bk-calculate-calories',
-  templateUrl: './calculate-calories.component.html',
-  styleUrls: ['./calculate-calories.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'bk-calculate-calories',
+    templateUrl: './calculate-calories.component.html',
+    styleUrls: ['./calculate-calories.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ProgramComponent implements OnInit {
   formGroup: FormGroup;

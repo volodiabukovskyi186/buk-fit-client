@@ -5,10 +5,11 @@ import { filter } from 'rxjs';
 import { AdminsService } from 'src/app/core/services/admins/admin.service';
 
 @Component({
-  selector: 'bk-video-lessons',
-  templateUrl: './video-lessons.component.html',
-  styleUrls: ['./video-lessons.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'bk-video-lessons',
+    templateUrl: './video-lessons.component.html',
+    styleUrls: ['./video-lessons.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ProgramComponent implements OnInit {
   user: any;

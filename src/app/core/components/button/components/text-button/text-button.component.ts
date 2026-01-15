@@ -3,10 +3,11 @@ import { Component, HostBinding, Input, ViewEncapsulation } from "@angular/core"
 import { ButtonColorEnum } from "../../button-base.component";
 
 @Component({
-  selector: "hs-text-button",
-  templateUrl: "./text-button.component.html",
-  styleUrls: ["./text-button.component.scss"],
-  encapsulation: ViewEncapsulation.None
+    selector: "hs-text-button",
+    templateUrl: "./text-button.component.html",
+    styleUrls: ["./text-button.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HSTextButtonComponent {
   @Input() color: keyof typeof ButtonColorEnum = ButtonColorEnum.primary;

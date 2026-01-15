@@ -21,6 +21,7 @@ import { ControlValueAccessor, FormControl, FormGroupDirective, NgControl, NgFor
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { SelectionModel } from '@angular/cdk/collections';
+import {Subject} from "rxjs";
 
 import { merge, Observable, Subscription } from 'rxjs';
 import { findIndex, startWith, switchMap } from 'rxjs/operators';
@@ -35,22 +36,23 @@ import { HSSelectBaseMixin } from './select-base.mixin';
 import { HSSelectChange } from './select-change';
 
 @Component({
-  selector: 'hs-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  inputs: ['disabled'],
-  host: {
-    'role': 'combobox',
-    '[attr.tabindex]': 'tabIndex',
-    '(focus)': 'focusEvent()',
-    '(blur)': 'blurEvent()',
-  },
-  providers: [
-    { provide: HSFormFieldControl, useExisting: HSSelectComponent },
-    { provide: HS_SELECT_PARENT_COMPONENT, useExisting: HSSelectComponent }
-  ],
+    selector: 'hs-select',
+    templateUrl: './select.component.html',
+    styleUrls: ['./select.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    inputs: ['disabled'],
+    host: {
+        'role': 'combobox',
+        '[attr.tabindex]': 'tabIndex',
+        '(focus)': 'focusEvent()',
+        '(blur)': 'blurEvent()',
+    },
+    providers: [
+        { provide: HSFormFieldControl, useExisting: HSSelectComponent },
+        { provide: HS_SELECT_PARENT_COMPONENT, useExisting: HSSelectComponent }
+    ],
+    standalone: false
 })
 export class HSSelectComponent extends HSSelectBaseMixin implements HSFormFieldControl<any>, ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
 
@@ -59,6 +61,20 @@ export class HSSelectComponent extends HSSelectBaseMixin implements HSFormFieldC
   @ViewChild(HSDropdownComponent) dropdown!: HSDropdownComponent;
   @ContentChild(HSSelectTriggerComponent) selectTrigger!: HSSelectTriggerComponent;
   @ContentChildren(HSSelectOptionComponent, { descendants: true }) options!: QueryList<HSSelectOptionComponent>;
+
+  // tabIndex = 0; // used in host binding [attr.tabindex]
+  //
+  // /** Angular Material-like pattern; used by stateChanges.next() */
+  // readonly stateChanges = new Subject<void>();
+  //
+  // /** required by logic and by inputs: ['disabled'] */
+  // @Input() disabled = false;
+  //
+  // /** needed because you call this.ngControl in code */
+  // public ngControl: NgControl | null = null;
+  //
+  // /** needed because you use this._elementRef in code */
+  // protected _elementRef: ElementRef;
 
   @Input() placeholder = '';
   @Input() isRounded = false;
@@ -389,7 +405,7 @@ export class HSSelectComponent extends HSSelectBaseMixin implements HSFormFieldC
 
     if (!isOpening) {
       this.searchControl.setValue('');
-      this.updateErrorState();
+      // this.updateErrorState();
       this.blurEvent();
       this.hoverIndex = -1;
       this.removeOptionsHover();
@@ -449,7 +465,7 @@ export class HSSelectComponent extends HSSelectBaseMixin implements HSFormFieldC
     }
 
     this.onChange(valueToEmit);
-    this.updateErrorState();
+    // this.updateErrorState();
     this.selectionChange.emit(new HSSelectChange(this, valueToEmit));
   }
 
@@ -506,4 +522,8 @@ export class HSSelectComponent extends HSSelectBaseMixin implements HSFormFieldC
 
     this.subscription.add(stream$);
   }
+
+  readonly autofilled: boolean;
+  readonly controlType: string;
+  // readonly errorState: boolean;
 }

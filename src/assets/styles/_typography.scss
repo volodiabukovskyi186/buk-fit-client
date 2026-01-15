@@ -1,4 +1,4 @@
-@import "variables";
+@use "./variables" as v;
 
 .f {
   &s {
@@ -55,55 +55,55 @@
 
   &c {
     &-text {
-      color: $hs-black;
+      color: v.$hs-black;
     }
 
     &-primary {
-      color: $hs-primary;
+      color: v.$hs-primary;
     }
 
     &-error {
-      color: $hs-error;
+      color: v.$hs-error;
     }
 
     &-success {
-      color: $hs-success;
+      color: v.$hs-success;
     }
 
     &-secondary-grey-00 {
-      color: $hs-secondary-grey-00;
+      color: v.$hs-secondary-grey-00;
     }
 
     &-secondary-grey-01 {
-      color: $hs-secondary-grey-01;
+      color: v.$hs-secondary-grey-01;
     }
 
     &-secondary-grey-02 {
-      color: $hs-secondary-grey-02;
+      color: v.$hs-secondary-grey-02;
     }
 
     &-secondary-grey-03 {
-      color: $hs-secondary-grey-03;
+      color: v.$hs-secondary-grey-03;
     }
 
     &-secondary-grey-04 {
-      color: $hs-secondary-grey-04;
+      color: v.$hs-secondary-grey-04;
     }
 
     &-secondary-blue-00 {
-      color: $hs-secondary-grey-00;
+      color: v.$hs-secondary-grey-00;
     }
 
     &-secondary-blue-01 {
-      color: $hs-secondary-grey-01;
+      color: v.$hs-secondary-grey-01;
     }
 
     &-secondary-blue-02 {
-      color: $hs-secondary-grey-02;
+      color: v.$hs-secondary-grey-02;
     }
 
     &-secondary-blue-03 {
-      color: $hs-secondary-grey-03;
+      color: v.$hs-secondary-grey-03;
     }
 
     &-white {

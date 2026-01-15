@@ -16,10 +16,11 @@ import { Subscription } from 'rxjs';
 import { HS_SELECT_PARENT_COMPONENT, HSSelectParentComponent } from '../select-parent.component';
 
 @Component({
-  selector: 'hs-select-option-all',
-  templateUrl: './select-option-all.component.html',
-  styleUrls: ['./select-option-all.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'hs-select-option-all',
+    templateUrl: './select-option-all.component.html',
+    styleUrls: ['./select-option-all.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class HSSelectOptionAllComponent implements AfterViewInit, OnDestroy {
   @Input()

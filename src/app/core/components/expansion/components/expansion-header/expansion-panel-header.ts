@@ -1,7 +1,6 @@
 import { FocusableOption, FocusMonitor, FocusOrigin } from '@angular/cdk/a11y';
 import { ANIMATION_MODULE_TYPE } from '@angular/platform-browser/animations';
 import { ENTER, hasModifierKey, SPACE } from '@angular/cdk/keycodes';
-import { HasTabIndex, mixinTabIndex } from '@angular/material/core';
 import {
   AfterViewInit,
   Attribute,
@@ -24,12 +23,6 @@ import { HSExpansionPanelComponent } from '../expansion-panel/expansion-panel.co
 import { HSAccordionTogglePosition } from '../accordion/accordion-base';
 import { indicatorRotateAnimations } from '../../expansion.animations';
 
-abstract class HSExpansionPanelHeaderBase {
-  abstract readonly disabled: boolean;
-}
-
-const HSMixinBase = mixinTabIndex(HSExpansionPanelHeaderBase);
-
 @Component({
   selector: 'hs-expansion-panel-header',
   styleUrls: ['expansion-panel-header.scss'],
@@ -37,12 +30,14 @@ const HSMixinBase = mixinTabIndex(HSExpansionPanelHeaderBase);
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   animations: [indicatorRotateAnimations],
-  inputs: ['tabIndex'],
+  // якщо вам потрібно підтримати Input з іменем tabIndex (як раніше) — залишайте inputs
+  // але краще просто мати @Input() tabIndex
   host: {
-    'class': 'hs-expansion-panel-header hs-focus-indicator',
-    'role': 'button',
+    class: 'hs-expansion-panel-header hs-focus-indicator',
+    role: 'button',
     '[attr.id]': 'panel._headerId',
-    '[attr.tabindex]': 'tabIndex',
+    // якщо disabled — робимо елемент нефокусованим
+    '[attr.tabindex]': 'disabled ? -1 : tabIndex',
     '[attr.aria-controls]': '_getPanelId()',
     '[attr.aria-expanded]': '_isExpanded()',
     '[attr.aria-disabled]': 'panel.disabled',
@@ -54,125 +49,106 @@ const HSMixinBase = mixinTabIndex(HSExpansionPanelHeaderBase);
     '(click)': '_toggle()',
     '(keydown)': '_keydown($event)',
   },
+  standalone: false,
 })
-export class HSExpansionPanelHeaderComponent extends HSMixinBase implements AfterViewInit, OnDestroy, FocusableOption, HasTabIndex {
-
+export class HSExpansionPanelHeaderComponent
+  implements AfterViewInit, OnDestroy, FocusableOption
+{
   @Input() collapsedHeight!: string;
   @Input() expandedHeight!: string;
+
+  // Заміна mixinTabIndex:
+  @Input() tabIndex = 0;
 
   private _parentChangeSubscription = Subscription.EMPTY;
 
   constructor(
     @Host() public panel: HSExpansionPanelComponent,
-    private _element: ElementRef,
+    private _element: ElementRef<HTMLElement>,
     private _focusMonitor: FocusMonitor,
     private _changeDetectorRef: ChangeDetectorRef,
     @Optional() @Inject(ANIMATION_MODULE_TYPE) public _animationMode?: string,
-    @Attribute('tabindex') tabIndex?: string,
+    @Attribute('tabindex') tabIndexAttr?: string,
   ) {
-    super();
     const accordionHideToggleChange = panel.accordion
       ? panel.accordion._stateChanges.pipe(
         filter(changes => !!(changes['hideToggle'] || changes['togglePosition'])),
       )
       : EMPTY;
-    this.tabIndex = parseInt(tabIndex || '') || 0;
 
-    // Since the toggle state depends on an @Input on the panel, we
-    // need to subscribe and trigger change detection manually.
+    // підтримка tabindex з атрибуту (як у вас було)
+    const parsed = Number.parseInt(tabIndexAttr || '', 10);
+    this.tabIndex = Number.isFinite(parsed) ? parsed : 0;
+
     this._parentChangeSubscription = merge(
       panel.opened,
       panel.closed,
       accordionHideToggleChange,
       panel._inputChanges.pipe(
-        filter(changes => {
-          return !!(changes['hideToggle'] || changes['disabled'] || changes['togglePosition']);
-        }),
+        filter(changes => !!(changes['hideToggle'] || changes['disabled'] || changes['togglePosition'])),
       ),
     ).subscribe(() => this._changeDetectorRef.markForCheck());
 
-    // Avoids focus being lost if the panel contained the focused element and was closed.
     panel.closed
       .pipe(filter(() => panel._containsFocus()))
-      .subscribe(() => _focusMonitor.focusVia(_element, 'program'));
+      .subscribe(() => this._focusMonitor.focusVia(this._element, 'program'));
   }
 
   get disabled(): boolean {
     return this.panel.disabled;
   }
 
-  /** Toggles the expanded state of the panel. */
   _toggle(): void {
     if (!this.disabled) {
       this.panel.toggle();
     }
   }
 
-  /** Gets whether the panel is expanded. */
   _isExpanded(): boolean {
     return this.panel.expanded;
   }
 
-  /** Gets the expanded state string of the panel. */
   _getExpandedState(): string {
     return this.panel._getExpandedState();
   }
 
-  /** Gets the panel id. */
   _getPanelId(): string {
     return this.panel.id;
   }
 
-  /** Gets the toggle position for the header. */
   _getTogglePosition(): HSAccordionTogglePosition {
     return this.panel.togglePosition;
   }
 
-  /** Gets whether the expand indicator should be shown. */
   _showToggle(): boolean {
     return !this.panel.hideToggle && !this.panel.disabled;
   }
 
-  /**
-   * Gets the current height of the header. Null if no custom height has been
-   * specified, and if the default height from the stylesheet should be used.
-   */
   _getHeaderHeight(): string | null {
     const isExpanded = this._isExpanded();
-    if (isExpanded && this.expandedHeight) {
-      return this.expandedHeight;
-    } else if (!isExpanded && this.collapsedHeight) {
-      return this.collapsedHeight;
-    }
+    if (isExpanded && this.expandedHeight) return this.expandedHeight;
+    if (!isExpanded && this.collapsedHeight) return this.collapsedHeight;
     return null;
   }
 
-  /** Handle keydown event calling to toggle() if appropriate. */
   _keydown(event: KeyboardEvent) {
     switch (event.keyCode) {
-      // Toggle for space and enter keys.
       case SPACE:
       case ENTER:
         if (!hasModifierKey(event)) {
           event.preventDefault();
           this._toggle();
         }
-
         break;
+
       default:
         if (this.panel.accordion) {
           this.panel.accordion._handleHeaderKeydown(event);
         }
-
         return;
     }
   }
 
-  /**
-   * Focuses the panel header. Implemented as a part of `FocusableOption`.
-   * @param origin Origin of the action that triggered the focus.
-   * @docs-private
-   */
   focus(origin?: FocusOrigin, options?: FocusOptions) {
     if (origin) {
       this._focusMonitor.focusVia(this._element, origin, options);

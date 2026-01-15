@@ -6,10 +6,11 @@ import { AdminsService } from 'src/app/core/services/admins/admin.service';
 import {AuthService} from "../../../../core/services/auth/auth.service";
 
 @Component({
-  selector: 'bk-meals',
-  templateUrl: './meals.component.html',
-  styleUrls: ['./meals.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'bk-meals',
+    templateUrl: './meals.component.html',
+    styleUrls: ['./meals.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ProgramComponent implements OnInit {
   user: any;

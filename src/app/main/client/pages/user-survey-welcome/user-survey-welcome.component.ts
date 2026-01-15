@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {HSFormFieldModule} from "../../../../core/components/form-field";
+import {HSInputDirective} from "../../../../core/components/input";
 import {HSInputModule} from "../../../../core/components/input";
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {IQCheckboxModule} from "../../../../core/components/checkbox";
@@ -21,11 +22,10 @@ import {TRAINING_TYPE_ENUM} from "../../../../core/enums/training-type.enum";
 import {TRAINING_EXPERIENCE_ENUM} from "../../../../core/enums/training-experiance.enum";
 
 @Component({
-  selector: 'hs-user-survey',
-  templateUrl: './user-survey-welcome.component.html',
-  styleUrls: ['./user-survey-welcome.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  standalone: true,
+    selector: 'hs-user-survey',
+    templateUrl: './user-survey-welcome.component.html',
+    styleUrls: ['./user-survey-welcome.component.scss'],
+    encapsulation: ViewEncapsulation.None,
   imports: [
     HSFormFieldModule,
     HSInputModule,
@@ -34,7 +34,8 @@ import {TRAINING_EXPERIENCE_ENUM} from "../../../../core/enums/training-experian
     HSSelectModule,
     NgIf,
     HSButtonModule,
-    NgClass
+    NgClass,
+    HSInputDirective
   ]
 })
 export class UserSurveyWelcomeComponent implements OnInit, OnDestroy {

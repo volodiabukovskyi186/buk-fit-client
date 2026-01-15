@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {HSInputDirective} from "src/app/core/components/input";
 
 import { ProgramRoutingModule } from './calculate-calories-routing.module';
 
@@ -36,7 +37,8 @@ import { ProgramComponent } from './calculate-calories.component';
     TableGridModule,
     CommonModule,
 
-    ProgramRoutingModule
+    ProgramRoutingModule,
+    HSInputDirective
   ]
 })
 export class CalculateCaloriesModule { }

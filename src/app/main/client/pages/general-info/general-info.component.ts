@@ -10,10 +10,11 @@ export enum GENERAL_INFO_TABS_ENUM {
 }
 
 @Component({
-  selector: 'bk-general-info',
-  templateUrl: './general-info.component.html',
-  styleUrls: ['./general-info.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'bk-general-info',
+    templateUrl: './general-info.component.html',
+    styleUrls: ['./general-info.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class GeneralInfoComponent {
   userInfoTabsEnum = GENERAL_INFO_TABS_ENUM; 

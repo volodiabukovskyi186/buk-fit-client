@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-general-info-nutrition-plan',
-  templateUrl: './general-info-nutrition-plan.component.html',
-  styleUrls: ['./general-info-nutrition-plan.component.scss']
+    selector: 'app-general-info-nutrition-plan',
+    templateUrl: './general-info-nutrition-plan.component.html',
+    styleUrls: ['./general-info-nutrition-plan.component.scss'],
+    standalone: false
 })
 export class GeneralInfoNutritionPlanComponent {
 

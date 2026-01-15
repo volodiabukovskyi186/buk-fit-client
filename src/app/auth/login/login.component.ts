@@ -11,10 +11,11 @@ import {TOKEN_ENUM} from "../../core/enums/token.enum";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
-  selector: 'bk-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'bk-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;

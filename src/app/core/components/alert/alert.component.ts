@@ -9,10 +9,11 @@ import { ALERT_SIZES_ENUM } from './enums/alert-sizes.enum';
 import { Subscription, timer } from 'rxjs';
 
 @Component({
-  selector: 'hs-alert',
-  templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'hs-alert',
+    templateUrl: './alert.component.html',
+    styleUrls: ['./alert.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class HSAlertComponent implements AfterViewInit, OnDestroy {
 

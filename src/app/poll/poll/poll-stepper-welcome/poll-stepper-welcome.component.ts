@@ -10,14 +10,13 @@ import {PollStepperInterface} from "src/app/poll/poll/features/poll-stepper/inte
 import {PollStepperService} from "src/app/poll/poll/features/poll-stepper/services/poll-stepper.service";
 
 @Component({
-  selector: 'app-poll-stepper-welcome',
-  standalone: true,
-  imports: [
-    NgForOf
-  ],
-  templateUrl: './poll-stepper-welcome.component.html',
-  styleUrl: './poll-stepper-welcome.component.scss',
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-poll-stepper-welcome',
+    imports: [
+
+    ],
+    templateUrl: './poll-stepper-welcome.component.html',
+    styleUrl: './poll-stepper-welcome.component.scss',
+    encapsulation: ViewEncapsulation.None
 })
 export class PollStepperWelcomeComponent implements OnInit {
   @Output() start= new EventEmitter<boolean>()

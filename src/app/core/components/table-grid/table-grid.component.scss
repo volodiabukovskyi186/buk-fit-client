@@ -1,5 +1,6 @@
 @import "variables";
 
+
 $hs-table-grid-border-color: #dcdee0;
 
 $ui-primary-light: $hs-neutrals;
@@ -27,7 +28,7 @@ hs-table-grid {
     .hs-table-cell {
       color: $hs-secondary-grey-03 !important;
 
-    
+
     }
 
     background: $hs-secondary-blue-00;
@@ -64,8 +65,8 @@ hs-table-grid {
         &:nth-child(odd) {
           // background: $ui-backgroundSecondary;
         }
-       
-       
+
+
       }
     }
 
@@ -212,7 +213,7 @@ hs-table-grid {
 
     &:last-child {
       // background: red;
-     
+
     }
   }
 
@@ -254,16 +255,16 @@ hs-table-grid {
 .cdk-virtual-scrollable {
     scrollbar-width: none;
   -ms-overflow-style: none;
-  
+
   &::-webkit-scrollbar {
     width: 0;
     height: 0;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background-color: transparent;
   }
-  
+
   &::-webkit-scrollbar-track {
     background-color: transparent;
   }

@@ -1,5 +1,6 @@
 @import "variables";
 
+
 $iq-checkbox-checkmark-size: var(--iq-checkbox-checkmark-size);
 $iq-checkbox-checkmark-color: white;
 $iq-checkbox-border-color-active: $hs-primary;
@@ -39,7 +40,7 @@ $iq-checkbox-border-radius: 1px;
         // box-shadow: 0 0 0 2px $iq-checkbox-disabled-box-shadow-color;
       }
 
-      
+
 
       input:checked:not(:indeterminate) ~ .iq-checkbox-wrapper .checkmark {
         border: 2px solid $iq-checkbox-border-color;
@@ -109,14 +110,14 @@ $iq-checkbox-border-radius: 1px;
         color: $iq-checkbox-border-color-active !important;
       }
     }
-  
+
 
     /* When the checkbox is checked, add background */
     input:checked:not(:indeterminate) ~ .iq-checkbox-wrapper .checkmark {
       border-color: $iq-checkbox-border-color-active;
       background:  $iq-checkbox-border-color-active;
       border-radius: $iq-checkbox-border-radius;
-      .icon-check { 
+      .icon-check {
         display: block;
       }
       //background-color: $iq-checkbox-primary-background-color;
