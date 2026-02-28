@@ -43,6 +43,14 @@ export class MainComponent implements OnInit, OnDestroy {
     this.router.navigate(['client/payment']);
   }
 
+  logOut(): void {
+    const stream$ = this.authService.logout().subscribe(() => {
+      this.router.navigate(['/auth/login']);
+    });
+
+    this.subscription.add(stream$);
+  }
+
   getActivePayments(): void {
     const stream$ = this.liqpayService.getActivePayments(this.user.id).subscribe((payment: any) => {
       this.payment = payment;

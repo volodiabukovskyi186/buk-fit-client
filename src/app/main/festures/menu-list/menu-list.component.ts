@@ -71,6 +71,12 @@ export class MenuListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  get mobileNavItems(): MenuItemInterface[] {
+    return this.menuList.reduce((acc: MenuItemInterface[], section: MenuSectionInterface) => {
+      return acc.concat(section.sections);
+    }, []).slice(0, 5);
+  }
+
   private mobileMenuState(): void {
     const stream$ = this.panelHeaderService.triggerMobileMenu$.subscribe((isOpen: boolean) => {
       this.isOpenMobile = isOpen;

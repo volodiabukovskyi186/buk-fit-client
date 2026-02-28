@@ -1,14 +1,15 @@
 
 <div class="panel-wrapper relative">
-    <div class="mobile-header flex justify-content-between">
-        <div class="mobile-menu-triggrs mr-16 p-14">
-            <i class="icon-menu fs-18 pointer" *ngIf="!isOpen" (click)="openMenu(true)"></i>
-            <i class="icon-cross fs-18 pointer" *ngIf="isOpen" (click)="openMenu(false)"></i>
+    <div class="mobile-header flex justify-content-end">
+      <div class="mobile-header-actions flex align-items-center">
+        <div class="mobile-menu-pay p-14" *ngIf="payment" (click)="moveToPayment()">
+          <i class="icon-money fs-18 pointer"></i>
+          <div class="mobile-menu-pay-circle">1</div>
         </div>
 
-      <div class="mobile-menu-pay p-14" *ngIf="payment" (click)="moveToPayment()">
-        <i class="icon-money fs-18 pointer"></i>
-        <div class="mobile-menu-pay-circle">1</div>
+        <div class="mobile-menu-logout p-14" (click)="logOut()">
+          <i class="icon-sign-out fs-18 pointer"></i>
+        </div>
       </div>
 
     </div>
@@ -19,7 +20,9 @@
         </div>
 
         <div class="panel-content flex-1 overflow-hidden">
-            <router-outlet></router-outlet>
+            <div class="panel-content-scroll">
+                <router-outlet></router-outlet>
+            </div>
         </div>
     </div>
 </div>

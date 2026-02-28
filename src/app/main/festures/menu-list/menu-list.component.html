@@ -2,7 +2,7 @@
 <div class="menu-list-wrapper flex flex-column">
     <div class="w-100 flex pt-8 pl-24 ">
         <div class="hs-log-out">
-            <i class="hs-icon icon-enter" (click)="logOut()"></i>
+            <i class="hs-icon icon-sign-out" (click)="logOut()"></i>
         </div>
     </div>
     <!-- <div class="menu-search-input">
@@ -75,7 +75,7 @@
 
             <div class="pl-12 mt-12 w-100 flex justify-content-end">
                 <div class="hs-log-out">
-                    <i class="hs-icon icon-enter" (click)="logOut()"></i>
+                    <i class="hs-icon icon-sign-out" (click)="logOut()"></i>
                 </div>
             </div>
             <div class="menu-list-section" *ngFor="let section of menuList">
@@ -131,3 +131,38 @@
         'side-bar-close-shadow': !isOpenMobile
     }"></div>
 </div>
+
+<nav class="mobile-bottom-nav" aria-label="Мобільна навігація">
+    <a
+        *ngFor="let menu of mobileNavItems"
+        class="mobile-bottom-nav-item"
+        [routerLink]="menu.url"
+        routerLinkActive="mobile-bottom-nav-item-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeMenu()"
+    >
+        <span class="mobile-bottom-nav-item-icon" [ngSwitch]="menu.url">
+            <svg *ngSwitchCase="'client/general-info'" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 10.5L12 4L20 10.5V20H4V10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M9.5 20V14H14.5V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <svg *ngSwitchCase="'client/program'" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 4H19V20H5V4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M9 8H15M9 12H15M9 16H13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+            </svg>
+            <svg *ngSwitchCase="'client/meals'" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6.5 4V12M9.5 4V12M6.5 8H9.5M8 12V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M14.5 4V9C14.5 10.7 15.8 12 17.5 12V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <svg *ngSwitchCase="'client/user-profile'" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"></circle>
+                <path d="M5 19C6.6 16.7 9.2 15.5 12 15.5C14.8 15.5 17.4 16.7 19 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+            </svg>
+            <svg *ngSwitchDefault viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8"></rect>
+                <path d="M8 12H16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+            </svg>
+        </span>
+        <span class="mobile-bottom-nav-item-label">{{ menu.title }}</span>
+    </a>
+</nav>

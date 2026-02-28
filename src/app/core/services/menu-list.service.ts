@@ -19,7 +19,7 @@ export class MenuListService {
       title: 'Головна',
       sections: [
         {
-          title: 'Загальна інформація',
+          title: 'Загальна',
           icon: '',
           isOpen: false,
           url: 'client/general-info',
