@@ -21,7 +21,7 @@
         <p><strong class="bk-title-color">Вага:</strong> {{ exercise.weight }}</p>
         <p><strong class="bk-title-color">Відпочинок:</strong> {{ exercise.restTime }}</p>
         <p><strong class="bk-title-color">Коментар:</strong> <span [innerHTML]="exercise.comment | MGAutoLink"></span></p>
-        <hs-button class="mt-8" *ngIf="exercise?.videoURL" (click)="moveToVideo(exercise?.videoURL)">Відео вправи</hs-button>
+        <hs-button class="mt-8" *ngIf="exercise?.videoURL" (click)="openVideoDrawer(exercise?.url)">Відео вправи</hs-button>
       </div>
     </div>
   </div>
@@ -48,3 +48,43 @@
     <h4 class="fc-secondary-grey-03 ">У вас ще немає програми тренувань</h4>
   </div>
 </ng-container>
+
+<div
+  class="video-drawer-overlay"
+  [class.video-drawer-overlay-open]="isVideoDrawerOpen"
+  (click)="closeVideoDrawer()"
+></div>
+
+<aside class="video-drawer" [class.video-drawer-open]="isVideoDrawerOpen" role="dialog" aria-modal="true" aria-label="Відео вправи">
+  <div class="video-drawer-header">
+    <h3>Відео вправи</h3>
+    <button type="button" class="video-drawer-close" (click)="closeVideoDrawer()" aria-label="Закрити відео">
+      <i class="icon-cross"></i>
+    </button>
+  </div>
+
+  <div class="video-drawer-content">
+    <div class="video-player-shell" *ngIf="activeVideoSafeUrl">
+      <iframe
+        *ngIf="isEmbeddedPlayer"
+        [src]="activeVideoSafeUrl"
+        title="Відео вправи"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+      ></iframe>
+
+      <video
+        autoplay
+        *ngIf="!isEmbeddedPlayer"
+        [src]="activeVideoSafeUrl"
+        controls
+        preload="metadata"
+        playsinline
+        controlsList="nodownload"
+      ></video>
+    </div>
+
+  </div>
+</aside>

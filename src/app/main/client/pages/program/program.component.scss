@@ -78,6 +78,108 @@ bk-program {
       }
     }
 
+    .video-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 120;
+    }
+
+    .video-drawer-overlay-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .video-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(560px, 100vw);
+      height: 100vh;
+      height: 100dvh;
+      background: #fff;
+      box-shadow: -12px 0 30px rgba(15, 23, 42, 0.2);
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      z-index: 121;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .video-drawer-open {
+      transform: translateX(0);
+    }
+
+    .video-drawer-header {
+      padding: 8px 20px;
+      border-bottom: 1px solid #e8edf3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h3 {
+        margin: 0;
+      }
+    }
+
+    .video-drawer-close {
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 8px;
+      background: #f3f6fa;
+      color: #5d6978;
+      cursor: pointer;
+    }
+
+    .video-drawer-content {
+      padding: 16px 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+    }
+
+    .video-player-shell {
+      width: 100%;
+      height: 100%;
+      max-height: calc(100dvh - 170px);
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      flex: 0 1 auto;
+    }
+
+    .video-player-shell iframe,
+    .video-player-shell video {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .video-drawer-open-link {
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .video-drawer {
+        width: 100vw;
+      }
+
+      .video-player-shell {
+        max-height: calc(100dvh - 150px);
+      }
+    }
 
 }
 
