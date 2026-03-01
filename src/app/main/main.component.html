@@ -1,6 +1,6 @@
 
 <div class="panel-wrapper relative">
-    <div class="mobile-header flex justify-content-end">
+    <div class="mobile-header flex justify-content-end  align-items-center px-10">
       <div class="mobile-header-actions flex w-100 justify-content-between ">
           <div class="flex align-items-center">
             <div class="welcome-badge-main">B U K F I T</div>
@@ -11,8 +11,17 @@
               <div class="mobile-menu-pay-circle">1</div>
             </div>
 
-            <div class="mobile-menu-logout p-14" (click)="logOut()">
-              <i class="icon-sign-out fs-18 pointer"></i>
+            <div class="mobile-profile-menu" (click)="$event.stopPropagation()">
+              <button type="button" class="mobile-profile-menu-trigger p-8" (click)="toggleProfileMenu($event)" aria-label="Відкрити меню профілю">
+                <i class="icon-menu fs-18 pointer"></i>
+              </button>
+
+              <div class="mobile-profile-menu-dropdown" *ngIf="isProfileMenuOpen">
+                <button type="button" class="mobile-profile-menu-item" (click)="logOut()">
+                  <i class="icon-sign-out fs-16"></i>
+                  <span>Вийти з профілю</span>
+                </button>
+              </div>
             </div>
           </div>
       </div>

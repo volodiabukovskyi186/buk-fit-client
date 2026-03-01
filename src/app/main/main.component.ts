@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { PanelHeaderService } from '../core/services/panel-header.service';
 import {AuthService} from "../core/services/auth/auth.service";
 import {ClientInterface} from "../core/interfaces/user.interface";
@@ -16,6 +16,7 @@ import {Router} from "@angular/router";
 })
 export class MainComponent implements OnInit, OnDestroy {
   isOpen = false;
+  isProfileMenuOpen = false;
   user: ClientInterface;
   tgViewportHeight: string = '';
   tgViewportStableHeight: string = '';
@@ -44,6 +45,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   logOut(): void {
+    this.isProfileMenuOpen = false;
     const stream$ = this.authService.logout().subscribe(() => {
       this.router.navigate(['/auth/login']);
     });
@@ -62,6 +64,23 @@ export class MainComponent implements OnInit, OnDestroy {
   openMenu(value): void {
     this.isOpen = value;
     this.panelHeaderService.triggerMobileMenu(this.isOpen)
+  }
+
+  toggleProfileMenu(event: MouseEvent): void {
+    event.stopPropagation();
+    this.isProfileMenuOpen = !this.isProfileMenuOpen;
+  }
+
+  @HostListener('document:click')
+  closeProfileMenuOnOutsideClick(): void {
+    if (this.isProfileMenuOpen) {
+      this.isProfileMenuOpen = false;
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  closeProfileMenuOnEscape(): void {
+    this.isProfileMenuOpen = false;
   }
 
   ngOnDestroy(): void {
