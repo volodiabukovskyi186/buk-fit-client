@@ -1,130 +1,198 @@
 bk-general-info {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
+  --text-main: #0f172a;
+  --text-muted: #334155;
+  --line: #dbe4ef;
+  --surface: #ffffff;
 
-  margin: 0;
-  padding: 0;
-height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  color: var(--text-main);
+  background:
+    radial-gradient(1100px 540px at 100% -18%, rgba(113, 168, 255, 0.16), transparent 62%),
+    radial-gradient(900px 500px at -12% 8%, rgba(255, 207, 120, 0.13), transparent 60%),
+    radial-gradient(820px 460px at 50% 108%, rgba(255, 166, 196, 0.1), transparent 63%),
+    linear-gradient(180deg, #fdfcff 0%, #f5f9ff 55%, #fffdf8 100%);
 
   .general-info-btn {
-    padding: 15px 20px
+    padding: 14px 18px 10px;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    background: rgba(245, 249, 255, 0.85);
+    border-bottom: 1px solid rgba(203, 213, 225, 0.45);
   }
 
   .general-info-container {
     height: 100%;
     overflow: auto;
-    background-color: #f4f4f4;
+    padding: 14px 18px 22px;
+  }
 
-    h1,
-    h2 {
-      color: #333;
+  .general-info-container app-general-info-workout-program,
+  .general-info-container app-general-info-nutrition,
+  .general-info-container app-general-info-diet-calculation,
+  .general-info-container app-general-info-nutrition-plan {
+    display: block;
+    width: min(100%, 980px);
+    margin: 0 auto;
+  }
+
+  .general-info-container app-general-info-nutrition section,
+  .general-info-container app-general-info-diet-calculation section,
+  .general-info-container app-general-info-nutrition-plan section {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.07);
+    overflow: hidden;
+  }
+
+  .general-info-container app-general-info-nutrition h1,
+  .general-info-container app-general-info-diet-calculation h1,
+  .general-info-container app-general-info-nutrition-plan h1 {
+    margin: 0;
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
+    line-height: 1.22;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    color: #0f172a;
+  }
+
+  .general-info-container app-general-info-nutrition p,
+  .general-info-container app-general-info-diet-calculation p,
+  .general-info-container app-general-info-nutrition-plan p {
+    margin: 0 0 10px;
+    color: var(--text-muted);
+    line-height: 1.62;
+  }
+
+  .general-info-container .important-note {
+    margin-top: 14px;
+    border: 1px solid #cfe1ff;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+    padding: 14px;
+  }
+
+  .general-info-container .important-note h2 {
+    margin: 0 0 10px;
+    font-size: 1.05rem;
+    color: #1d4ed8;
+  }
+
+  .general-info-container app-general-info-nutrition h2,
+  .general-info-container app-general-info-diet-calculation h2,
+  .general-info-container app-general-info-nutrition-plan h2 {
+    margin: 18px 0 10px;
+    font-size: 1.08rem;
+    line-height: 1.35;
+    color: #0f172a;
+  }
+
+  .general-info-container ul {
+    list-style: none;
+    margin: 8px 0 4px;
+    padding: 0;
+  }
+
+  .general-info-container ul li {
+    position: relative;
+    padding: 10px 12px 10px 38px;
+    margin: 8px 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    color: var(--text-muted);
+    line-height: 1.52;
+  }
+
+  .general-info-container ul li::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 13px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 45% 45%, #ffffff 0 22%, transparent 24%),
+      linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.22);
+  }
+
+  .general-info-container table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 14px 0 0;
+    font-size: 0.92rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    background: #fff;
+  }
+
+  .general-info-container thead th {
+    background: #eff6ff;
+    color: #1e3a8a;
+    font-weight: 700;
+  }
+
+  .general-info-container th,
+  .general-info-container td {
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+    color: #1f2937;
+    white-space: normal;
+  }
+
+  .general-info-container tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .general-info-container tr td:last-child,
+  .general-info-container tr th:last-child {
+    border-right: 0;
+  }
+
+  .general-info-container table tbody tr:nth-child(even) td {
+    background: #fbfdff;
+  }
+
+  @media (max-width: 768px) {
+    .general-info-btn {
+      padding: 10px 10px 8px;
     }
 
-    section {
-      margin: 20px;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    .general-info-container {
+      padding: 10px 10px 14px;
     }
 
-    .important-note {
-      border: 2px solid red;
-      padding: 10px;
-      margin-bottom: 20px;
-
-      h2 {
-        color: red;
-      }
-
-      p {
-        margin: 0;
-      }
+    .general-info-container app-general-info-nutrition section,
+    .general-info-container app-general-info-diet-calculation section,
+    .general-info-container app-general-info-nutrition-plan section {
+      border-radius: 14px;
+      padding: 14px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-      }
-
-      th {
-        background-color: #f2f2f2;
-      }
-
-      tr:nth-child(even) {
-        background-color: #f9f9f9;
-      }
+    .general-info-container ul li {
+      padding: 10px 10px 10px 34px;
+      margin: 7px 0;
     }
 
-    ul {
-      list-style: none;
-      padding: 0;
-
-      li {
-        background: #e7f3ff;
-        margin: 5px 0;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      body {
-        padding: 10px;
-      }
-
-      section {
-        margin: 10px;
-        padding: 15px;
-      }
-
-      table,
-      thead,
-      tbody,
-      th,
-      td,
-      tr {
-        display: block;
-      }
-
-      thead tr {
-        display: none;
-      }
-
-      tr {
-        margin-bottom: 10px;
-      }
-
-      td {
-        border: none;
-        position: relative;
-        padding-left: 50%;
-        text-align: right;
-      }
-
-      td:before {
-        content: attr(data-label);
-        position: absolute;
-        left: 10px;
-        width: calc(50% - 20px);
-        padding-right: 10px;
-        white-space: nowrap;
-        text-align: left;
-      }
-
-      ul {
-        //padding-left: 20px;
-      }
+    .general-info-container ul li::before {
+      left: 10px;
+      top: 13px;
     }
   }
 }
