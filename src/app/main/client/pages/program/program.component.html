@@ -1,53 +1,51 @@
-<h2>Програма тренувань</h2>
-
-<div *ngIf="exercises?.length > 1">
-  <div hsButtonToggleGroup [value]="selectedDay" (change)="setDay($event)" class="mt-12" style="max-width: 900px;">
-    <hs-button-toggle-ui [ngClass]="{'bk-toggle-width': selectedDay == i}"  *ngFor="let program of exercises; let i = index" [value]="i">
-      <span>{{selectedDay == i ? 'День': ''}}  {{ i + 1 }}</span>
-    </hs-button-toggle-ui>
+<section class="program-page">
+  <div *ngIf="exercises?.length > 1" class="program-days">
+    <div hsButtonToggleGroup [value]="selectedDay" (change)="setDay($event)" class="program-days-toggle">
+      <hs-button-toggle-ui [ngClass]="{'bk-toggle-width': selectedDay == i}" *ngFor="let program of exercises; let i = index" [value]="i">
+        <span>{{ selectedDay == i ? 'День' : 'Д' }} {{ i + 1 }}</span>
+      </hs-button-toggle-ui>
+    </div>
   </div>
 
-</div>
-
-<div *ngIf="exercises?.length > 0">
-  <div class="program">
-    <div class="mb-8">
-      <h4>День {{ selectedDay + 1 }}</h4>
+  <div *ngIf="exercises?.length > 0" class="program-content">
+    <div class="program-day-title-wrap">
+      <h2 class="program-day-title">День {{ selectedDay + 1 }}</h2>
     </div>
-    <div *ngFor="let exercise of exercises[selectedDay]?.exercises" class="card">
-      <div class="card-content">
-        <h2 class="pb-8">{{ exercise.exerciseName }}:</h2>
-        <p><strong class="bk-title-color">Підходи та повторення:</strong> {{ exercise.setsAndReps }}</p>
-        <p><strong class="bk-title-color">Вага:</strong> {{ exercise.weight }}</p>
-        <p><strong class="bk-title-color">Відпочинок:</strong> {{ exercise.restTime }}</p>
-        <p><strong class="bk-title-color">Коментар:</strong> <span [innerHTML]="exercise.comment | MGAutoLink"></span></p>
-        <hs-button class="mt-8" *ngIf="exercise?.videoURL" (click)="openVideoDrawer(exercise?.url)">Відео вправи</hs-button>
+
+    <article *ngFor="let exercise of exercises[selectedDay]?.exercises; let idx = index" class="exercise-card">
+      <div class="exercise-card-head">
+        <span class="exercise-index">{{ idx + 1 }}</span>
+        <h3>{{ exercise.exerciseName }}</h3>
       </div>
+
+      <div class="exercise-grid">
+        <p><strong>Підходи та повторення:</strong> {{ exercise.setsAndReps }}</p>
+        <p><strong>Вага:</strong> {{ exercise.weight }}</p>
+        <p><strong>Відпочинок:</strong> {{ exercise.restTime }}</p>
+      </div>
+
+      <p class="exercise-comment"><strong>Коментар:</strong> <span [innerHTML]="exercise.comment | MGAutoLink"></span></p>
+
+      <div class="exercise-actions">
+
+
+        @if(exercise?.url) {
+          <hs-button  (click)="openVideoDrawer(exercise?.url)">Відео вправи</hs-button>
+        } @else {
+          <hs-button *ngIf="exercise?.videoURL" (click)="moveToVideo(exercise?.videoURL)">Відео вправи</hs-button>
+        }
+
+      </div>
+    </article>
+  </div>
+
+  <ng-container *ngIf="!exercises?.length">
+    <div class="program-empty">
+      <h4>У вас ще немає програми тренувань</h4>
+      <p>Після заповнення анкети та підтвердження тренером програма зʼявиться тут.</p>
     </div>
-  </div>
-</div>
-
-<!--<div *ngFor="let program of exercises;  let i = index" class="program">-->
-<!--    <div class="mb-8">-->
-<!--        <h4>День {{i + 1}}</h4>-->
-<!--    </div>-->
-<!--    <div *ngFor="let exercise of program.exercises" class="card">-->
-<!--      <div class="card-content">-->
-<!--        <h2 class="pb-8">{{ exercise.exerciseName }}:</h2>-->
-<!--        <p><strong class="bk-title-color">Підходи і повторення:</strong> {{ exercise.setsAndReps }}</p>-->
-<!--        <p><strong class="bk-title-color">Вага:</strong> {{ exercise.weight }}</p>-->
-<!--        <p><strong class="bk-title-color">Відпочинок:</strong> {{ exercise.restTime }}</p>-->
-<!--        <p><strong class="bk-title-color">Коментар:</strong> <span [innerHTML]="exercise.comment | MGAutoLink"></span></p>-->
-<!--        <hs-button class="mt-8" *ngIf="exercise?.videoURL" (click)="moveToVideo(exercise?.videoURL)">Відео вправи</hs-button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<ng-container *ngIf="!exercises?.length">
-  <div class="w-100 flex justify-content-center pt-24">
-    <h4 class="fc-secondary-grey-03 ">У вас ще немає програми тренувань</h4>
-  </div>
-</ng-container>
+  </ng-container>
+</section>
 
 <div
   class="video-drawer-overlay"

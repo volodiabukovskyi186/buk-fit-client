@@ -1,8 +1,6 @@
 import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { filter } from 'rxjs';
-import { AdminsService } from 'src/app/core/services/admins/admin.service';
 import {AuthService} from "../../../../core/services/auth/auth.service";
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -22,7 +20,6 @@ export class ProgramComponent implements OnInit {
   isEmbeddedPlayer = false;
 
   constructor(
-    private snackBar: MatSnackBar,
     public firestore: AngularFirestore,
     private authService: AuthService,
     private sanitizer: DomSanitizer
@@ -49,9 +46,11 @@ export class ProgramComponent implements OnInit {
       .valueChanges()
       .subscribe((users: any[]) => {
         this.exercises = users[0]?.days;
-        console.log('exercises', this.exercises);
-
       });
+  }
+
+  moveToVideo(link:string) {
+    window.open(link);
   }
 
   openVideoDrawer(link: string): void {
