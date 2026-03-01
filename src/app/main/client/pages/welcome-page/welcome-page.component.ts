@@ -28,7 +28,6 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('888888')
     this.checkIsLoggedIn();
   }
 
@@ -39,7 +38,6 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
   private checkIsLoggedIn() {
     const stream$ = this.authService.userState$.pipe(filter((user: ClientInterface | null) => user !== null)).subscribe((user: ClientInterface) => {
       this.user = user;
-      console.log('21312312313')
       if (this.user.status == USER_STATUS_ENUM.ACTIVE) {
         this.router.navigate(['/client/program']);
       }

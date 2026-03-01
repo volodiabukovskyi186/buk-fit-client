@@ -1,18 +1,20 @@
 
 <div class="panel-wrapper relative">
     <div class="mobile-header flex justify-content-end">
-      <div class="mobile-header-actions flex align-items-center">
-<!--        <div>-->
-<!--          <img src="../../assets/images/buk-horizontal.png" alt="">-->
-<!--        </div>-->
-        <div class="mobile-menu-pay p-14" *ngIf="payment" (click)="moveToPayment()">
-          <i class="icon-money fs-18 pointer"></i>
-          <div class="mobile-menu-pay-circle">1</div>
-        </div>
+      <div class="mobile-header-actions flex w-100 justify-content-between ">
+          <div class="flex align-items-center">
+            <div class="welcome-badge-main">B U K F I T</div>
+          </div>
+          <div>
+            <div class="mobile-menu-pay p-14" *ngIf="payment" (click)="moveToPayment()">
+              <i class="icon-money fs-18 pointer"></i>
+              <div class="mobile-menu-pay-circle">1</div>
+            </div>
 
-        <div class="mobile-menu-logout p-14" (click)="logOut()">
-          <i class="icon-sign-out fs-18 pointer"></i>
-        </div>
+            <div class="mobile-menu-logout p-14" (click)="logOut()">
+              <i class="icon-sign-out fs-18 pointer"></i>
+            </div>
+          </div>
       </div>
 
     </div>
