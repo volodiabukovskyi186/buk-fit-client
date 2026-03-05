@@ -1,0 +1,96 @@
+<div class="entry-dialog">
+
+  <!-- ── Header ────────────────────────────────────────────────────────────── -->
+  <div class="entry-dialog__header">
+    <div class="entry-dialog__header-icon">
+      <span class="material-icons">monitor_weight</span>
+    </div>
+    <h2 class="entry-dialog__title">{{ isEdit ? 'Редагувати запис' : 'Новий запис' }}</h2>
+    <button class="entry-dialog__close" type="button" (click)="cancel()">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="entry-dialog__body">
+
+    <!-- ── Weight hero ───────────────────────────────────────────────────── -->
+    <div class="ed-weight-card">
+      <span class="ed-weight-card__label">Ваша вага</span>
+      <div class="ed-weight-card__row">
+        <input
+          class="ed-weight-card__input"
+          type="number"
+          inputmode="decimal"
+          step="0.1"
+          formControlName="weightKg"
+          placeholder="0.0"
+          autofocus
+        />
+        <span class="ed-weight-card__unit">кг</span>
+      </div>
+      <span class="ed-weight-card__error"
+            *ngIf="hasError('weightKg', 'required') || hasError('weightKg', 'positiveNumber') || hasError('weightKg', 'max')">
+        Введіть коректну вагу (до 500 кг)
+      </span>
+    </div>
+
+    <!-- ── Measurements ──────────────────────────────────────────────────── -->
+    <div class="ed-section">
+      <div class="ed-section__label">
+        <div class="ed-section__icon ed-section__icon--orange">
+          <span class="material-icons">straighten</span>
+        </div>
+        <span>Заміри</span>
+        <span class="ed-section__optional">необов'язково</span>
+      </div>
+
+      <div class="ed-measure-row">
+        <span class="ed-measure-row__label">Талія</span>
+        <div class="ed-measure-row__right">
+          <input class="ed-measure-row__input" type="number" inputmode="decimal" step="0.5"
+                 formControlName="waistCm" placeholder="—" />
+          <span class="ed-measure-row__unit">см</span>
+        </div>
+      </div>
+      <div class="ed-section__divider"></div>
+      <div class="ed-measure-row">
+        <span class="ed-measure-row__label">Стегна</span>
+        <div class="ed-measure-row__right">
+          <input class="ed-measure-row__input" type="number" inputmode="decimal" step="0.5"
+                 formControlName="hipsCm" placeholder="—" />
+          <span class="ed-measure-row__unit">см</span>
+        </div>
+      </div>
+      <div class="ed-section__divider"></div>
+      <div class="ed-measure-row">
+        <span class="ed-measure-row__label">Груди</span>
+        <div class="ed-measure-row__right">
+          <input class="ed-measure-row__input" type="number" inputmode="decimal" step="0.5"
+                 formControlName="chestCm" placeholder="—" />
+          <span class="ed-measure-row__unit">см</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Note ──────────────────────────────────────────────────────────── -->
+    <div class="ed-note-wrap">
+      <textarea
+        class="ed-note"
+        formControlName="note"
+        rows="2"
+        maxlength="300"
+        placeholder="Нотатка: самопочуття, умови...">
+      </textarea>
+      <span class="ed-note__count">{{ f['note'].value?.length || 0 }}/300</span>
+    </div>
+
+    <!-- ── Actions ───────────────────────────────────────────────────────── -->
+    <div class="entry-dialog__actions">
+      <button type="submit" class="entry-dialog__submit">
+        {{ isEdit ? 'Зберегти зміни' : 'Додати запис' }}
+      </button>
+      <button type="button" class="entry-dialog__cancel-link" (click)="cancel()">Скасувати</button>
+    </div>
+
+  </form>
+</div>

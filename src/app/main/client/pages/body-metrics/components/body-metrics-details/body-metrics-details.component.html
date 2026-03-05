@@ -1,0 +1,321 @@
+<div class="bm-details">
+
+  <!-- ── Loading ──────────────────────────────────────────────────────────── -->
+  <div *ngIf="facade.loading()" class="bm-details__loading">
+    <hs-loader-ui></hs-loader-ui>
+  </div>
+
+  <!-- ── Error ────────────────────────────────────────────────────────────── -->
+  <div *ngIf="facade.error() && !facade.loading()" class="bm-details__error">
+    <span class="material-icons">error_outline</span>
+    <span>{{ facade.error() }}</span>
+  </div>
+
+  <!-- ── Empty state ──────────────────────────────────────────────────────── -->
+  <ng-container *ngIf="!facade.loading() && !facade.latestEntry()">
+
+    <!-- Has survey data: show preview card -->
+    <ng-container *ngIf="hasSurveyData(); else noDataEmpty">
+      <div class="bm-first">
+        <div class="bm-first__icon-row">
+          <div class="bm-first__icon-wrap">
+            <span class="material-icons">monitor_weight</span>
+          </div>
+          <div>
+            <p class="bm-first__title">Перший запис</p>
+            <p class="bm-first__sub">дані з вашого профілю</p>
+          </div>
+        </div>
+
+        <div class="bm-first__weight">
+          <span class="bm-first__weight-val">{{ surveyWeightFormatted() }}</span>
+          <span class="bm-first__weight-unit">кг</span>
+        </div>
+
+        <div class="bm-first__chips"
+             *ngIf="facade.surveyDefaults().waistCm || facade.surveyDefaults().hipsCm || facade.surveyDefaults().chestCm">
+          <span *ngIf="facade.surveyDefaults().waistCm" class="bm-first__chip">
+            Талія {{ facade.surveyDefaults().waistCm }} см
+          </span>
+          <span *ngIf="facade.surveyDefaults().hipsCm" class="bm-first__chip">
+            Стегна {{ facade.surveyDefaults().hipsCm }} см
+          </span>
+          <span *ngIf="facade.surveyDefaults().chestCm" class="bm-first__chip">
+            Груди {{ facade.surveyDefaults().chestCm }} см
+          </span>
+        </div>
+
+        <button
+          class="bm-first__save-btn"
+          [disabled]="quickSaving()"
+          (click)="quickAddFromSurvey()"
+        >
+          <span *ngIf="!quickSaving()">Зберегти як перший запис</span>
+          <span *ngIf="quickSaving()">Зберігаємо…</span>
+        </button>
+
+        <button class="bm-first__manual-btn" (click)="openAddDialog()">
+          Ввести вручну
+        </button>
+      </div>
+    </ng-container>
+
+    <!-- No survey data: simple fallback -->
+    <ng-template #noDataEmpty>
+      <div class="bm-details__empty">
+        <div class="bm-details__empty-icon">
+          <span class="material-icons">monitor_weight</span>
+        </div>
+        <p class="bm-details__empty-title">Немає записів</p>
+        <p class="bm-details__empty-sub">Додайте перший запис ваги</p>
+        <hs-button
+          class="bm-details__empty-btn"
+          text="Додати запис"
+          (click)="openAddDialog()"
+        ></hs-button>
+      </div>
+    </ng-template>
+
+  </ng-container>
+
+  <!-- ── Content ──────────────────────────────────────────────────────────── -->
+  <ng-container *ngIf="!facade.loading() && facade.latestEntry() as entry">
+
+    <!-- ── Hero card: weight + 7d motivation ────────────────────────────── -->
+    <div class="bm-hero"
+         [style.--accent]="weight7dLevel()?.accentColor || '#3FA1FB'"
+         [style.--accent-bg]="weight7dLevel()?.accentBg || '#F5F5F5'">
+
+      <!-- Weight section -->
+      <div class="bm-hero__weight-section">
+        <div class="bm-hero__weight-row">
+          <div class="bm-weight">
+            <span class="bm-weight__value">{{ weightFormatted() }}</span>
+            <span class="bm-weight__unit">кг</span>
+          </div>
+          <div class="bm-card__actions">
+            <button class="bm-icon-btn" (click)="openEditDialog()">
+              <span class="material-icons">edit</span>
+            </button>
+            <button class="bm-icon-btn bm-icon-btn--danger" (click)="openDeleteDialog()">
+              <span class="material-icons">delete_outline</span>
+            </button>
+          </div>
+        </div>
+        <p class="bm-weight__date">{{ latestEntryDatetime() }}</p>
+        <p *ngIf="entry.note" class="bm-note">{{ entry.note }}</p>
+      </div>
+
+      <!-- 7d section -->
+      <ng-container *ngIf="weight7dLevel() as w7d">
+        <div class="bm-hero__7d">
+          <div class="bm-7d__top">
+            <span class="bm-7d__label">Прогрес за 7 днів</span>
+            <div class="bm-7d__stats">
+              <span class="bm-7d__kg">{{ w7d.kg }} кг</span>
+              <span class="bm-7d__pct">{{ w7d.percent }}</span>
+            </div>
+          </div>
+          <div class="bm-7d__body">
+            <div class="bm-7d__emoji-wrap">
+              <span class="bm-7d__emoji">{{ w7d.emoji }}</span>
+            </div>
+            <div class="bm-7d__text">
+              <p class="bm-7d__headline">{{ w7d.headline }}</p>
+              <p class="bm-7d__subtext">{{ w7d.subtext }}</p>
+            </div>
+          </div>
+          <div class="bm-7d__bar-wrap">
+
+            <!-- LOSE_WEIGHT bar: bad(left) → good(right) → bad(far-right) -->
+            <div *ngIf="w7d.goalType === 'lose'" class="bm-7d__bar">
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--very-gain"></div>
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--gain"></div>
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--slow"></div>
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--ideal">
+                <span class="bm-7d__ideal-label">ціль</span>
+              </div>
+              <div class="bm-7d__marker" [style.left.%]="w7d.markerPercent">
+                <div class="bm-7d__marker-pin"></div>
+                <span *ngIf="w7d.exceedsLeft || w7d.exceedsRight" class="bm-7d__marker-overflow">{{ w7d.percent }}</span>
+              </div>
+            </div>
+
+            <!-- GAIN_WEIGHT bar: bad(left) → good(right) — reversed scale -->
+            <div *ngIf="w7d.goalType === 'gain'" class="bm-7d__bar">
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--ideal">
+                <span class="bm-7d__ideal-label">ціль</span>
+              </div>
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--slow"></div>
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--gain"></div>
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--very-gain"></div>
+              <div class="bm-7d__marker" [style.left.%]="w7d.markerPercent">
+                <div class="bm-7d__marker-pin"></div>
+                <span *ngIf="w7d.exceedsLeft || w7d.exceedsRight" class="bm-7d__marker-overflow">{{ w7d.percent }}</span>
+              </div>
+            </div>
+
+            <!-- TONE_BODY bar: bad(edges) → good(center) — symmetric -->
+            <div *ngIf="w7d.goalType === 'tone'" class="bm-7d__bar">
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--very-gain" style="flex:1"></div>
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--slow" style="flex:1"></div>
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--ideal" style="flex:2">
+                <span class="bm-7d__ideal-label">ціль</span>
+              </div>
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--slow" style="flex:1"></div>
+              <div class="bm-7d__bar-seg bm-7d__bar-seg--very-gain" style="flex:1"></div>
+              <div class="bm-7d__marker" [style.left.%]="w7d.markerPercent">
+                <div class="bm-7d__marker-pin"></div>
+                <span *ngIf="w7d.exceedsLeft || w7d.exceedsRight" class="bm-7d__marker-overflow">{{ w7d.percent }}</span>
+              </div>
+            </div>
+
+            <div class="bm-7d__bar-labels">
+              <span *ngFor="let label of w7d.barLabels">{{ label }}</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- No 7d data yet -->
+      <div *ngIf="!weight7dLevel()" class="bm-hero__7d bm-hero__7d--empty">
+        <span class="material-icons">insights</span>
+        <p>Додайте ≥ 2 записи за тиждень, щоб побачити прогрес</p>
+      </div>
+
+    </div>
+
+    <!-- Cards row: comparison + best 30d -->
+    <div class="bm-row">
+
+      <!-- Compared to last time -->
+      <div class="bm-card bm-card--half">
+        <p class="bm-card__label">З минулого разу</p>
+        <ng-container *ngIf="deltaDisplay() as delta; else noPrev">
+          <p
+            class="bm-delta"
+            [class.bm-delta--good]="deltaIsGood()"
+            [class.bm-delta--bad]="deltaIsBad()"
+          >
+            <span class="material-icons bm-delta__icon">
+              {{ deltaIsPositive() ? 'arrow_upward' : deltaIsNegative() ? 'arrow_downward' : 'remove' }}
+            </span>
+            {{ delta }} кг
+          </p>
+          <p class="bm-card__sub" *ngIf="prevEntryDate()">{{ prevEntryDate() }}</p>
+        </ng-container>
+        <ng-template #noPrev>
+          <p class="bm-card__empty-val">—</p>
+          <p class="bm-card__sub">Попереднього запису нема</p>
+        </ng-template>
+      </div>
+
+      <!-- Best 30d -->
+      <div class="bm-card bm-card--half">
+        <p class="bm-card__label">{{ facade.best30dLabel() }}</p>
+        <p class="bm-card__big-val"
+           [class.bm-card__empty-val]="!facade.best30dWeight()">
+          {{ best30dFormatted() }}
+        </p>
+        <p class="bm-card__sub" *ngIf="facade.best30dWeight()">{{ facade.best30dSubLabel() }}</p>
+      </div>
+
+    </div>
+
+    <div class="bm-card">
+    <bk-body-metrics-chart></bk-body-metrics-chart>
+    </div>
+    <!-- Card: Metrics list -->
+    <div class="bm-card">
+      <h3 class="bm-card__title">Метрики</h3>
+
+      <div class="bm-metrics">
+
+        <!-- Weight -->
+        <div class="bm-metric">
+          <div class="bm-metric__icon-wrap" style="background:#E8F4FF">
+            <span class="material-icons" style="color:#3FA1FB">monitor_weight</span>
+          </div>
+          <div class="bm-metric__info">
+            <span class="bm-metric__name">Вага</span>
+            <span class="bm-metric__unit">кг</span>
+          </div>
+          <span class="bm-metric__value">{{ weightFormatted() }}</span>
+        </div>
+
+        <!-- Best 30d -->
+        <hr class="bm-divider">
+        <div class="bm-metric">
+          <div class="bm-metric__icon-wrap" style="background:#E6F7EE">
+            <span class="material-icons" style="color:#27AE60">emoji_events</span>
+          </div>
+          <div class="bm-metric__info">
+            <span class="bm-metric__name">{{ facade.best30dLabel() }}</span>
+            <span class="bm-metric__unit">{{ facade.best30dSubLabel() }}</span>
+          </div>
+          <span class="bm-metric__value"
+            [class.bm-metric__value--empty]="!facade.best30dWeight()">
+            {{ best30dFormatted() }}
+          </span>
+        </div>
+
+        <!-- Optional: waist -->
+        <ng-container *ngIf="entry.waistCm">
+          <hr class="bm-divider">
+          <div class="bm-metric">
+            <div class="bm-metric__icon-wrap" style="background:#FEF6E7">
+              <span class="material-icons" style="color:#F2AF4A">straighten</span>
+            </div>
+            <div class="bm-metric__info">
+              <span class="bm-metric__name">Талія</span>
+              <span class="bm-metric__unit">см</span>
+            </div>
+            <span class="bm-metric__value">{{ entry.waistCm }}</span>
+          </div>
+        </ng-container>
+
+        <!-- Optional: hips -->
+        <ng-container *ngIf="entry.hipsCm">
+          <hr class="bm-divider">
+          <div class="bm-metric">
+            <div class="bm-metric__icon-wrap" style="background:#F3EFFE">
+              <span class="material-icons" style="color:#9B51E0">straighten</span>
+            </div>
+            <div class="bm-metric__info">
+              <span class="bm-metric__name">Стегна</span>
+              <span class="bm-metric__unit">см</span>
+            </div>
+            <span class="bm-metric__value">{{ entry.hipsCm }}</span>
+          </div>
+        </ng-container>
+
+        <!-- Optional: chest -->
+        <ng-container *ngIf="entry.chestCm">
+          <hr class="bm-divider">
+          <div class="bm-metric">
+            <div class="bm-metric__icon-wrap" style="background:#FDECEA">
+              <span class="material-icons" style="color:#E95032">straighten</span>
+            </div>
+            <div class="bm-metric__info">
+              <span class="bm-metric__name">Груди</span>
+              <span class="bm-metric__unit">см</span>
+            </div>
+            <span class="bm-metric__value">{{ entry.chestCm }}</span>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+
+  </ng-container>
+
+  <!-- ── FAB: Add entry ────────────────────────────────────────────────────── -->
+  <button
+    *ngIf="!facade.loading() && facade.latestEntry()"
+    class="bm-fab"
+    (click)="openAddDialog()"
+  >
+    <span class="material-icons">add</span>
+  </button>
+
+</div>

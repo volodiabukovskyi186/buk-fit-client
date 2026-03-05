@@ -142,27 +142,80 @@
         (click)="closeMenu()"
     >
         <span class="mobile-bottom-nav-item-icon" [ngSwitch]="menu.url">
-            <svg *ngSwitchCase="'client/general-info'" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4 10.5L12 4L20 10.5V20H4V10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M9.5 20V14H14.5V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
             <svg *ngSwitchCase="'client/program'" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M5 4H19V20H5V4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
                 <path d="M9 8H15M9 12H15M9 16H13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
             </svg>
-            <svg *ngSwitchCase="'client/meals'" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+
+            <svg *ngSwitchCase="'client/body-metrics'" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 20L8.5 13L12 17L15.5 10L20 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M4 4V20H20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+
+             <svg *ngSwitchCase="'client/meals'" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M6.5 4V12M9.5 4V12M6.5 8H9.5M8 12V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
                 <path d="M14.5 4V9C14.5 10.7 15.8 12 17.5 12V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-            <svg *ngSwitchCase="'client/user-profile'" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"></circle>
-                <path d="M5 19C6.6 16.7 9.2 15.5 12 15.5C14.8 15.5 17.4 16.7 19 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
-            </svg>
-            <svg *ngSwitchDefault viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8"></rect>
-                <path d="M8 12H16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
             </svg>
         </span>
         <span class="mobile-bottom-nav-item-label">{{ menu.title }}</span>
     </a>
+
+    <!-- More button -->
+    <div class="mobile-more-wrap">
+
+      <!-- Popup -->
+      <div class="mobile-more-popup" *ngIf="isMoreOpen">
+        <a class="mobile-more-popup__item mobile-more-popup__item--danger"
+           (click)="logOut();closeMore()">
+          <span class="mobile-more-popup__icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M15 3H19C19.5523 3 20 3.44772 20 4V20C20 20.5523 19.5523 21 19 21H15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+              <path d="M10 17L15 12L10 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M15 12H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+            </svg>
+          </span>
+          <span class="mobile-more-popup__label">Вийти</span>
+        </a>
+        <a class="mobile-more-popup__item" routerLink="client/general-info"
+           routerLinkActive="mobile-more-popup__item--active" (click)="closeMore()">
+          <span class="mobile-more-popup__icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 10.5L12 4L20 10.5V20H4V10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M9.5 20V14H14.5V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          <span class="mobile-more-popup__label">Загальна інформація</span>
+        </a>
+
+        <a class="mobile-more-popup__item" routerLink="client/user-profile"
+           routerLinkActive="mobile-more-popup__item--active" (click)="closeMore()">
+          <span class="mobile-more-popup__icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"></circle>
+              <path d="M5 19C6.6 16.7 9.2 15.5 12 15.5C14.8 15.5 17.4 16.7 19 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+            </svg>
+          </span>
+          <span class="mobile-more-popup__label">Мій профіль</span>
+        </a>
+      </div>
+
+      <button
+          class="mobile-bottom-nav-item mobile-bottom-nav-item--more"
+          [class.mobile-bottom-nav-item-active]="isMoreOpen"
+          (click)="toggleMore()"
+          type="button"
+      >
+          <span class="mobile-bottom-nav-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="5" cy="12" r="1.5" fill="currentColor"></circle>
+                  <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+                  <circle cx="19" cy="12" r="1.5" fill="currentColor"></circle>
+              </svg>
+          </span>
+          <span class="mobile-bottom-nav-item-label">Ще</span>
+      </button>
+    </div>
+
+    <!-- Backdrop to close popup -->
+    <div class="mobile-more-backdrop" *ngIf="isMoreOpen" (click)="closeMore()"></div>
 </nav>

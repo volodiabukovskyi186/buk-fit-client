@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {GOAL_ENUM} from "src/app/core/enums/goal.enum";
 import {HSFormFieldModule} from "../../../../../../core/components/form-field";
 import {HSInputDirective} from "../../../../../../core/components/input";
 import {HSInputModule} from "../../../../../../core/components/input";
@@ -40,6 +41,7 @@ export class UserSurveyComponent implements OnInit, OnDestroy {
   currentUserId: string;
   formGroup: FormGroup;
   genderEnum = GENDER_ENUM;
+  goalEnum = GOAL_ENUM;
   trainingExperienceEnum = TRAINING_EXPERIENCE_ENUM;
   trainingTypeEnum = TRAINING_TYPE_ENUM;
   private subscription: Subscription = new Subscription();
@@ -76,7 +78,7 @@ export class UserSurveyComponent implements OnInit, OnDestroy {
   private initForm() {
     this.formGroup = this.fb.group({
       gender: [GENDER_ENUM.MEN, Validators.required],
-      goal: ['', Validators.required],
+      goal: [GOAL_ENUM.LOSE_WEIGHT, Validators.required],
       age: [null, [Validators.min(0)]],
       height: [null, [Validators.min(0)]],
       measurements: this.fb.group({

@@ -39,6 +39,7 @@ export class MenuListComponent implements OnInit, OnDestroy {
   {}
 
   ngOnInit(): void {
+    this.getMenuList();
     this.getAdmin();
     this.mobileMenuState();
   }
@@ -71,10 +72,29 @@ export class MenuListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  readonly mobileNavUrls = ['client/body-metrics', 'client/program', 'client/meals'];
+
   get mobileNavItems(): MenuItemInterface[] {
-    return this.menuList.reduce((acc: MenuItemInterface[], section: MenuSectionInterface) => {
+    const all = this.menuList.reduce((acc: MenuItemInterface[], section: MenuSectionInterface) => {
       return acc.concat(section.sections);
-    }, []).slice(0, 5);
+    }, []);
+    return this.mobileNavUrls
+      .map(url => all.find(item => item.url === url))
+      .filter((item): item is MenuItemInterface => !!item);
+  }
+
+  isMoreOpen = false;
+
+  toggleMore(): void {
+    this.isMoreOpen = !this.isMoreOpen;
+  }
+
+  closeMore(): void {
+    this.isMoreOpen = false;
+  }
+
+  openMobileMenu(): void {
+    this.panelHeaderService.triggerMobileMenu(true);
   }
 
   private mobileMenuState(): void {

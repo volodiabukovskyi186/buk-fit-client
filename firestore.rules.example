@@ -1,0 +1,79 @@
+// firestore.rules — приклад правил безпеки для колекції bodyMetrics
+// Розгортайте через: firebase deploy --only firestore:rules
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper functions ─────────────────────────────────────────────────────
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidBodyMetricsEntry() {
+      let data = request.resource.data;
+      return
+        data.keys().hasAll(['userId', 'createdAt', 'weightKg']) &&
+        data.userId is string &&
+        data.weightKg is number &&
+        data.weightKg > 0 &&
+        data.weightKg <= 500 &&
+        (
+          !('heightCm' in data) ||
+          (data.heightCm is number && data.heightCm > 0 && data.heightCm <= 300)
+        ) &&
+        (
+          !('waistCm' in data) ||
+          (data.waistCm is number && data.waistCm > 0)
+        ) &&
+        (
+          !('hipsCm' in data) ||
+          (data.hipsCm is number && data.hipsCm > 0)
+        ) &&
+        (
+          !('chestCm' in data) ||
+          (data.chestCm is number && data.chestCm > 0)
+        ) &&
+        (
+          !('note' in data) ||
+          (data.note is string && data.note.size() <= 300)
+        ) &&
+        (
+          !('photoUrl' in data) ||
+          data.photoUrl is string
+        );
+    }
+
+    // ── bodyMetrics collection ────────────────────────────────────────────────
+
+    match /users/{userId}/bodyMetrics/{entryId} {
+
+      // Only the owner can read their own entries
+      allow read: if isOwner(userId);
+
+      // Owner can create a valid entry (userId in data must match path)
+      allow create: if isOwner(userId)
+        && isValidBodyMetricsEntry()
+        && request.resource.data.userId == userId;
+
+      // Owner can update (but cannot change userId)
+      allow update: if isOwner(userId)
+        && isValidBodyMetricsEntry()
+        && request.resource.data.userId == resource.data.userId;
+
+      // Owner can delete
+      allow delete: if isOwner(userId);
+    }
+
+    // ── Users profile (if you store heightCm there) ───────────────────────────
+    match /clients/{userId} {
+      allow read:   if isOwner(userId);
+      allow update: if isOwner(userId);
+    }
+  }
+}

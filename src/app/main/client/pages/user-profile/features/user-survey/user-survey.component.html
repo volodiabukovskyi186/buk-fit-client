@@ -12,13 +12,26 @@
   </div>
 
 
-  <div class="bk-textarea-container" >
-    <hs-label>Ціль </hs-label>
-    <textarea class="bk-textarea"  placeholder="Чого хочете досягнути завдяки тренуванням?" [ngClass]="{'bk-textarea-error':!goalControl.valid && goalControl.touched}"
-               [rows]="3" formControlName="goal">
-                                            </textarea>
-    <div class="bk-textarea-error-text" *ngIf="!goalControl.valid && goalControl.touched">Це поле обов`язкове до заповнення</div>
-  </div>
+<!--  <div class="bk-textarea-container" >-->
+<!--    <hs-label>Ціль </hs-label>-->
+<!--    <textarea class="bk-textarea"  placeholder="Чого хочете досягнути завдяки тренуванням?" [ngClass]="{'bk-textarea-error':!goalControl.valid && goalControl.touched}"-->
+<!--               [rows]="3" formControlName="goal">-->
+<!--                                            </textarea>-->
+<!--    <div class="bk-textarea-error-text" *ngIf="!goalControl.valid && goalControl.touched">Це поле обов`язкове до заповнення</div>-->
+<!--  </div>-->
+
+    <div class="flex bk-two-fields">
+      <hs-form-field class="w-100">
+        <hs-label>Ціль</hs-label>
+        <hs-select [dropdownMinWidth]="200" placeholder="Ціль" formControlName="goal">
+          <hs-select-option [value]="goalEnum.LOSE_WEIGHT">Скинути вагу</hs-select-option>
+          <hs-select-option [value]="goalEnum.TONE_BODY">Підтягнути тіло</hs-select-option>
+          <hs-select-option [value]="goalEnum.GAIN_WEIGHT">Набрати вагу</hs-select-option>
+        </hs-select>
+
+        <hs-error>Поле обов’язкове</hs-error>
+      </hs-form-field>
+    </div>
 
   <div class="flex bk-two-fields">
     <hs-form-field class="w-100">
@@ -51,7 +64,7 @@
 
     <div class="flex bk-two-fields">
       <hs-form-field class="w-100">
-        <hs-label>Стегно (см)</hs-label>
+        <hs-label>Стегна (см)</hs-label>
         <input iqInput type="number" placeholder="20" formControlName="hip"/>
       </hs-form-field>
 

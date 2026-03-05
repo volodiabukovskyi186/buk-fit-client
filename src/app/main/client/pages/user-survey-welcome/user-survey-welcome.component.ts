@@ -12,6 +12,7 @@ import {HSButtonModule} from "../../../../core/components/button";
 import {Firestore} from "@angular/fire/firestore";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {GOAL_ENUM} from "../../../../core/enums/goal.enum";
 // import {ClientInterface} from "../core/interfaces/user.interface";
 import {AuthService} from "../../../../core/services/auth/auth.service";
 import {take} from "rxjs/operators";
@@ -47,6 +48,7 @@ export class UserSurveyWelcomeComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   genderEnum = GENDER_ENUM;
   user:ClientInterface;
+  goalEnum = GOAL_ENUM;
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -91,7 +93,7 @@ export class UserSurveyWelcomeComponent implements OnInit, OnDestroy {
   private initForm() {
     this.formGroup = this.fb.group({
       gender: [GENDER_ENUM.WOMEN, Validators.required],
-      goal: [null, Validators.required],
+      goal: [GOAL_ENUM.LOSE_WEIGHT, Validators.required],
       age: [null, [Validators.min(0)]],
       height: [null, [Validators.min(0)]],
       measurements: this.fb.group({

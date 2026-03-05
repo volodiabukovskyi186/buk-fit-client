@@ -1,0 +1,46 @@
+@import 'variables';
+
+.confirm-delete {
+  padding: 24px 20px 20px;
+  text-align: center;
+  max-width: 320px;
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #FDECEA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+
+    .material-icons {
+      color: $hs-error;
+      font-size: 28px;
+    }
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 700;
+    color: $hs-black;
+    margin: 0 0 8px;
+  }
+
+  &__message {
+    font-size: 14px;
+    color: $hs-secondary-grey-03;
+    margin: 0 0 24px;
+    line-height: 1.5;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 12px;
+
+    hs-button {
+      flex: 1;
+    }
+  }
+}

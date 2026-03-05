@@ -1,0 +1,41 @@
+<div class="chart-container">
+
+  <!-- Range Switcher -->
+  <div class="range-switcher">
+    <button
+      *ngFor="let r of ranges"
+      class="range-btn"
+      [class.range-btn--active]="facade.chartRange() === r.value"
+      (click)="facade.setRange(r.value)"
+    >
+      {{ r.label }}
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="facade.loading()" class="chart-state">
+    <hs-loader-ui></hs-loader-ui>
+  </div>
+
+  <!-- Empty state (< 2 points) -->
+  <div *ngIf="!facade.loading() && !hasEnoughData()" class="chart-state chart-state--empty">
+    <span class="material-icons chart-state__icon">show_chart</span>
+    <p class="chart-state__title">Недостатньо даних</p>
+    <p class="chart-state__subtitle">
+      Додайте щонайменше 2 записи, щоб побачити графік
+    </p>
+  </div>
+
+  <!-- Chart -->
+  <div
+    *ngIf="!facade.loading() && hasEnoughData() && chartOptions()"
+    class="chart-wrapper"
+  >
+    <div
+      echarts
+      [options]="chartOptions()!"
+      class="echarts"
+    ></div>
+  </div>
+
+</div>

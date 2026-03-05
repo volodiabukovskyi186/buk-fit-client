@@ -1,0 +1,13 @@
+<div class="confirm-delete">
+  <div class="confirm-delete__icon">
+    <span class="material-icons">delete_outline</span>
+  </div>
+
+  <h2 class="confirm-delete__title">{{ title }}</h2>
+  <p class="confirm-delete__message">{{ message }}</p>
+
+  <div class="confirm-delete__actions">
+    <hs-button mode="outlined" text="Скасувати" (click)="cancel()"></hs-button>
+    <hs-button text="Видалити" color="error" (click)="confirm()"></hs-button>
+  </div>
+</div>

@@ -1,0 +1,332 @@
+@import 'variables';
+
+// ─── Dialog shell ─────────────────────────────────────────────────────────────
+
+.entry-dialog {
+  width: 100%;
+  max-width: 480px;
+  background: $hs-background;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+// ─── Header ───────────────────────────────────────────────────────────────────
+
+.entry-dialog__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px 12px 14px;
+  background: linear-gradient(135deg, #3FA1FB 0%, #005DAD 100%);
+}
+
+.entry-dialog__header-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  .material-icons { font-size: 18px; color: #fff; }
+}
+
+.entry-dialog__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  flex: 1;
+}
+
+.entry-dialog__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.9);
+  flex-shrink: 0;
+
+  .material-icons { font-size: 18px; }
+
+  &:hover { background: rgba(255, 255, 255, 0.25); }
+}
+
+// ─── Body ─────────────────────────────────────────────────────────────────────
+
+.entry-dialog__body {
+  padding: 12px 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+// ─── Weight hero ──────────────────────────────────────────────────────────────
+
+.ed-weight-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 16px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+
+  &__label {
+    font-size: 11px;
+    font-weight: 700;
+    color: $hs-secondary-grey-03;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+  }
+
+  &__row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  &__input {
+    width: 160px;
+    border: none;
+    background: transparent;
+    font-size: 58px;
+    font-weight: 800;
+    color: $hs-black;
+    text-align: center;
+    font-family: inherit;
+    letter-spacing: -2px;
+    line-height: 1;
+    outline: none;
+    -moz-appearance: textfield;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    &::placeholder { color: $hs-secondary-grey-02; }
+  }
+
+  &__unit {
+    font-size: 26px;
+    font-weight: 600;
+    color: $hs-secondary-grey-03;
+    padding-bottom: 6px;
+  }
+
+  &__error {
+    display: block;
+    font-size: 12px;
+    color: $hs-error;
+    margin-top: 4px;
+    text-align: center;
+  }
+}
+
+// ─── Sections ─────────────────────────────────────────────────────────────────
+
+.ed-section {
+  background: #fff;
+  border-radius: 18px;
+  padding: 12px 14px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+.ed-section__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  > span:first-of-type {
+    font-size: 13px;
+    font-weight: 700;
+    color: $hs-black;
+  }
+}
+
+.ed-section__icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  .material-icons { font-size: 15px; }
+
+  &--orange { background: #FEF6E7; .material-icons { color: $hs-warning; } }
+}
+
+.ed-section__optional {
+  font-size: 11px;
+  font-weight: 600;
+  color: $hs-secondary-grey-03;
+  background: $hs-secondary-grey-00;
+  padding: 2px 8px;
+  border-radius: 100px;
+  margin-left: 2px;
+}
+
+.ed-section__divider {
+  height: 1px;
+  background: $hs-secondary-grey-01;
+  margin: 0;
+}
+
+// ─── Measurement rows ─────────────────────────────────────────────────────────
+
+.ed-measure-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 2px;
+  gap: 12px;
+
+  &__label {
+    font-size: 15px;
+    font-weight: 600;
+    color: $hs-black;
+    flex: 1;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__input {
+    width: 80px;
+    height: 44px;
+    border: 1.5px solid $hs-secondary-grey-01;
+    border-radius: 12px;
+    background: $hs-background;
+    font-size: 17px;
+    font-weight: 700;
+    color: $hs-black;
+    text-align: center;
+    font-family: inherit;
+    outline: none;
+    -moz-appearance: textfield;
+    transition: border-color 0.15s;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    &:focus { border-color: $hs-primary; background: #fff; }
+
+    &::placeholder { color: $hs-secondary-grey-02; font-weight: 400; }
+  }
+
+  &__unit {
+    font-size: 13px;
+    font-weight: 600;
+    color: $hs-secondary-grey-03;
+    min-width: 20px;
+  }
+}
+
+// ─── Note ─────────────────────────────────────────────────────────────────────
+
+.ed-note-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.ed-note {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid $hs-secondary-grey-01;
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  color: $hs-black;
+  background: #fff;
+  resize: none;
+  outline: none;
+  transition: border-color 0.15s;
+
+  &:focus { border-color: $hs-primary; }
+  &::placeholder { color: $hs-secondary-grey-03; }
+
+  &__count {
+    font-size: 11px;
+    color: $hs-secondary-grey-03;
+    text-align: right;
+    display: block;
+    margin-top: 4px;
+    padding-right: 2px;
+  }
+}
+
+// ─── Actions ──────────────────────────────────────────────────────────────────
+
+.entry-dialog__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+
+}
+
+.entry-dialog__submit {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 16px;
+  background: $hs-primary;
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: background 0.18s;
+
+  &:hover { background: $hs-primary-dark; }
+  &:active { background: darken(#3FA1FB, 15%); }
+}
+
+.entry-dialog__cancel-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: $hs-secondary-grey-03;
+  padding: 6px 16px;
+
+  &:hover { color: $hs-black; }
+}
+
+// ─── Mobile full-screen layout ────────────────────────────────────────────────
+
+@media (max-width: 600px) {
+  .entry-dialog {
+    border-radius: 0;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+
+    .entry-dialog__body {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}

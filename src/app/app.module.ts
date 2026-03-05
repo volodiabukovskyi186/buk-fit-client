@@ -1,5 +1,6 @@
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {NgModule} from '@angular/core';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
@@ -38,7 +39,11 @@ import {PaymentComponent} from "./main/client/pages/payment/payment.component";
     BrowserModule,
     AppRoutingModule,
     NgxMaskDirective,
-    PaymentComponent],
+    PaymentComponent,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
+  ],
   providers: [
     provideNgxMask(),
     {

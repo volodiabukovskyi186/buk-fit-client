@@ -42,6 +42,13 @@ const routes: Routes = [
     path: 'payment',
     component: PaymentComponent
   },
+  {
+    path: 'body-metrics',
+    loadChildren: () =>
+      import('./pages/body-metrics/body-metrics.module').then(
+        (m) => m.BodyMetricsModule,
+      ),
+  },
 ];
 
 @NgModule({

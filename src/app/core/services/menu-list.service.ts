@@ -26,7 +26,14 @@ export class MenuListService {
           role:USER_ROLES_ENUM.CLIENT
         },
         {
-          title: 'Програма',
+          title: 'Прогрес',
+          icon: '',
+          isOpen: false,
+          url: 'client/body-metrics',
+          role: USER_ROLES_ENUM.CLIENT
+        },
+        {
+          title: 'Тренування',
           icon: '',
           isOpen: false,
           url: 'client/program',
