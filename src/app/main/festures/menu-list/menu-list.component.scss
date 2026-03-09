@@ -545,3 +545,44 @@ hs-menu-list {
   margin: 0;
   background: transparent;
 }
+
+// ─── Alert dot (desktop + sidebar menu) ───────────────────────────────────────
+
+.menu-alert-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FC611F;
+  margin-left: 7px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(252, 97, 31, 0.22);
+}
+
+// ─── Alert dot (mobile bottom nav) ────────────────────────────────────────────
+
+.mobile-bottom-nav-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
+
+.mobile-bottom-nav-alert-dot {
+  position: absolute;
+  top: -2px;
+  right: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FC611F;
+  border: 2px solid #fff;
+}

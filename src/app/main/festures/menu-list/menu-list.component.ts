@@ -6,13 +6,14 @@ import { Router } from '@angular/router';
 import { MenuItemInterface, MenuSectionInterface } from '../../../core/interfaces/menu-item.interface';
 import { MenuListService } from '../../../core/services/menu-list.service';
 // import { PanelHeaderService } from '../panel-header/panel-header.service';
-import { filter, Subscription } from 'rxjs';
+import { filter, Observable, Subscription } from 'rxjs';
 import { AdminsService } from 'src/app/core/services/admins/admin.service';
 import { PanelHeaderService } from 'src/app/core/services/panel-header.service';
 import { USER_ROLES_ENUM } from 'src/app/core/enums/users-roles.enum';
 import {AuthService} from "../../../core/services/auth/auth.service";
 import {ClientInterface} from "../../../core/interfaces/user.interface";
 import {TOKEN_ENUM} from "../../../core/enums/token.enum";
+import { BodyMetricsAlertService } from '../../client/pages/body-metrics/services/body-metrics-alert.service';
 
 @Component({
     selector: 'hs-menu-list',
@@ -27,16 +28,19 @@ export class MenuListComponent implements OnInit, OnDestroy {
   isOpenMobile = false;
   role = USER_ROLES_ENUM.CLIENT;
   private subscription: Subscription = new Subscription();
+
+  metricsAlert$!: Observable<boolean>;
+
   constructor(
     private panelHeaderService: PanelHeaderService,
     private adminsService: AdminsService,
     private menuListService: MenuListService,
     private authService: AuthService,
-
-
+    private bodyMetricsAlertService: BodyMetricsAlertService,
     private router: Router
-  )
-  {}
+  ) {
+    this.metricsAlert$ = this.bodyMetricsAlertService.needsAlert$;
+  }
 
   ngOnInit(): void {
     this.getMenuList();

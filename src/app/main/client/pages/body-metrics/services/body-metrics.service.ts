@@ -63,6 +63,18 @@ export class BodyMetricsService {
       );
   }
 
+  // ─── Survey mutations ────────────────────────────────────────────────────────
+
+  async updateGoal(userId: string, goal: GOAL_ENUM): Promise<void> {
+    const snapshot = await this.firestore
+      .collection('user-survey', ref => ref.where('id', '==', userId).limit(1))
+      .get()
+      .toPromise();
+
+    if (!snapshot || snapshot.empty) return;
+    await snapshot.docs[0].ref.update({ goal });
+  }
+
   // ─── Queries ────────────────────────────────────────────────────────────────
 
   getEntries(userId: string): Observable<BodyMetricsEntry[]> {

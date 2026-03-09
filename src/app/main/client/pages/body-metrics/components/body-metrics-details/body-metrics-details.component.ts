@@ -5,6 +5,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Timestamp } from 'firebase/firestore';
 import { BodyMetricsFacade } from '../../store/body-metrics.facade';
@@ -89,20 +90,20 @@ export class BodyMetricsDetailsComponent {
     let barLabels: string[];
 
     if (goal === GOAL_ENUM.GAIN_WEIGHT) {
-      // ── Набір маси: хороше = позитивний %  ─────────────────────────────
+      // ── Набір маси: ідеально = +0.25% до +0.5% ─────────────────────────
       goalType = 'gain';
-      barLabels = ['-1.5%', '-0.5%', '0%', '+0.5%', '+1.5%'];
+      barLabels = ['-0.5%', '0%', '+0.25%', '+0.5%', '+1%'];
 
-      const clamped = Math.max(-1.5, Math.min(1.5, percent));
-      markerPercent = Math.round((clamped + 1.5) / 3.0 * 100);
-      exceedsLeft  = percent < -1.5;
-      exceedsRight = percent > 1.5;
+      const clamped = Math.max(-0.5, Math.min(1, percent));
+      markerPercent = Math.round((clamped + 0.5) / 1.5 * 100);
+      exceedsLeft  = percent < -0.5;
+      exceedsRight = percent > 1;
 
-      if (percent > 1.5) {
+      if (percent > 0.5) {
         level = 'fast'; emoji = '🚀';
-        headline = 'Швидкий набір!';
-        subtext = 'Чудовий результат — стеж за якістю харчування';
-        accentColor = '#27AE60'; accentBg = '#E6F7EE';
+        headline = 'Занадто швидкий набір!';
+        subtext = 'Ризик набору жиру — зменш профіцит калорій';
+        accentColor = '#F2AF4A'; accentBg = '#FEF6E7';
       } else if (percent >= 0.25) {
         level = 'perfect'; emoji = '🔥';
         headline = 'Ідеальний темп набору!';
@@ -121,7 +122,7 @@ export class BodyMetricsDetailsComponent {
       }
 
     } else if (goal === GOAL_ENUM.TONE_BODY) {
-      // ── Підтягування тіла: хороше = стабільна вага ±0.4%  ───────────────
+      // ── Підтягування тіла: ідеально = стабільна вага ±0.4%; набір — заблоковано ───
       goalType = 'tone';
       barLabels = ['-1.5%', '-0.5%', '0%', '+0.5%', '+1.5%'];
 
@@ -131,7 +132,12 @@ export class BodyMetricsDetailsComponent {
       exceedsRight = percent > 1.5;
 
       const abs = Math.abs(percent);
-      if (abs <= 0.4) {
+      if (percent > 0.4) {
+        level = 'locked'; emoji = '🔒';
+        headline = 'Набір ваги — не по плану!';
+        subtext = 'При підтримці ваги збільшення — сигнал переглянути харчування';
+        accentColor = '#E95032'; accentBg = '#FDECEA';
+      } else if (abs <= 0.4) {
         level = 'ideal'; emoji = '🔥';
         headline = 'Вага стабільна!';
         subtext = 'Ідеально для тонусу — тіло змінює склад';
@@ -144,14 +150,12 @@ export class BodyMetricsDetailsComponent {
       } else {
         level = 'extreme'; emoji = '⚠️';
         headline = 'Значна зміна ваги';
-        subtext = percent < 0
-          ? 'Вага суттєво знизилась — перевір калорійність раціону'
-          : 'Вага суттєво зросла — переглянь харчування';
+        subtext = 'Вага суттєво знизилась — перевір калорійність раціону';
         accentColor = '#E95032'; accentBg = '#FDECEA';
       }
 
     } else {
-      // ── Схуднення (LOSE_WEIGHT): хороше = негативний %  ─────────────────
+      // ── Схуднення (LOSE_WEIGHT): хороше = негативний %; набір — заблоковано ─
       goalType = 'lose';
       barLabels = ['+1.5%', '+0.5%', '0%', '-0.5%', '-1.5%'];
 
@@ -176,9 +180,9 @@ export class BodyMetricsDetailsComponent {
         subtext = 'Маленькі кроки — теж перемога. Додай активності';
         accentColor = '#F2AF4A'; accentBg = '#FEF6E7';
       } else {
-        level = 'gain'; emoji = '😤';
-        headline = 'Не здавайся!';
-        subtext = 'Цей тиждень не вдався — але ти можеш переломити тренд';
+        level = 'locked'; emoji = '🔒';
+        headline = 'Набір ваги — заблоковано!';
+        subtext = 'При меті схуднення збільшення ваги — крок назад. Переглянь план';
         accentColor = '#E95032'; accentBg = '#FDECEA';
       }
     }
@@ -219,6 +223,10 @@ export class BodyMetricsDetailsComponent {
   });
 
   quickSaving = signal(false);
+  goalSaving = signal(false);
+
+  readonly goalEnum = GOAL_ENUM;
+  readonly goalCtrl = new FormControl<GOAL_ENUM | null>(null);
 
   // ─── Actions ──────────────────────────────────────────────────────────────
 
@@ -237,6 +245,17 @@ export class BodyMetricsDetailsComponent {
       await this.facade.addEntry(payload);
     } finally {
       this.quickSaving.set(false);
+    }
+  }
+
+  async saveGoal(): Promise<void> {
+    const goal = this.goalCtrl.value;
+    if (!goal) return;
+    this.goalSaving.set(true);
+    try {
+      await this.facade.saveGoal(goal);
+    } finally {
+      this.goalSaving.set(false);
     }
   }
 

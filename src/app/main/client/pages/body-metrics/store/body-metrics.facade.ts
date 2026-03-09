@@ -27,6 +27,11 @@ export class BodyMetricsFacade implements OnDestroy {
   readonly entries = this._entries.asReadonly();
   readonly chartRange = this._chartRange.asReadonly();
   readonly surveyDefaults = this._surveyDefaults.asReadonly();
+  readonly hasGoal = computed<boolean>(() => {
+    const goal = this._surveyDefaults().goal;
+    return !!(goal && (Object.values(GOAL_ENUM) as string[]).includes(goal));
+  });
+
   readonly surveyGoal = computed<GOAL_ENUM>(() => {
     const goal = this._surveyDefaults().goal;
     const valid = Object.values(GOAL_ENUM) as string[];
@@ -174,6 +179,12 @@ export class BodyMetricsFacade implements OnDestroy {
       this._error.set(err?.message ?? 'Не вдалось оновити запис');
       throw err;
     }
+  }
+
+  async saveGoal(goal: GOAL_ENUM): Promise<void> {
+    if (!this.userId) return;
+    await this.service.updateGoal(this.userId, goal);
+    this._surveyDefaults.update(d => ({ ...d, goal }));
   }
 
   async deleteEntry(id: string): Promise<void> {

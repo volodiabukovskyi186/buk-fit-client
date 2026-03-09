@@ -27,6 +27,10 @@
                             routerLinkActive="active-route" [routerLink]="menu?.url" *ngIf="menu?.url">
 
                             <span class="menu-list-menu-header-content">{{menu.title }}</span>
+                            <span
+                              *ngIf="menu.url === 'client/body-metrics' && (metricsAlert$ | async)"
+                              class="menu-alert-dot"
+                            ></span>
                         </div>
 
                         <span class="menu-list-menu-header flex align-items-center fw-600 " [ngClass]="{'menu-list-header-with-childred': menu?.children?.length}" (click)="moveToUrl(menu)"
@@ -91,6 +95,10 @@
                                 routerLinkActive="active-route" [routerLink]="menu?.url" *ngIf="menu?.url" (click)="closeMenu()">
 
                                 <span class="menu-list-menu-header-content">{{menu.title }}</span>
+                                <span
+                                  *ngIf="menu.url === 'client/body-metrics' && (metricsAlert$ | async)"
+                                  class="menu-alert-dot"
+                                ></span>
                             </div>
 
                             <div class="menu-list-menu-header justify-content-between flex align-items-center fw-600 w-100" (click)="moveToUrl(menu)"
@@ -147,10 +155,18 @@
                 <path d="M9 8H15M9 12H15M9 16H13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
             </svg>
 
-            <svg *ngSwitchCase="'client/body-metrics'" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4 20L8.5 13L12 17L15.5 10L20 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M4 4V20H20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
+            <ng-container *ngSwitchCase="'client/body-metrics'">
+              <span class="mobile-bottom-nav-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 20L8.5 13L12 17L15.5 10L20 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M4 4V20H20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <span
+                  *ngIf="metricsAlert$ | async"
+                  class="mobile-bottom-nav-alert-dot"
+                ></span>
+              </span>
+            </ng-container>
 
              <svg *ngSwitchCase="'client/meals'" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M6.5 4V12M9.5 4V12M6.5 8H9.5M8 12V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>

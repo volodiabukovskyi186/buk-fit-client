@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HSButtonModule } from '../../../../core/components/button/button.module';
 import { HSFormFieldModule } from '../../../../core/components/form-field/form-field.module';
 import { HSInputModule } from '../../../../core/components/input/input.module';
+import { HSSelectModule } from '../../../../core/components/select/select.module';
 import { LoaderComponent } from '../../../../core/components/loader/loader.component';
 
 // ─── ngx-echarts ─────────────────────────────────────────────────────────────
@@ -45,6 +46,7 @@ import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog
     HSButtonModule,
     HSFormFieldModule,
     HSInputModule,
+    HSSelectModule,
     LoaderComponent,
 
     // ECharts — lazy-load the echarts core to keep bundle small

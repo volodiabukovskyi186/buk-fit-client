@@ -119,6 +119,13 @@ bk-meals {
     flex: 1;
   }
 
+  .totals-raw-note {
+    margin: 10px 0 0;
+    font-size: 0.68rem;
+    color: #7a96c2;
+    font-style: italic;
+  }
+
   .totals-stat--cal {
     align-items: flex-start;
     flex: 0 0 auto;

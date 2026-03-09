@@ -36,9 +36,9 @@ export class BodyMetricsEntryDialogComponent implements OnInit {
         e?.weightKg ?? this.data.defaultWeightKg ?? null,
         [Validators.required, positiveNumber, Validators.max(500)],
       ],
-      waistCm:  [e?.waistCm  ?? this.data.defaultWaistCm  ?? null, [positiveNumber, Validators.max(300)]],
-      hipsCm:   [e?.hipsCm   ?? this.data.defaultHipsCm   ?? null, [positiveNumber, Validators.max(300)]],
-      chestCm:  [e?.chestCm  ?? this.data.defaultChestCm  ?? null, [positiveNumber, Validators.max(300)]],
+      waistCm:  [e?.waistCm  ?? this.data.defaultWaistCm  ?? null],
+      hipsCm:   [e?.hipsCm   ?? this.data.defaultHipsCm   ?? null],
+      chestCm:  [e?.chestCm  ?? this.data.defaultChestCm  ?? null],
       note:     [e?.note ?? ''],
     });
   }
