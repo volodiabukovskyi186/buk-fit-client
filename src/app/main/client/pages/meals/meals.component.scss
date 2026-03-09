@@ -1,67 +1,331 @@
-$primary-color: #007bff;
-$secondary-color: #0056b3;
-$background-color: #f8f9fa;
-$text-color: #343a40;
-$light-background-color: #e9ecef;
-
-
 bk-meals {
+  --line: #dbe4ef;
+  --text: #0f172a;
+  --muted: #64748b;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+  padding: 14px;
+  font-family: 'Montserrat', sans-serif;
+
+  .meals-page {
+    width: min(100%, 640px);
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    height: 100%;
-    overflow: auto;
-
-    .program {
-        margin-top: 16px;
-    }
-    day {
-      margin: 20px 0;
-    }
-
-  .meal {
-    overflow-wrap: break-word;
-    white-space: pre-wrap; /* важливо для \n */
-    max-width: 100%; /* або конкретна ширина, напр. 300px */
+    gap: 10px;
   }
 
-    .card {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* ── Skeleton ── */
+  .sk-hero {
+    border-radius: 18px;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 8px 20px rgba(15,23,42,.06);
+  }
 
-      h3 {
-        margin-top: 0;
-        color: $primary-color;
-      }
+  .sk-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
 
-      ul {
-        padding: 0;
-        list-style: none;
+  .sk-stat {
+    height: 48px;
+    border-radius: 10px;
+    background: #e8edf5;
+    animation: sk-pulse 1.5s ease-in-out infinite;
+  }
 
-        li {
-          margin: 5px 0;
-          padding: 5px 10px;
-          background-color: $light-background-color;
-          border-radius: 4px;
-        }
-      }
-    }
+  .meal-skeleton {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 4px 12px rgba(15,23,42,.05);
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
 
-    @media (max-width: 768px) {
-      .card-content {
-        ul {
-          li {
-            display: flex;
-            flex-direction: column;
-            margin: 10px 0;
-          }
-        }
-      }
-    }
+  .sk-row { display: flex; align-items: center; gap: 10px; }
 
+  .sk-circle {
+    width: 32px; height: 32px;
+    border-radius: 50%; flex-shrink: 0;
+    background: #e8edf5;
+    animation: sk-pulse 1.5s ease-in-out infinite;
+  }
 
+  .sk-line {
+    height: 12px; border-radius: 5px; width: 88%;
+    background: #e8edf5;
+    animation: sk-pulse 1.5s ease-in-out infinite;
+  }
+
+  .sk-line--sm    { width: 38%; height: 14px; }
+  .sk-line--title { width: 42%; height: 16px; }
+  .sk-line--body  { width: 90%; }
+  .sk-line--short { width: 60%; }
+
+  @keyframes sk-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.38; }
+  }
+
+  /* ── Totals hero card ── */
+  .totals-card {
+    border-radius: 18px;
+    padding: 16px 18px;
+    background: linear-gradient(135deg, #e8f2ff 0%, #f3f8ff 55%, #fff8ed 100%);
+    border: 1px solid #cfe0ff;
+    box-shadow: 0 10px 28px rgba(37,99,235,.10);
+  }
+
+  .totals-label {
+    margin: 0 0 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #3b7dd8;
+  }
+
+  .totals-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .totals-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(37,99,235,.18);
+    margin: 0 14px;
+    flex-shrink: 0;
+  }
+
+  .totals-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    flex: 1;
+  }
+
+  .totals-stat--cal {
+    align-items: flex-start;
+    flex: 0 0 auto;
+
+    .totals-stat__val { font-size: 1.6rem; color: #c84b00; }
+    .totals-stat__key { color: #c84b00; opacity: 0.75; }
+  }
+
+  .totals-stat__val {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #1e3a8a;
+    line-height: 1;
+  }
+
+  .totals-stat__unit {
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin-left: 1px;
+    vertical-align: baseline;
+  }
+
+  .totals-stat__key {
+    font-size: 0.66rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+
+  /* ── Meal card ── */
+  .meal-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 13px 14px;
+    box-shadow: 0 4px 14px rgba(15,23,42,.06);
+  }
+
+  /* ── Card head ── */
+  .meal-card__head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 9px;
+  }
+
+  .meal-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    background: var(--mc-bg, rgba(63,161,251,.12));
+  }
+
+  .meal-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .meal-kcal {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    font-size: 0.82rem;
+    color: #c84b00;
+    font-weight: 700;
+    background: #fff3e0;
+    padding: 3px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .meal-kcal__unit {
+    font-size: 0.68rem;
+    font-weight: 600;
+    opacity: 0.8;
+  }
+
+  /* ── Macros strip ── */
+  .meal-macros {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .macro {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .macro__lbl {
+    font-size: 0.65rem;
+    opacity: 0.7;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .macro--p { background: #e8f5e9; color: #1b5e20; }
+  .macro--f { background: #fff8e1; color: #e65100; }
+  .macro--c { background: #e3f2fd; color: #0d47a1; }
+
+  /* ── Content ── */
+  .meal-content {
+    padding: 10px 12px;
+    border-radius: 9px;
+    border: 1px solid #e8edf5;
+    background: #f8fbff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .meal-spacer { height: 6px; }
+
+  .meal-heading {
+    margin: 7px 0 2px;
+    font-size: 0.67rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    //color: #94a3b8;
+
+    &:first-child { margin-top: 0; }
+  }
+
+  .meal-bullet {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin: 2px 0;
+    padding-left: 2px;
+    font-size: 0.83rem;
+    color: #0f172a;
+    line-height: 1.5;
+  }
+
+  .meal-dot {
+    flex-shrink: 0;
+    color: #0f172a;
+    font-size: 0.9rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  /* ── Legacy text ── */
+  .meal-card--text pre {
+    margin: 0;
+    white-space: pre-wrap;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    color: #334155;
+    line-height: 1.65;
+  }
+
+  /* ── Empty ── */
+  .meal-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 44px 16px;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 16px;
+    text-align: center;
+  }
+
+  .meal-empty__icon { font-size: 2.4rem; line-height: 1; }
+
+  .meal-empty__title {
+    margin: 4px 0 0;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .meal-empty__sub {
+    margin: 2px 0 0;
+    font-size: 0.78rem;
+    color: var(--muted);
+    max-width: 240px;
+    line-height: 1.5;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 480px) {
+    padding: 10px;
+
+    .totals-card { padding: 14px; }
+
+    .totals-divider { margin: 0 10px; }
+
+    .totals-stat--cal .totals-stat__val { font-size: 1.35rem; }
+
+    .meal-card { padding: 12px; }
+
+    .meal-macros { flex-wrap: wrap; gap: 5px; }
+  }
 }

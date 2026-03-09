@@ -35,7 +35,7 @@ import {TRAINING_EXPERIENCE_ENUM} from "../../../../core/enums/training-experian
     HSSelectModule,
     NgIf,
     HSButtonModule,
-    NgClass,
+
     HSInputDirective
   ]
 })

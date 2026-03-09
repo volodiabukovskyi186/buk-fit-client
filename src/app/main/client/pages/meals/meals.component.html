@@ -1,12 +1,98 @@
-<h2 class="pb-8">Програма харчування</h2>
-<ng-container *ngIf="!dailyMealsText?.text">
-  <div class="w-100 flex justify-content-center pt-24">
-    <h4 class="fc-secondary-grey-03 ">У вас ще немає програми харчування</h4>
+<div class="meals-page">
+
+  <!-- ── Skeleton ── -->
+  <ng-container *ngIf="loading">
+    <div class="sk-hero">
+      <div class="sk-line sk-line--sm"></div>
+      <div class="sk-stats">
+        <div class="sk-stat" *ngFor="let s of [1,2,3,4]"></div>
+      </div>
+    </div>
+    <div class="meal-skeleton" *ngFor="let s of [1,2,3]">
+      <div class="sk-row">
+        <div class="sk-circle"></div>
+        <div class="sk-line sk-line--title"></div>
+      </div>
+      <div class="sk-line sk-line--body"></div>
+      <div class="sk-line sk-line--body sk-line--short"></div>
+    </div>
+  </ng-container>
+
+  <!-- ── Totals hero ── -->
+  <div class="totals-card" *ngIf="!loading && hasMeals">
+    <p class="totals-label">Добовий раціон</p>
+    <div class="totals-row">
+      <div class="totals-stat totals-stat--cal">
+        <span class="totals-stat__val">{{ totals.calories }}</span>
+        <span class="totals-stat__key">ккал</span>
+      </div>
+      <div class="totals-divider"></div>
+      <div class="totals-stat">
+        <span class="totals-stat__val">{{ totals.protein }}<span class="totals-stat__unit">г</span></span>
+        <span class="totals-stat__key">Білки</span>
+      </div>
+      <div class="totals-stat">
+        <span class="totals-stat__val">{{ totals.fat }}<span class="totals-stat__unit">г</span></span>
+        <span class="totals-stat__key">Жири</span>
+      </div>
+      <div class="totals-stat">
+        <span class="totals-stat__val">{{ totals.carbs }}<span class="totals-stat__unit">г</span></span>
+        <span class="totals-stat__key">Вуглев.</span>
+      </div>
+    </div>
   </div>
-</ng-container>
 
-<div *ngIf="dailyMealsText?.text" class="flex w-100 card meal" >
-  <div *ngIf="dailyMealsText?.text" [innerHTML]="dailyMealsText?.text | MGAutoLink"></div>
+  <!-- ── Meal cards ── -->
+  <ng-container *ngIf="!loading && hasMeals">
+    <article
+      *ngFor="let meal of mealsDoc!.meals; trackBy: trackByType"
+      class="meal-card"
+      [style.--mc]="mealMeta[meal.type].color"
+      [style.--mc-bg]="mealMeta[meal.type].bg"
+    >
+      <!-- head -->
+      <div class="meal-card__head">
+        <span class="meal-icon">{{ mealMeta[meal.type].emoji }}</span>
+        <span class="meal-title">{{ mealMeta[meal.type].label }}</span>
+        <div class="meal-kcal">
+          <span>🔥</span><strong>{{ meal.calories }}</strong><span class="meal-kcal__unit">ккал</span>
+        </div>
+      </div>
+
+      <!-- macros strip -->
+      <div class="meal-macros">
+        <span class="macro macro--p"><span class="macro__lbl">Б</span>{{ meal.protein }}г</span>
+        <span class="macro macro--f"><span class="macro__lbl">Ж</span>{{ meal.fat }}г</span>
+        <span class="macro macro--c"><span class="macro__lbl">В</span>{{ meal.carbs }}г</span>
+      </div>
+
+      <!-- content -->
+      <div class="meal-content">
+        <ng-container *ngFor="let line of parseContent(meal.content)">
+          <div *ngIf="line.type === 'empty'" class="meal-spacer"></div>
+          <p *ngIf="line.type === 'heading'" class="meal-heading">{{ line.text }}</p>
+          <p *ngIf="line.type === 'bullet'" class="meal-bullet">
+            <span class="meal-dot">•</span>{{ line.text }}
+          </p>
+        </ng-container>
+      </div>
+    </article>
+  </ng-container>
+
+  <!-- ── Legacy text ── -->
+  <ng-container *ngIf="!loading && !hasMeals && hasText">
+    <div class="meal-card meal-card--text">
+      <pre>{{ mealsDoc!.text }}</pre>
+    </div>
+  </ng-container>
+
+  <!-- ── Empty ── -->
+  <ng-container *ngIf="!loading && !hasMeals && !hasText">
+    <div class="meal-empty">
+      <span class="meal-empty__icon">🥗</span>
+      <p class="meal-empty__title">Раціон ще не призначено</p>
+      <p class="meal-empty__sub">Після підтвердження тренером план зʼявиться тут</p>
+    </div>
+  </ng-container>
+
 </div>
-
-

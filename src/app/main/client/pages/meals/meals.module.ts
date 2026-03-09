@@ -14,31 +14,28 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { ButtonToggleModule } from 'src/app/core/components/button-toggle/button-toggle.module';
 import { HSSelectModule } from 'src/app/core/components/select/select.module';
 import { ProgramComponent } from './meals.component';
-import {MGAutolinkModule} from "../../../../core/pipes/auto-link/auto-link.module";
 
 
 @NgModule({
   declarations: [
     ProgramComponent
   ],
-    imports: [
-        HSSelectModule,
-        ReactiveFormsModule,
-        FormsModule,
-        ButtonToggleModule,
-        MatDialogModule,
-        HSInputModule,
-        HSFormFieldModule,
-        HSTimeToUtcModule,
-        ClipboardModule,
-        ReactiveFormsModule,
-        FormsModule,
-        HSButtonModule,
-        TableGridModule,
-        CommonModule,
-
-        ProgramRoutingModule,
-        MGAutolinkModule
-    ]
+  imports: [
+    HSSelectModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ButtonToggleModule,
+    MatDialogModule,
+    HSInputModule,
+    HSFormFieldModule,
+    HSTimeToUtcModule,
+    ClipboardModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HSButtonModule,
+    TableGridModule,
+    CommonModule,
+    ProgramRoutingModule,
+  ]
 })
 export class MealsModule { }

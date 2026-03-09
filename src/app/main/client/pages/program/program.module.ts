@@ -14,7 +14,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { ButtonToggleModule } from 'src/app/core/components/button-toggle/button-toggle.module';
 import { HSSelectModule } from 'src/app/core/components/select/select.module';
 import { ProgramComponent } from './program.component';
-import {MGAutolinkModule} from "../../../../core/pipes/auto-link/auto-link.module";
+import { MGAutolinkModule } from "../../../../core/pipes/auto-link/auto-link.module";
 
 
 @NgModule({
@@ -37,7 +37,6 @@ import {MGAutolinkModule} from "../../../../core/pipes/auto-link/auto-link.modul
     HSButtonModule,
     TableGridModule,
     CommonModule,
-
     ProgramRoutingModule
   ]
 })
