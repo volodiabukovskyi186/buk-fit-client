@@ -49,10 +49,6 @@ export class ProgramComponent implements OnInit {
       });
   }
 
-  moveToVideo(link:string) {
-    window.open(link);
-  }
-
   openVideoDrawer(link: string): void {
     if (!link) {
       return;

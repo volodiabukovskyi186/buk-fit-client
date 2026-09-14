@@ -30,9 +30,7 @@
 
 
         @if(exercise?.url) {
-          <hs-button  (click)="openVideoDrawer(exercise?.url)">Відео вправи</hs-button>
-        } @else {
-          <hs-button *ngIf="exercise?.videoURL" (click)="moveToVideo(exercise?.videoURL)">Відео вправи</hs-button>
+          <hs-button (click)="openVideoDrawer(exercise?.url)">Відео вправи</hs-button>
         }
 
       </div>
