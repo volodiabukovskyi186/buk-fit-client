@@ -11,7 +11,7 @@ export const environment = {
   botToken: '8033627783:AAFoa_Pzye9EcwK5_JbaCAuAbZbfGG8021U',
   miniAppLink: 'https://buk-fit.com/',
   botNewRegister: '8111781384:AAF5--svXCOVJwor5gaWDTtPx8F3Oxi4vtI',
-  bukAdminLink: 'https://buk-fit-app-admin-13b24d3755d7.herokuapp.com/',
+  bukAdminLink: 'https://admin.buk-fit.com',
   welcomeMessageChannelID: -1003045965696,
   registerChatId: -1003052114090,
 };
