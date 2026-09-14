@@ -15,8 +15,15 @@ import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {ClientInterface} from "../../interfaces/user.interface";
 import {sendPasswordResetEmail} from "@angular/fire/auth";
 import { Auth, createUserWithEmailAndPassword, UserCredential } from '@angular/fire/auth';
-import {doc} from "@angular/fire/firestore";
+import {doc, Timestamp} from "@angular/fire/firestore";
 import {USER_STATUS_ENUM} from "../../enums/users-status.enum";
+
+/**
+ * Як часто оновлювати clients/{uid}.lastSeenAt.
+ * Раз на 30 хв: адмінці потрібна точність до дня, а не до хвилини,
+ * тож немає сенсу платити за запис при кожному перезавантаженні сторінки.
+ */
+const LAST_SEEN_THROTTLE_MS = 30 * 60 * 1000;
 
 @Injectable({
   providedIn: 'root'
@@ -168,7 +175,36 @@ export class AuthService {
     onAuthStateChanged(this.auth, (user) => {
       this.userFirebaseSubject.next(user);
       console.log(user ? `Користувач залогований: ${user.email}` : 'Користувач не залогований');
+
+      if (user?.uid) {
+        this.touchLastSeen(user.uid);
+      }
     });
+  }
+
+  /**
+   * Відмічає, що клієнт відкрив застосунок: пише clients/{uid}.lastSeenAt.
+   * Видно в адмінці в колонці «Остання активність».
+   * Помилка тут нічого не ламає — просто не оновимо дату.
+   */
+  private touchLastSeen(uid: string): void {
+    const storageKey = `bk_last_seen_${uid}`;
+
+    try {
+      const lastWrite = Number(localStorage.getItem(storageKey)) || 0;
+      if (Date.now() - lastWrite < LAST_SEEN_THROTTLE_MS) {
+        return;
+      }
+      localStorage.setItem(storageKey, String(Date.now()));
+    } catch {
+      // localStorage недоступний (приватний режим) — пишемо без тротлінгу
+    }
+
+    this.firestore
+      .collection('clients')
+      .doc(uid)
+      .update({lastSeenAt: Timestamp.now()})
+      .catch((error) => console.warn('Не вдалося оновити lastSeenAt:', error));
   }
 
 }
