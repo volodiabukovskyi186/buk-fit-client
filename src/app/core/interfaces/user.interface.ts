@@ -14,4 +14,6 @@ export interface ClientInterface {
   secondName: string;
   tgUser:any;
   tgChatId?:any;
+  /** Останнє відкриття застосунку. Пишеться в AuthService, читає адмінка. */
+  lastSeenAt?: Timestamp | null;
 }
